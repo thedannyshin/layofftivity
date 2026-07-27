@@ -9,15 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as CohortChatRouteImport } from './routes/cohort-chat'
 import { Route as TabsRouteImport } from './routes/_tabs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventsEventIdRouteImport } from './routes/events.$eventId'
 import { Route as ChatPersonIdRouteImport } from './routes/chat.$personId'
 import { Route as TabsMatchRouteImport } from './routes/_tabs/match'
 import { Route as TabsHomeRouteImport } from './routes/_tabs/home'
+import { Route as TabsCohortRouteImport } from './routes/_tabs/cohort'
 import { Route as TabsOrganizationsIndexRouteImport } from './routes/_tabs/organizations/index'
 import { Route as TabsOrganizationsOrgIdRouteImport } from './routes/_tabs/organizations/$orgId'
 
+const CohortChatRoute = CohortChatRouteImport.update({
+  id: '/cohort-chat',
+  path: '/cohort-chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TabsRoute = TabsRouteImport.update({
   id: '/_tabs',
   getParentRoute: () => rootRouteImport,
@@ -47,6 +54,11 @@ const TabsHomeRoute = TabsHomeRouteImport.update({
   path: '/home',
   getParentRoute: () => TabsRoute,
 } as any)
+const TabsCohortRoute = TabsCohortRouteImport.update({
+  id: '/cohort',
+  path: '/cohort',
+  getParentRoute: () => TabsRoute,
+} as any)
 const TabsOrganizationsIndexRoute = TabsOrganizationsIndexRouteImport.update({
   id: '/organizations/',
   path: '/organizations/',
@@ -60,6 +72,8 @@ const TabsOrganizationsOrgIdRoute = TabsOrganizationsOrgIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cohort-chat': typeof CohortChatRoute
+  '/cohort': typeof TabsCohortRoute
   '/home': typeof TabsHomeRoute
   '/match': typeof TabsMatchRoute
   '/chat/$personId': typeof ChatPersonIdRoute
@@ -69,6 +83,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cohort-chat': typeof CohortChatRoute
+  '/cohort': typeof TabsCohortRoute
   '/home': typeof TabsHomeRoute
   '/match': typeof TabsMatchRoute
   '/chat/$personId': typeof ChatPersonIdRoute
@@ -80,6 +96,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_tabs': typeof TabsRouteWithChildren
+  '/cohort-chat': typeof CohortChatRoute
+  '/_tabs/cohort': typeof TabsCohortRoute
   '/_tabs/home': typeof TabsHomeRoute
   '/_tabs/match': typeof TabsMatchRoute
   '/chat/$personId': typeof ChatPersonIdRoute
@@ -91,6 +109,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/cohort-chat'
+    | '/cohort'
     | '/home'
     | '/match'
     | '/chat/$personId'
@@ -100,6 +120,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/cohort-chat'
+    | '/cohort'
     | '/home'
     | '/match'
     | '/chat/$personId'
@@ -110,6 +132,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_tabs'
+    | '/cohort-chat'
+    | '/_tabs/cohort'
     | '/_tabs/home'
     | '/_tabs/match'
     | '/chat/$personId'
@@ -121,12 +145,20 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TabsRoute: typeof TabsRouteWithChildren
+  CohortChatRoute: typeof CohortChatRoute
   ChatPersonIdRoute: typeof ChatPersonIdRoute
   EventsEventIdRoute: typeof EventsEventIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/cohort-chat': {
+      id: '/cohort-chat'
+      path: '/cohort-chat'
+      fullPath: '/cohort-chat'
+      preLoaderRoute: typeof CohortChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_tabs': {
       id: '/_tabs'
       path: ''
@@ -169,6 +201,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TabsHomeRouteImport
       parentRoute: typeof TabsRoute
     }
+    '/_tabs/cohort': {
+      id: '/_tabs/cohort'
+      path: '/cohort'
+      fullPath: '/cohort'
+      preLoaderRoute: typeof TabsCohortRouteImport
+      parentRoute: typeof TabsRoute
+    }
     '/_tabs/organizations/': {
       id: '/_tabs/organizations/'
       path: '/organizations'
@@ -187,6 +226,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface TabsRouteChildren {
+  TabsCohortRoute: typeof TabsCohortRoute
   TabsHomeRoute: typeof TabsHomeRoute
   TabsMatchRoute: typeof TabsMatchRoute
   TabsOrganizationsOrgIdRoute: typeof TabsOrganizationsOrgIdRoute
@@ -194,6 +234,7 @@ interface TabsRouteChildren {
 }
 
 const TabsRouteChildren: TabsRouteChildren = {
+  TabsCohortRoute: TabsCohortRoute,
   TabsHomeRoute: TabsHomeRoute,
   TabsMatchRoute: TabsMatchRoute,
   TabsOrganizationsOrgIdRoute: TabsOrganizationsOrgIdRoute,
@@ -205,6 +246,7 @@ const TabsRouteWithChildren = TabsRoute._addFileChildren(TabsRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TabsRoute: TabsRouteWithChildren,
+  CohortChatRoute: CohortChatRoute,
   ChatPersonIdRoute: ChatPersonIdRoute,
   EventsEventIdRoute: EventsEventIdRoute,
 }
