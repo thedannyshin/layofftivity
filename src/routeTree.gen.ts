@@ -21,7 +21,12 @@ import { Route as ChatPersonIdRouteImport } from './routes/chat.$personId'
 import { Route as TabsMatchRouteImport } from './routes/_tabs/match'
 import { Route as TabsHomeRouteImport } from './routes/_tabs/home'
 import { Route as TabsCohortRouteImport } from './routes/_tabs/cohort'
+import { Route as TabsProfileIndexRouteImport } from './routes/_tabs/profile/index'
 import { Route as TabsOrganizationsIndexRouteImport } from './routes/_tabs/organizations/index'
+import { Route as TabsProfileReflectionsRouteImport } from './routes/_tabs/profile/reflections'
+import { Route as TabsProfileHistoryRouteImport } from './routes/_tabs/profile/history'
+import { Route as TabsProfileFriendsRouteImport } from './routes/_tabs/profile/friends'
+import { Route as TabsProfileBadgesRouteImport } from './routes/_tabs/profile/badges'
 import { Route as TabsOrganizationsOrgIdRouteImport } from './routes/_tabs/organizations/$orgId'
 
 const VolunteerDayRoute = VolunteerDayRouteImport.update({
@@ -83,9 +88,34 @@ const TabsCohortRoute = TabsCohortRouteImport.update({
   path: '/cohort',
   getParentRoute: () => TabsRoute,
 } as any)
+const TabsProfileIndexRoute = TabsProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => TabsRoute,
+} as any)
 const TabsOrganizationsIndexRoute = TabsOrganizationsIndexRouteImport.update({
   id: '/organizations/',
   path: '/organizations/',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsProfileReflectionsRoute = TabsProfileReflectionsRouteImport.update({
+  id: '/profile/reflections',
+  path: '/profile/reflections',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsProfileHistoryRoute = TabsProfileHistoryRouteImport.update({
+  id: '/profile/history',
+  path: '/profile/history',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsProfileFriendsRoute = TabsProfileFriendsRouteImport.update({
+  id: '/profile/friends',
+  path: '/profile/friends',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsProfileBadgesRoute = TabsProfileBadgesRouteImport.update({
+  id: '/profile/badges',
+  path: '/profile/badges',
   getParentRoute: () => TabsRoute,
 } as any)
 const TabsOrganizationsOrgIdRoute = TabsOrganizationsOrgIdRouteImport.update({
@@ -107,7 +137,12 @@ export interface FileRoutesByFullPath {
   '/chat/$personId': typeof ChatPersonIdRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/organizations/$orgId': typeof TabsOrganizationsOrgIdRoute
+  '/profile/badges': typeof TabsProfileBadgesRoute
+  '/profile/friends': typeof TabsProfileFriendsRoute
+  '/profile/history': typeof TabsProfileHistoryRoute
+  '/profile/reflections': typeof TabsProfileReflectionsRoute
   '/organizations/': typeof TabsOrganizationsIndexRoute
+  '/profile/': typeof TabsProfileIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -122,7 +157,12 @@ export interface FileRoutesByTo {
   '/chat/$personId': typeof ChatPersonIdRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/organizations/$orgId': typeof TabsOrganizationsOrgIdRoute
+  '/profile/badges': typeof TabsProfileBadgesRoute
+  '/profile/friends': typeof TabsProfileFriendsRoute
+  '/profile/history': typeof TabsProfileHistoryRoute
+  '/profile/reflections': typeof TabsProfileReflectionsRoute
   '/organizations': typeof TabsOrganizationsIndexRoute
+  '/profile': typeof TabsProfileIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -139,7 +179,12 @@ export interface FileRoutesById {
   '/chat/$personId': typeof ChatPersonIdRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/_tabs/organizations/$orgId': typeof TabsOrganizationsOrgIdRoute
+  '/_tabs/profile/badges': typeof TabsProfileBadgesRoute
+  '/_tabs/profile/friends': typeof TabsProfileFriendsRoute
+  '/_tabs/profile/history': typeof TabsProfileHistoryRoute
+  '/_tabs/profile/reflections': typeof TabsProfileReflectionsRoute
   '/_tabs/organizations/': typeof TabsOrganizationsIndexRoute
+  '/_tabs/profile/': typeof TabsProfileIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -156,7 +201,12 @@ export interface FileRouteTypes {
     | '/chat/$personId'
     | '/events/$eventId'
     | '/organizations/$orgId'
+    | '/profile/badges'
+    | '/profile/friends'
+    | '/profile/history'
+    | '/profile/reflections'
     | '/organizations/'
+    | '/profile/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -171,7 +221,12 @@ export interface FileRouteTypes {
     | '/chat/$personId'
     | '/events/$eventId'
     | '/organizations/$orgId'
+    | '/profile/badges'
+    | '/profile/friends'
+    | '/profile/history'
+    | '/profile/reflections'
     | '/organizations'
+    | '/profile'
   id:
     | '__root__'
     | '/'
@@ -187,7 +242,12 @@ export interface FileRouteTypes {
     | '/chat/$personId'
     | '/events/$eventId'
     | '/_tabs/organizations/$orgId'
+    | '/_tabs/profile/badges'
+    | '/_tabs/profile/friends'
+    | '/_tabs/profile/history'
+    | '/_tabs/profile/reflections'
     | '/_tabs/organizations/'
+    | '/_tabs/profile/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -288,11 +348,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TabsCohortRouteImport
       parentRoute: typeof TabsRoute
     }
+    '/_tabs/profile/': {
+      id: '/_tabs/profile/'
+      path: '/profile'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof TabsProfileIndexRouteImport
+      parentRoute: typeof TabsRoute
+    }
     '/_tabs/organizations/': {
       id: '/_tabs/organizations/'
       path: '/organizations'
       fullPath: '/organizations/'
       preLoaderRoute: typeof TabsOrganizationsIndexRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/profile/reflections': {
+      id: '/_tabs/profile/reflections'
+      path: '/profile/reflections'
+      fullPath: '/profile/reflections'
+      preLoaderRoute: typeof TabsProfileReflectionsRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/profile/history': {
+      id: '/_tabs/profile/history'
+      path: '/profile/history'
+      fullPath: '/profile/history'
+      preLoaderRoute: typeof TabsProfileHistoryRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/profile/friends': {
+      id: '/_tabs/profile/friends'
+      path: '/profile/friends'
+      fullPath: '/profile/friends'
+      preLoaderRoute: typeof TabsProfileFriendsRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/profile/badges': {
+      id: '/_tabs/profile/badges'
+      path: '/profile/badges'
+      fullPath: '/profile/badges'
+      preLoaderRoute: typeof TabsProfileBadgesRouteImport
       parentRoute: typeof TabsRoute
     }
     '/_tabs/organizations/$orgId': {
@@ -310,7 +405,12 @@ interface TabsRouteChildren {
   TabsHomeRoute: typeof TabsHomeRoute
   TabsMatchRoute: typeof TabsMatchRoute
   TabsOrganizationsOrgIdRoute: typeof TabsOrganizationsOrgIdRoute
+  TabsProfileBadgesRoute: typeof TabsProfileBadgesRoute
+  TabsProfileFriendsRoute: typeof TabsProfileFriendsRoute
+  TabsProfileHistoryRoute: typeof TabsProfileHistoryRoute
+  TabsProfileReflectionsRoute: typeof TabsProfileReflectionsRoute
   TabsOrganizationsIndexRoute: typeof TabsOrganizationsIndexRoute
+  TabsProfileIndexRoute: typeof TabsProfileIndexRoute
 }
 
 const TabsRouteChildren: TabsRouteChildren = {
@@ -318,7 +418,12 @@ const TabsRouteChildren: TabsRouteChildren = {
   TabsHomeRoute: TabsHomeRoute,
   TabsMatchRoute: TabsMatchRoute,
   TabsOrganizationsOrgIdRoute: TabsOrganizationsOrgIdRoute,
+  TabsProfileBadgesRoute: TabsProfileBadgesRoute,
+  TabsProfileFriendsRoute: TabsProfileFriendsRoute,
+  TabsProfileHistoryRoute: TabsProfileHistoryRoute,
+  TabsProfileReflectionsRoute: TabsProfileReflectionsRoute,
   TabsOrganizationsIndexRoute: TabsOrganizationsIndexRoute,
+  TabsProfileIndexRoute: TabsProfileIndexRoute,
 }
 
 const TabsRouteWithChildren = TabsRoute._addFileChildren(TabsRouteChildren)
