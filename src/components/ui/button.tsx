@@ -5,20 +5,20 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full text-[15px] font-bold cursor-pointer border-2 border-foreground transition-[box-shadow,transform,background-color] duration-[120ms] ease-out focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft disabled:pointer-events-none disabled:border-input disabled:bg-muted disabled:text-[var(--lo-green-faint)] disabled:shadow-none disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-[18px] [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full text-[15px] font-bold cursor-pointer border-2 border-transparent transition-[box-shadow,transform,background-color] duration-[120ms] ease-out focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-[var(--lo-green-faint)] disabled:shadow-none disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-[18px] [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-[4px_4px_0_var(--lo-dark-green)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[var(--lo-elevation-press)]",
+          "border-foreground bg-primary text-primary-foreground shadow-[4px_4px_0_var(--lo-dark-green)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[var(--lo-elevation-press)]",
         accent:
-          "bg-accent text-accent-foreground shadow-[4px_4px_0_var(--lo-dark-green)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[var(--lo-elevation-press)]",
+          "border-foreground bg-accent text-accent-foreground shadow-[4px_4px_0_var(--lo-dark-green)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[var(--lo-elevation-press)]",
         soft: "bg-primary-soft text-foreground hover:bg-[var(--lo-hatch-green)]",
-        quiet: "bg-card text-foreground hover:bg-secondary",
+        quiet: "bg-secondary text-foreground hover:bg-primary-soft",
         destructive: "bg-destructive text-destructive-foreground",
         outline:
           "border-dashed border-primary bg-card text-foreground hover:bg-secondary",
-        secondary: "bg-card text-foreground hover:bg-secondary",
+        secondary: "bg-secondary text-foreground hover:bg-primary-soft",
         ghost: "border-transparent bg-transparent text-primary hover:text-foreground",
         link: "border-transparent bg-transparent text-primary underline-offset-4 hover:underline",
       },
