@@ -59,7 +59,7 @@ function ContinueTogether() {
       <div className="rounded-2xl bg-accent-soft p-5 text-center">
         <div className="flex justify-center -space-x-2">
           {members.map((m) => (
-            <Avatar key={m.id} src={m.photo} name={m.name} size={38} className="border-accent-soft" />
+            <Avatar key={m.id} src={m.photo} name={m.name} size={38} />
           ))}
         </div>
         <p className="mt-3 text-[17px] leading-snug font-bold text-accent-foreground">
@@ -80,10 +80,10 @@ function ContinueTogether() {
               type="button"
               onClick={() => choose(o.id, o.title)}
               className={cn(
-                "flex w-full items-center gap-3 rounded-2xl border p-4 text-left transition-colors",
+                "flex w-full items-center gap-3 rounded-2xl p-4 text-left transition-colors",
                 selected
-                  ? "border-primary bg-primary-soft"
-                  : "border-border bg-card hover:border-primary/40 active:bg-secondary",
+                  ? "bg-primary-soft"
+                  : "bg-secondary hover:bg-primary-soft/70",
               )}
             >
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft">

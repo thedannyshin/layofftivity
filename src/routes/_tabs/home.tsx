@@ -66,7 +66,7 @@ function Home() {
       <SectionTitle>Your next volunteer day</SectionTitle>
       <Link
         to="/volunteer-day"
-        className="block rounded-2xl border border-primary bg-primary p-5 transition-colors hover:bg-primary/95 active:bg-primary/90"
+        className="block rounded-2xl bg-primary p-5 transition-colors hover:bg-primary/95 active:bg-primary/90"
       >
         <div className="flex items-center gap-2">
           <span className="rounded-full bg-accent px-2.5 py-1 text-[12px] font-bold text-accent-foreground">
@@ -90,10 +90,10 @@ function Home() {
             <MapPin className="h-4 w-4" /> {upcoming.location}
           </p>
         </div>
-        <div className="mt-4 flex items-center justify-between border-t border-primary-foreground/20 pt-4">
+        <div className="mt-4 flex items-center justify-between pt-4">
           <div className="flex -space-x-2">
             {members.slice(0, 5).map((m) => (
-              <Avatar key={m.id} src={m.photo} name={m.name} size={30} className="border-primary" />
+              <Avatar key={m.id} src={m.photo} name={m.name} size={30} />
             ))}
           </div>
           <span className="flex items-center gap-1 text-[14px] font-bold text-primary-foreground">
@@ -133,8 +133,8 @@ function Home() {
                 >
                   <span
                     className={cn(
-                      "flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2",
-                      done ? "border-primary bg-primary" : "border-border",
+                      "flex h-6 w-6 shrink-0 items-center justify-center rounded-md",
+                      done ? "bg-primary" : "bg-secondary",
                     )}
                   >
                     {done && (
@@ -169,7 +169,7 @@ function Home() {
       </SectionTitle>
       <Link
         to="/cohort"
-        className="block rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+        className="block rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
       >
         <div className="flex items-center justify-between">
           <div className="min-w-0">
@@ -195,7 +195,7 @@ function Home() {
       {/* Match nudge */}
       <Link
         to="/match"
-        className="mt-3 flex items-center gap-3 rounded-2xl border border-border bg-accent-soft p-4 transition-colors hover:border-accent active:bg-accent-soft/70"
+        className="mt-3 flex items-center gap-3 rounded-2xl bg-accent-soft p-4 transition-colors active:bg-accent-soft/70"
       >
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent">
           <Sparkles className="h-5 w-5 text-accent-foreground" />
@@ -222,7 +222,7 @@ function Home() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+              className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
             >
               <OrgMark cover={org.cover} />
               <div className="min-w-0 flex-1">

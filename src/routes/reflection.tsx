@@ -66,10 +66,10 @@ function ReflectionScreen() {
               onClick={() => setMood(m)}
               aria-pressed={mood === m}
               className={cn(
-                "rounded-full border px-4 py-2.5 text-[14px] font-semibold transition-colors",
+                "rounded-full px-4 py-2.5 text-[14px] font-semibold transition-colors",
                 mood === m
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border bg-card hover:border-primary/40",
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary hover:bg-primary-soft/70",
               )}
             >
               {m}
@@ -83,7 +83,7 @@ function ReflectionScreen() {
           onChange={(e) => setNote(e.target.value)}
           rows={6}
           placeholder="What stayed with you from this morning?"
-          className="w-full resize-none rounded-2xl border border-border bg-card p-4 text-[15px] leading-relaxed outline-none focus:border-primary"
+          className="w-full resize-none rounded-2xl bg-card p-4 text-[15px] leading-relaxed outline-none focus:ring-2 focus:ring-primary/30"
         />
 
         <SectionTitle>One thing you're grateful for</SectionTitle>
@@ -91,7 +91,7 @@ function ReflectionScreen() {
           value={gratitude}
           onChange={(e) => setGratitude(e.target.value)}
           placeholder="Someone, something small, anything"
-          className="h-12 w-full rounded-xl border border-border bg-card px-4 text-[15px] outline-none focus:border-primary"
+          className="h-12 w-full rounded-xl bg-card px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
         />
 
         <SectionTitle>Photos</SectionTitle>
@@ -106,7 +106,7 @@ function ReflectionScreen() {
                 type="button"
                 aria-label="Remove photo"
                 onClick={() => setPhotos((p) => p - 1)}
-                className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full border border-border bg-card"
+                className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-card"
               >
                 <X className="h-3 w-3" />
               </button>
@@ -116,7 +116,7 @@ function ReflectionScreen() {
             <button
               type="button"
               onClick={() => setPhotos((p) => p + 1)}
-              className="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-border bg-card text-muted-foreground hover:border-primary/50"
+              className="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl bg-secondary text-muted-foreground"
             >
               <Camera className="h-5 w-5" />
               <span className="text-[11px] font-semibold">Add</span>
@@ -140,7 +140,7 @@ function ReflectionScreen() {
         </div>
       </Screen>
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-border bg-card">
+      <div className="fixed inset-x-0 bottom-0 bg-card">
         <div className="mx-auto w-full max-w-[430px] px-5 py-4">
           <Button size="lg" className="w-full" disabled={!mood || !note.trim()} onClick={save}>
             <Check />

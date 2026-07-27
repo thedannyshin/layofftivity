@@ -52,7 +52,7 @@ function EventDetail() {
         <Link
           to="/organizations/$orgId"
           params={{ orgId: org.id }}
-          className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+          className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
         >
           <OrgMark cover={org.cover} />
           <div className="min-w-0 flex-1">
@@ -148,7 +148,7 @@ function EventDetail() {
       </Screen>
 
       {!joined && (
-        <div className="fixed inset-x-0 bottom-0 border-t border-border bg-card">
+        <div className="fixed inset-x-0 bottom-0 bg-card">
           <div className="mx-auto w-full max-w-[430px] px-5 py-4">
             <Button size="lg" className="w-full" onClick={join}>
               Join this event

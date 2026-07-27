@@ -41,7 +41,7 @@ function VolunteerDay() {
         <TopBar title="Saturday, August 8" subtitle={`${org.name} · ${event.time}`} back />
 
         {/* Check in */}
-        <Card className={cn(state.checkedIn && "border-primary bg-primary-soft")}>
+        <Card className={cn(state.checkedIn && "bg-primary-soft")}>
           {state.checkedIn ? (
             <>
               <div className="flex items-center gap-2">
@@ -70,7 +70,7 @@ function VolunteerDay() {
         {/* Navigation */}
         <SectionTitle>Getting there</SectionTitle>
         <Card>
-          <div className="flex h-32 items-center justify-center rounded-xl border border-border bg-secondary">
+          <div className="flex h-32 items-center justify-center rounded-xl bg-secondary">
             <div className="text-center">
               <MapPin className="mx-auto h-6 w-6 text-primary" />
               <p className="mt-1 text-[13px] font-semibold">{event.address}</p>
@@ -121,13 +121,13 @@ function VolunteerDay() {
 
         {/* Timeline */}
         <SectionTitle>Timeline</SectionTitle>
-        <ol className="relative space-y-5 border-l border-border pl-6">
+        <ol className="relative space-y-5 pl-6 before:absolute before:top-2 before:bottom-2 before:left-0 before:w-px before:bg-secondary">
           {timeline.map((t, i) => (
             <li key={t.time} className="relative">
               <span
                 className={cn(
-                  "absolute top-1 -left-[31px] h-3 w-3 rounded-full border-2 border-background",
-                  state.checkedIn && i < 2 ? "bg-primary" : "bg-border",
+                  "absolute top-1 -left-[31px] h-3 w-3 rounded-full",
+                  state.checkedIn && i < 2 ? "bg-primary" : "bg-secondary",
                 )}
               />
               <p className="text-[12px] font-bold text-muted-foreground uppercase">{t.time}</p>
@@ -138,7 +138,7 @@ function VolunteerDay() {
         </ol>
       </Screen>
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-border bg-card">
+      <div className="fixed inset-x-0 bottom-0 bg-card">
         <div className="mx-auto w-full max-w-[430px] px-5 py-4">
           <Button
             size="lg"

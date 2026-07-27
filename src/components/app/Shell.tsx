@@ -32,7 +32,7 @@ export function TopBar({
 }) {
   const router = useRouter();
   return (
-    <header className="sticky top-0 z-20 -mx-5 mb-4 border-b border-[var(--lo-fresh-sprout)] bg-background/95 px-5 pt-3 pb-3 backdrop-blur">
+    <header className="sticky top-0 z-20 -mx-5 mb-4 bg-background/95 px-5 pt-3 pb-3 backdrop-blur">
       <div className="flex items-center gap-2">
         {back && (
           <button
@@ -90,9 +90,7 @@ export function Card({
     <As
       className={cn(
         "rounded-[20px] p-4",
-        variant === "accent"
-          ? "border-2 border-foreground bg-card"
-          : "bg-card ring-1 ring-[var(--lo-fresh-sprout)]",
+        variant === "accent" ? "bg-primary-soft" : "bg-card",
         className,
       )}
     >

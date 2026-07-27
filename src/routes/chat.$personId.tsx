@@ -48,7 +48,7 @@ function Chat() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <header className="sticky top-0 z-20 border-b border-border bg-card">
+      <header className="sticky top-0 z-20 bg-card">
         <div className="mx-auto flex w-full max-w-[430px] items-center gap-3 px-3 py-3">
           <Link
             to="/match"
@@ -79,7 +79,7 @@ function Chat() {
                   "max-w-[75%] rounded-2xl px-4 py-2.5",
                   mine
                     ? "bg-primary text-primary-foreground"
-                    : "border border-border bg-card text-foreground",
+                    : "bg-secondary text-foreground",
                 )}
               >
                 <p className="text-[15px] leading-relaxed">{m.text}</p>
@@ -97,7 +97,7 @@ function Chat() {
         })}
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-border bg-card">
+      <div className="fixed inset-x-0 bottom-0 bg-card">
         <div className="mx-auto w-full max-w-[430px] px-4 py-3">
           <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
             {suggestions.map((s) => (
@@ -105,7 +105,7 @@ function Chat() {
                 key={s}
                 type="button"
                 onClick={() => send(s)}
-                className="shrink-0 rounded-full border border-border bg-background px-3.5 py-2 text-[13px] font-semibold hover:border-primary/40"
+                className="shrink-0 rounded-full bg-secondary px-3.5 py-2 text-[13px] font-semibold"
               >
                 {s}
               </button>
@@ -122,7 +122,7 @@ function Chat() {
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               placeholder={`Message ${person.name.split(" ")[0]}`}
-              className="h-12 flex-1 rounded-xl border border-border bg-background px-4 text-[15px] outline-none focus:border-primary"
+              className="h-12 flex-1 rounded-xl bg-secondary px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
             />
             <button
               type="submit"
