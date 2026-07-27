@@ -68,6 +68,7 @@ type Ctx = {
   state: State;
   hydrated: boolean;
   update: (fn: (s: State) => State) => void;
+  reset: () => void;
 };
 
 const StoreContext = React.createContext<Ctx | null>(null);
@@ -99,7 +100,19 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
-  const value = React.useMemo(() => ({ state, hydrated, update }), [state, hydrated, update]);
+  const reset = React.useCallback(() => {
+    try {
+      window.localStorage.removeItem(KEY);
+    } catch {
+      /* ignore */
+    }
+    setState(initialState);
+  }, []);
+
+  const value = React.useMemo(
+    () => ({ state, hydrated, update, reset }),
+    [state, hydrated, update, reset],
+  );
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
 }
 
