@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TabsRouteImport } from './routes/_tabs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TabsHomeRouteImport } from './routes/_tabs/home'
+import { Route as TabsOrganizationsIndexRouteImport } from './routes/_tabs/organizations/index'
+import { Route as TabsOrganizationsOrgIdRouteImport } from './routes/_tabs/organizations/$orgId'
 
 const TabsRoute = TabsRouteImport.update({
   id: '/_tabs',
@@ -27,27 +29,49 @@ const TabsHomeRoute = TabsHomeRouteImport.update({
   path: '/home',
   getParentRoute: () => TabsRoute,
 } as any)
+const TabsOrganizationsIndexRoute = TabsOrganizationsIndexRouteImport.update({
+  id: '/organizations/',
+  path: '/organizations/',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsOrganizationsOrgIdRoute = TabsOrganizationsOrgIdRouteImport.update({
+  id: '/organizations/$orgId',
+  path: '/organizations/$orgId',
+  getParentRoute: () => TabsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/home': typeof TabsHomeRoute
+  '/organizations/$orgId': typeof TabsOrganizationsOrgIdRoute
+  '/organizations/': typeof TabsOrganizationsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof TabsHomeRoute
+  '/organizations/$orgId': typeof TabsOrganizationsOrgIdRoute
+  '/organizations': typeof TabsOrganizationsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_tabs': typeof TabsRouteWithChildren
   '/_tabs/home': typeof TabsHomeRoute
+  '/_tabs/organizations/$orgId': typeof TabsOrganizationsOrgIdRoute
+  '/_tabs/organizations/': typeof TabsOrganizationsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/home'
+  fullPaths: '/' | '/home' | '/organizations/$orgId' | '/organizations/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/home'
-  id: '__root__' | '/' | '/_tabs' | '/_tabs/home'
+  to: '/' | '/home' | '/organizations/$orgId' | '/organizations'
+  id:
+    | '__root__'
+    | '/'
+    | '/_tabs'
+    | '/_tabs/home'
+    | '/_tabs/organizations/$orgId'
+    | '/_tabs/organizations/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -78,15 +102,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TabsHomeRouteImport
       parentRoute: typeof TabsRoute
     }
+    '/_tabs/organizations/': {
+      id: '/_tabs/organizations/'
+      path: '/organizations'
+      fullPath: '/organizations/'
+      preLoaderRoute: typeof TabsOrganizationsIndexRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/organizations/$orgId': {
+      id: '/_tabs/organizations/$orgId'
+      path: '/organizations/$orgId'
+      fullPath: '/organizations/$orgId'
+      preLoaderRoute: typeof TabsOrganizationsOrgIdRouteImport
+      parentRoute: typeof TabsRoute
+    }
   }
 }
 
 interface TabsRouteChildren {
   TabsHomeRoute: typeof TabsHomeRoute
+  TabsOrganizationsOrgIdRoute: typeof TabsOrganizationsOrgIdRoute
+  TabsOrganizationsIndexRoute: typeof TabsOrganizationsIndexRoute
 }
 
 const TabsRouteChildren: TabsRouteChildren = {
   TabsHomeRoute: TabsHomeRoute,
+  TabsOrganizationsOrgIdRoute: TabsOrganizationsOrgIdRoute,
+  TabsOrganizationsIndexRoute: TabsOrganizationsIndexRoute,
 }
 
 const TabsRouteWithChildren = TabsRoute._addFileChildren(TabsRouteChildren)
