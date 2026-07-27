@@ -32,7 +32,7 @@ export function TopBar({
 }) {
   const router = useRouter();
   return (
-    <header className="sticky top-0 z-20 -mx-5 mb-4 border-b-2 border-foreground bg-background/95 px-5 pt-3 pb-3 backdrop-blur">
+    <header className="sticky top-0 z-20 -mx-5 mb-4 border-b border-[var(--lo-fresh-sprout)] bg-background/95 px-5 pt-3 pb-3 backdrop-blur">
       <div className="flex items-center gap-2">
         {back && (
           <button
@@ -79,13 +79,23 @@ export function Card({
   children,
   className,
   as: As = "div",
+  variant = "plain",
 }: {
   children: ReactNode;
   className?: string;
   as?: "div" | "section";
+  variant?: "plain" | "accent";
 }) {
   return (
-    <As className={cn("rounded-[20px] border-2 border-foreground bg-card p-4", className)}>
+    <As
+      className={cn(
+        "rounded-[20px] p-4",
+        variant === "accent"
+          ? "border-2 border-foreground bg-card"
+          : "bg-card ring-1 ring-[var(--lo-fresh-sprout)]",
+        className,
+      )}
+    >
       {children}
     </As>
   );
@@ -101,10 +111,10 @@ export function Chip({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full border-2 px-3 py-1 text-[13px] font-semibold",
-        tone === "neutral" && "border-[var(--lo-fresh-sprout)] bg-secondary text-foreground",
-        tone === "green" && "border-[var(--lo-fresh-sprout)] bg-primary-soft text-foreground",
-        tone === "yellow" && "border-[var(--lo-sunshine-gold)] bg-accent-soft text-accent-foreground",
+        "inline-flex items-center gap-1 rounded-full px-3 py-1 text-[13px] font-semibold",
+        tone === "neutral" && "bg-secondary text-foreground",
+        tone === "green" && "bg-primary-soft text-foreground",
+        tone === "yellow" && "bg-accent-soft text-accent-foreground",
       )}
     >
       {children}
@@ -131,7 +141,7 @@ export function Avatar({
       height={size}
       loading="lazy"
       style={{ width: size, height: size }}
-      className={cn("shrink-0 rounded-full border-2 border-foreground object-cover", className)}
+      className={cn("shrink-0 rounded-full object-cover", className)}
     />
   );
 }
