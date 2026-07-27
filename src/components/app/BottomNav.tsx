@@ -14,9 +14,9 @@ export function BottomNav() {
   const path = useRouterState({ select: (s) => s.location.pathname });
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-card">
+    <nav className="fixed inset-x-0 bottom-0 z-30 border-t-2 border-foreground bg-card">
       <ul className="mx-auto flex w-full max-w-[430px] items-stretch">
-        {items.map(({ to, label, icon: Icon }) => {
+        {items.map(({ to, label, icon: Icon }, i) => {
           const active = path === to || path.startsWith(to + "/");
           return (
             <li key={to} className="flex-1">
@@ -25,11 +25,14 @@ export function BottomNav() {
                 aria-current={active ? "page" : undefined}
                 className={cn(
                   "flex h-16 flex-col items-center justify-center gap-1 transition-colors",
-                  active ? "text-primary" : "text-muted-foreground hover:text-foreground",
+                  i > 0 && "border-l-2 border-[var(--lo-fresh-sprout)]",
+                  active
+                    ? "bg-secondary font-bold text-foreground"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
-                <Icon className={cn("h-[22px] w-[22px]", active && "stroke-[2.4]")} />
-                <span className="text-[11px] font-semibold">{label}</span>
+                <Icon className={cn("h-[22px] w-[22px]", active && "stroke-[2.4] text-primary")} />
+                <span className="text-[12px] font-semibold">{label}</span>
               </Link>
             </li>
           );

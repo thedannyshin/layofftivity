@@ -64,28 +64,50 @@
 }
 
 :root {
-  --radius: 0.875rem;
-  --background: oklch(0.968 0.005 106);
-  --foreground: oklch(0.316 0 0);
+  /* Layofftivity design system — palette inherited from Touch Grass */
+  --lo-dark-green: oklch(0.322 0.066 146.3);
+  --lo-grass-green: oklch(0.719 0.194 149.9);
+  --lo-fresh-sprout: oklch(0.84 0.137 134);
+  --lo-sunshine-gold: oklch(0.867 0.177 90.8);
+  --lo-lemonade: oklch(0.887 0.182 109.9);
+  --lo-sprout-tint: oklch(0.977 0.014 138.7);
+  --lo-gold-tint: oklch(0.975 0.038 93.8);
+  --lo-green-muted: oklch(0.425 0.079 147.1);
+  --lo-green-faint: oklch(0.662 0.051 148.7);
+  --lo-green-line: oklch(0.865 0.03 142.2);
+  --lo-green-disabled: oklch(0.956 0.01 140.5);
+  --lo-green-glow: oklch(0.952 0.031 157.2);
+  --lo-hatch-green: oklch(0.937 0.034 138.6);
+  --lo-hatch-gold: oklch(0.952 0.072 93.8);
+
+  /* Elevation is drawn, never blurred */
+  --lo-stroke: 2px;
+  --lo-elevation-sprout: 4px 4px 0 var(--lo-fresh-sprout);
+  --lo-elevation-dark: 6px 6px 0 var(--lo-dark-green);
+  --lo-elevation-press: 2px 2px 0 var(--lo-dark-green);
+
+  --radius: 1.25rem;
+  --background: var(--lo-sprout-tint);
+  --foreground: var(--lo-dark-green);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.316 0 0);
+  --card-foreground: var(--lo-dark-green);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.316 0 0);
-  --primary: oklch(0.512 0.109 149.5);
-  --primary-foreground: oklch(0.99 0.005 106);
-  --primary-soft: oklch(0.945 0.028 149.5);
-  --secondary: oklch(0.93 0.008 106);
-  --secondary-foreground: oklch(0.316 0 0);
-  --muted: oklch(0.945 0.006 106);
-  --muted-foreground: oklch(0.545 0.008 106);
-  --accent: oklch(0.834 0.146 87);
-  --accent-foreground: oklch(0.316 0 0);
-  --accent-soft: oklch(0.965 0.045 92);
-  --destructive: oklch(0.55 0.19 27.325);
+  --popover-foreground: var(--lo-dark-green);
+  --primary: var(--lo-grass-green);
+  --primary-foreground: oklch(1 0 0);
+  --primary-soft: var(--lo-green-glow);
+  --secondary: var(--lo-sprout-tint);
+  --secondary-foreground: var(--lo-dark-green);
+  --muted: var(--lo-green-disabled);
+  --muted-foreground: var(--lo-green-muted);
+  --accent: var(--lo-sunshine-gold);
+  --accent-foreground: var(--lo-dark-green);
+  --accent-soft: var(--lo-gold-tint);
+  --destructive: oklch(0.573 0.151 37.4);
   --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.905 0.006 106);
-  --input: oklch(0.9 0.006 106);
-  --ring: oklch(0.512 0.109 149.5);
+  --border: var(--lo-dark-green);
+  --input: var(--lo-green-line);
+  --ring: var(--lo-grass-green);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -145,18 +167,18 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family:
-      "Plus Jakarta Sans",
-      ui-sans-serif,
-      system-ui,
-      -apple-system,
-      sans-serif;
+      Bitter,
+      Georgia,
+      serif;
     -webkit-font-smoothing: antialiased;
   }
 
   h1,
   h2,
   h3 {
-    letter-spacing: -0.02em;
+    font-family: "Young Serif", Georgia, serif;
+    font-weight: 400;
+    letter-spacing: 0;
   }
 }
 
@@ -165,4 +187,55 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* Layofftivity primitives */
+@utility lo-display {
+  font-family: "Young Serif", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+@utility lo-eyebrow {
+  font-size: 12px;
+  line-height: 1.33;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@utility lo-outline {
+  border-width: var(--lo-stroke);
+  border-style: solid;
+  border-color: var(--lo-dark-green);
+}
+
+@utility lo-outline-soft {
+  border-width: var(--lo-stroke);
+  border-style: solid;
+  border-color: var(--lo-fresh-sprout);
+}
+
+@utility lo-raised {
+  box-shadow: var(--lo-elevation-sprout);
+}
+
+@utility lo-hero {
+  box-shadow: var(--lo-elevation-dark);
+}
+
+@utility lo-hatch {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--lo-sprout-tint) 0 10px,
+    var(--lo-hatch-green) 10px 20px
+  );
+}
+
+@utility lo-hatch-gold {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--lo-gold-tint) 0 10px,
+    var(--lo-hatch-gold) 10px 20px
+  );
 }

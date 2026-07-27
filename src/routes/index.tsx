@@ -3,6 +3,7 @@ import * as React from "react";
 import { ArrowRight, Check, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Screen } from "@/components/app/Shell";
+import { LogoMark } from "@/components/app/LogoMark";
 import { causeOptions, interestOptions } from "@/lib/data";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -79,10 +80,11 @@ function Onboarding() {
       <div className="flex min-h-screen flex-col bg-background">
         <Screen className="flex flex-1 flex-col justify-between pt-16">
           <div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary">
-              <span className="text-xl font-extrabold text-primary-foreground">L</span>
+            <div className="flex items-center gap-3">
+              <LogoMark size={56} />
+              <span className="lo-display text-[32px] leading-none">Layofftivity</span>
             </div>
-            <h1 className="mt-8 text-[34px] leading-[1.1] font-extrabold">
+            <h1 className="lo-display mt-8 text-[34px] leading-[1.15]">
               Belonging comes from showing up with the same people.
             </h1>
             <p className="mt-4 text-[16px] leading-relaxed text-muted-foreground">
@@ -97,8 +99,8 @@ function Onboarding() {
                 "No résumés, no pitches, no small talk about titles",
               ].map((line) => (
                 <li key={line} className="flex gap-3">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary-soft">
-                    <Check className="h-3 w-3 text-primary" />
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-foreground bg-primary">
+                    <Check className="h-3 w-3 text-primary-foreground" strokeWidth={3} />
                   </span>
                   <span className="text-[15px] text-foreground">{line}</span>
                 </li>
