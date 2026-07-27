@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VolunteerDayRouteImport } from './routes/volunteer-day'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ReflectionRouteImport } from './routes/reflection'
 import { Route as InviteRouteImport } from './routes/invite'
 import { Route as ContinueTogetherRouteImport } from './routes/continue-together'
@@ -32,6 +33,11 @@ import { Route as TabsOrganizationsOrgIdRouteImport } from './routes/_tabs/organ
 const VolunteerDayRoute = VolunteerDayRouteImport.update({
   id: '/volunteer-day',
   path: '/volunteer-day',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReflectionRoute = ReflectionRouteImport.update({
@@ -130,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/continue-together': typeof ContinueTogetherRoute
   '/invite': typeof InviteRoute
   '/reflection': typeof ReflectionRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/volunteer-day': typeof VolunteerDayRoute
   '/cohort': typeof TabsCohortRoute
   '/home': typeof TabsHomeRoute
@@ -150,6 +157,7 @@ export interface FileRoutesByTo {
   '/continue-together': typeof ContinueTogetherRoute
   '/invite': typeof InviteRoute
   '/reflection': typeof ReflectionRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/volunteer-day': typeof VolunteerDayRoute
   '/cohort': typeof TabsCohortRoute
   '/home': typeof TabsHomeRoute
@@ -172,6 +180,7 @@ export interface FileRoutesById {
   '/continue-together': typeof ContinueTogetherRoute
   '/invite': typeof InviteRoute
   '/reflection': typeof ReflectionRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/volunteer-day': typeof VolunteerDayRoute
   '/_tabs/cohort': typeof TabsCohortRoute
   '/_tabs/home': typeof TabsHomeRoute
@@ -194,6 +203,7 @@ export interface FileRouteTypes {
     | '/continue-together'
     | '/invite'
     | '/reflection'
+    | '/sitemap.xml'
     | '/volunteer-day'
     | '/cohort'
     | '/home'
@@ -214,6 +224,7 @@ export interface FileRouteTypes {
     | '/continue-together'
     | '/invite'
     | '/reflection'
+    | '/sitemap.xml'
     | '/volunteer-day'
     | '/cohort'
     | '/home'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
     | '/continue-together'
     | '/invite'
     | '/reflection'
+    | '/sitemap.xml'
     | '/volunteer-day'
     | '/_tabs/cohort'
     | '/_tabs/home'
@@ -257,6 +269,7 @@ export interface RootRouteChildren {
   ContinueTogetherRoute: typeof ContinueTogetherRoute
   InviteRoute: typeof InviteRoute
   ReflectionRoute: typeof ReflectionRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   VolunteerDayRoute: typeof VolunteerDayRoute
   ChatPersonIdRoute: typeof ChatPersonIdRoute
   EventsEventIdRoute: typeof EventsEventIdRoute
@@ -269,6 +282,13 @@ declare module '@tanstack/react-router' {
       path: '/volunteer-day'
       fullPath: '/volunteer-day'
       preLoaderRoute: typeof VolunteerDayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reflection': {
@@ -435,6 +455,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContinueTogetherRoute: ContinueTogetherRoute,
   InviteRoute: InviteRoute,
   ReflectionRoute: ReflectionRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   VolunteerDayRoute: VolunteerDayRoute,
   ChatPersonIdRoute: ChatPersonIdRoute,
   EventsEventIdRoute: EventsEventIdRoute,
@@ -442,3 +463,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
