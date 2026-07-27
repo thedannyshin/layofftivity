@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VolunteerDayRouteImport } from './routes/volunteer-day'
 import { Route as ReflectionRouteImport } from './routes/reflection'
+import { Route as InviteRouteImport } from './routes/invite'
+import { Route as ContinueTogetherRouteImport } from './routes/continue-together'
 import { Route as CohortChatRouteImport } from './routes/cohort-chat'
 import { Route as TabsRouteImport } from './routes/_tabs'
 import { Route as IndexRouteImport } from './routes/index'
@@ -30,6 +32,16 @@ const VolunteerDayRoute = VolunteerDayRouteImport.update({
 const ReflectionRoute = ReflectionRouteImport.update({
   id: '/reflection',
   path: '/reflection',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InviteRoute = InviteRouteImport.update({
+  id: '/invite',
+  path: '/invite',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContinueTogetherRoute = ContinueTogetherRouteImport.update({
+  id: '/continue-together',
+  path: '/continue-together',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CohortChatRoute = CohortChatRouteImport.update({
@@ -85,6 +97,8 @@ const TabsOrganizationsOrgIdRoute = TabsOrganizationsOrgIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cohort-chat': typeof CohortChatRoute
+  '/continue-together': typeof ContinueTogetherRoute
+  '/invite': typeof InviteRoute
   '/reflection': typeof ReflectionRoute
   '/volunteer-day': typeof VolunteerDayRoute
   '/cohort': typeof TabsCohortRoute
@@ -98,6 +112,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cohort-chat': typeof CohortChatRoute
+  '/continue-together': typeof ContinueTogetherRoute
+  '/invite': typeof InviteRoute
   '/reflection': typeof ReflectionRoute
   '/volunteer-day': typeof VolunteerDayRoute
   '/cohort': typeof TabsCohortRoute
@@ -113,6 +129,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_tabs': typeof TabsRouteWithChildren
   '/cohort-chat': typeof CohortChatRoute
+  '/continue-together': typeof ContinueTogetherRoute
+  '/invite': typeof InviteRoute
   '/reflection': typeof ReflectionRoute
   '/volunteer-day': typeof VolunteerDayRoute
   '/_tabs/cohort': typeof TabsCohortRoute
@@ -128,6 +146,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/cohort-chat'
+    | '/continue-together'
+    | '/invite'
     | '/reflection'
     | '/volunteer-day'
     | '/cohort'
@@ -141,6 +161,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cohort-chat'
+    | '/continue-together'
+    | '/invite'
     | '/reflection'
     | '/volunteer-day'
     | '/cohort'
@@ -155,6 +177,8 @@ export interface FileRouteTypes {
     | '/'
     | '/_tabs'
     | '/cohort-chat'
+    | '/continue-together'
+    | '/invite'
     | '/reflection'
     | '/volunteer-day'
     | '/_tabs/cohort'
@@ -170,6 +194,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TabsRoute: typeof TabsRouteWithChildren
   CohortChatRoute: typeof CohortChatRoute
+  ContinueTogetherRoute: typeof ContinueTogetherRoute
+  InviteRoute: typeof InviteRoute
   ReflectionRoute: typeof ReflectionRoute
   VolunteerDayRoute: typeof VolunteerDayRoute
   ChatPersonIdRoute: typeof ChatPersonIdRoute
@@ -190,6 +216,20 @@ declare module '@tanstack/react-router' {
       path: '/reflection'
       fullPath: '/reflection'
       preLoaderRoute: typeof ReflectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invite': {
+      id: '/invite'
+      path: '/invite'
+      fullPath: '/invite'
+      preLoaderRoute: typeof InviteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/continue-together': {
+      id: '/continue-together'
+      path: '/continue-together'
+      fullPath: '/continue-together'
+      preLoaderRoute: typeof ContinueTogetherRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cohort-chat': {
@@ -287,6 +327,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TabsRoute: TabsRouteWithChildren,
   CohortChatRoute: CohortChatRoute,
+  ContinueTogetherRoute: ContinueTogetherRoute,
+  InviteRoute: InviteRoute,
   ReflectionRoute: ReflectionRoute,
   VolunteerDayRoute: VolunteerDayRoute,
   ChatPersonIdRoute: ChatPersonIdRoute,
