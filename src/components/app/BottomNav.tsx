@@ -14,7 +14,7 @@ export function BottomNav() {
   const path = useRouterState({ select: (s) => s.location.pathname });
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--lo-fresh-sprout)] bg-card">
+    <nav className="fixed inset-x-0 bottom-0 z-30 bg-card">
       <ul className="mx-auto flex w-full max-w-[430px] items-stretch">
         {items.map(({ to, label, icon: Icon }, i) => {
           const active = path === to || path.startsWith(to + "/");
