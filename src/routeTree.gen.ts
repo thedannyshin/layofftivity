@@ -9,38 +9,323 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VolunteerDayRouteImport } from './routes/volunteer-day'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ReflectionRouteImport } from './routes/reflection'
+import { Route as InviteRouteImport } from './routes/invite'
+import { Route as ContinueTogetherRouteImport } from './routes/continue-together'
+import { Route as CohortChatRouteImport } from './routes/cohort-chat'
+import { Route as TabsRouteImport } from './routes/_tabs'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EventsEventIdRouteImport } from './routes/events.$eventId'
+import { Route as ChatPersonIdRouteImport } from './routes/chat.$personId'
+import { Route as TabsMatchRouteImport } from './routes/_tabs/match'
+import { Route as TabsHomeRouteImport } from './routes/_tabs/home'
+import { Route as TabsCohortRouteImport } from './routes/_tabs/cohort'
+import { Route as TabsProfileIndexRouteImport } from './routes/_tabs/profile/index'
+import { Route as TabsOrganizationsIndexRouteImport } from './routes/_tabs/organizations/index'
+import { Route as TabsProfileReflectionsRouteImport } from './routes/_tabs/profile/reflections'
+import { Route as TabsProfileHistoryRouteImport } from './routes/_tabs/profile/history'
+import { Route as TabsProfileFriendsRouteImport } from './routes/_tabs/profile/friends'
+import { Route as TabsProfileBadgesRouteImport } from './routes/_tabs/profile/badges'
+import { Route as TabsOrganizationsOrgIdRouteImport } from './routes/_tabs/organizations/$orgId'
 
+const VolunteerDayRoute = VolunteerDayRouteImport.update({
+  id: '/volunteer-day',
+  path: '/volunteer-day',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReflectionRoute = ReflectionRouteImport.update({
+  id: '/reflection',
+  path: '/reflection',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InviteRoute = InviteRouteImport.update({
+  id: '/invite',
+  path: '/invite',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContinueTogetherRoute = ContinueTogetherRouteImport.update({
+  id: '/continue-together',
+  path: '/continue-together',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CohortChatRoute = CohortChatRouteImport.update({
+  id: '/cohort-chat',
+  path: '/cohort-chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TabsRoute = TabsRouteImport.update({
+  id: '/_tabs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventsEventIdRoute = EventsEventIdRouteImport.update({
+  id: '/events/$eventId',
+  path: '/events/$eventId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatPersonIdRoute = ChatPersonIdRouteImport.update({
+  id: '/chat/$personId',
+  path: '/chat/$personId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TabsMatchRoute = TabsMatchRouteImport.update({
+  id: '/match',
+  path: '/match',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsHomeRoute = TabsHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsCohortRoute = TabsCohortRouteImport.update({
+  id: '/cohort',
+  path: '/cohort',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsProfileIndexRoute = TabsProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsOrganizationsIndexRoute = TabsOrganizationsIndexRouteImport.update({
+  id: '/organizations/',
+  path: '/organizations/',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsProfileReflectionsRoute = TabsProfileReflectionsRouteImport.update({
+  id: '/profile/reflections',
+  path: '/profile/reflections',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsProfileHistoryRoute = TabsProfileHistoryRouteImport.update({
+  id: '/profile/history',
+  path: '/profile/history',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsProfileFriendsRoute = TabsProfileFriendsRouteImport.update({
+  id: '/profile/friends',
+  path: '/profile/friends',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsProfileBadgesRoute = TabsProfileBadgesRouteImport.update({
+  id: '/profile/badges',
+  path: '/profile/badges',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsOrganizationsOrgIdRoute = TabsOrganizationsOrgIdRouteImport.update({
+  id: '/organizations/$orgId',
+  path: '/organizations/$orgId',
+  getParentRoute: () => TabsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cohort-chat': typeof CohortChatRoute
+  '/continue-together': typeof ContinueTogetherRoute
+  '/invite': typeof InviteRoute
+  '/reflection': typeof ReflectionRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/volunteer-day': typeof VolunteerDayRoute
+  '/cohort': typeof TabsCohortRoute
+  '/home': typeof TabsHomeRoute
+  '/match': typeof TabsMatchRoute
+  '/chat/$personId': typeof ChatPersonIdRoute
+  '/events/$eventId': typeof EventsEventIdRoute
+  '/organizations/$orgId': typeof TabsOrganizationsOrgIdRoute
+  '/profile/badges': typeof TabsProfileBadgesRoute
+  '/profile/friends': typeof TabsProfileFriendsRoute
+  '/profile/history': typeof TabsProfileHistoryRoute
+  '/profile/reflections': typeof TabsProfileReflectionsRoute
+  '/organizations/': typeof TabsOrganizationsIndexRoute
+  '/profile/': typeof TabsProfileIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cohort-chat': typeof CohortChatRoute
+  '/continue-together': typeof ContinueTogetherRoute
+  '/invite': typeof InviteRoute
+  '/reflection': typeof ReflectionRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/volunteer-day': typeof VolunteerDayRoute
+  '/cohort': typeof TabsCohortRoute
+  '/home': typeof TabsHomeRoute
+  '/match': typeof TabsMatchRoute
+  '/chat/$personId': typeof ChatPersonIdRoute
+  '/events/$eventId': typeof EventsEventIdRoute
+  '/organizations/$orgId': typeof TabsOrganizationsOrgIdRoute
+  '/profile/badges': typeof TabsProfileBadgesRoute
+  '/profile/friends': typeof TabsProfileFriendsRoute
+  '/profile/history': typeof TabsProfileHistoryRoute
+  '/profile/reflections': typeof TabsProfileReflectionsRoute
+  '/organizations': typeof TabsOrganizationsIndexRoute
+  '/profile': typeof TabsProfileIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_tabs': typeof TabsRouteWithChildren
+  '/cohort-chat': typeof CohortChatRoute
+  '/continue-together': typeof ContinueTogetherRoute
+  '/invite': typeof InviteRoute
+  '/reflection': typeof ReflectionRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/volunteer-day': typeof VolunteerDayRoute
+  '/_tabs/cohort': typeof TabsCohortRoute
+  '/_tabs/home': typeof TabsHomeRoute
+  '/_tabs/match': typeof TabsMatchRoute
+  '/chat/$personId': typeof ChatPersonIdRoute
+  '/events/$eventId': typeof EventsEventIdRoute
+  '/_tabs/organizations/$orgId': typeof TabsOrganizationsOrgIdRoute
+  '/_tabs/profile/badges': typeof TabsProfileBadgesRoute
+  '/_tabs/profile/friends': typeof TabsProfileFriendsRoute
+  '/_tabs/profile/history': typeof TabsProfileHistoryRoute
+  '/_tabs/profile/reflections': typeof TabsProfileReflectionsRoute
+  '/_tabs/organizations/': typeof TabsOrganizationsIndexRoute
+  '/_tabs/profile/': typeof TabsProfileIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/cohort-chat'
+    | '/continue-together'
+    | '/invite'
+    | '/reflection'
+    | '/sitemap.xml'
+    | '/volunteer-day'
+    | '/cohort'
+    | '/home'
+    | '/match'
+    | '/chat/$personId'
+    | '/events/$eventId'
+    | '/organizations/$orgId'
+    | '/profile/badges'
+    | '/profile/friends'
+    | '/profile/history'
+    | '/profile/reflections'
+    | '/organizations/'
+    | '/profile/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/cohort-chat'
+    | '/continue-together'
+    | '/invite'
+    | '/reflection'
+    | '/sitemap.xml'
+    | '/volunteer-day'
+    | '/cohort'
+    | '/home'
+    | '/match'
+    | '/chat/$personId'
+    | '/events/$eventId'
+    | '/organizations/$orgId'
+    | '/profile/badges'
+    | '/profile/friends'
+    | '/profile/history'
+    | '/profile/reflections'
+    | '/organizations'
+    | '/profile'
+  id:
+    | '__root__'
+    | '/'
+    | '/_tabs'
+    | '/cohort-chat'
+    | '/continue-together'
+    | '/invite'
+    | '/reflection'
+    | '/sitemap.xml'
+    | '/volunteer-day'
+    | '/_tabs/cohort'
+    | '/_tabs/home'
+    | '/_tabs/match'
+    | '/chat/$personId'
+    | '/events/$eventId'
+    | '/_tabs/organizations/$orgId'
+    | '/_tabs/profile/badges'
+    | '/_tabs/profile/friends'
+    | '/_tabs/profile/history'
+    | '/_tabs/profile/reflections'
+    | '/_tabs/organizations/'
+    | '/_tabs/profile/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TabsRoute: typeof TabsRouteWithChildren
+  CohortChatRoute: typeof CohortChatRoute
+  ContinueTogetherRoute: typeof ContinueTogetherRoute
+  InviteRoute: typeof InviteRoute
+  ReflectionRoute: typeof ReflectionRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  VolunteerDayRoute: typeof VolunteerDayRoute
+  ChatPersonIdRoute: typeof ChatPersonIdRoute
+  EventsEventIdRoute: typeof EventsEventIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/volunteer-day': {
+      id: '/volunteer-day'
+      path: '/volunteer-day'
+      fullPath: '/volunteer-day'
+      preLoaderRoute: typeof VolunteerDayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reflection': {
+      id: '/reflection'
+      path: '/reflection'
+      fullPath: '/reflection'
+      preLoaderRoute: typeof ReflectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invite': {
+      id: '/invite'
+      path: '/invite'
+      fullPath: '/invite'
+      preLoaderRoute: typeof InviteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/continue-together': {
+      id: '/continue-together'
+      path: '/continue-together'
+      fullPath: '/continue-together'
+      preLoaderRoute: typeof ContinueTogetherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cohort-chat': {
+      id: '/cohort-chat'
+      path: '/cohort-chat'
+      fullPath: '/cohort-chat'
+      preLoaderRoute: typeof CohortChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_tabs': {
+      id: '/_tabs'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof TabsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +333,133 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/events/$eventId': {
+      id: '/events/$eventId'
+      path: '/events/$eventId'
+      fullPath: '/events/$eventId'
+      preLoaderRoute: typeof EventsEventIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat/$personId': {
+      id: '/chat/$personId'
+      path: '/chat/$personId'
+      fullPath: '/chat/$personId'
+      preLoaderRoute: typeof ChatPersonIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_tabs/match': {
+      id: '/_tabs/match'
+      path: '/match'
+      fullPath: '/match'
+      preLoaderRoute: typeof TabsMatchRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/home': {
+      id: '/_tabs/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof TabsHomeRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/cohort': {
+      id: '/_tabs/cohort'
+      path: '/cohort'
+      fullPath: '/cohort'
+      preLoaderRoute: typeof TabsCohortRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/profile/': {
+      id: '/_tabs/profile/'
+      path: '/profile'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof TabsProfileIndexRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/organizations/': {
+      id: '/_tabs/organizations/'
+      path: '/organizations'
+      fullPath: '/organizations/'
+      preLoaderRoute: typeof TabsOrganizationsIndexRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/profile/reflections': {
+      id: '/_tabs/profile/reflections'
+      path: '/profile/reflections'
+      fullPath: '/profile/reflections'
+      preLoaderRoute: typeof TabsProfileReflectionsRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/profile/history': {
+      id: '/_tabs/profile/history'
+      path: '/profile/history'
+      fullPath: '/profile/history'
+      preLoaderRoute: typeof TabsProfileHistoryRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/profile/friends': {
+      id: '/_tabs/profile/friends'
+      path: '/profile/friends'
+      fullPath: '/profile/friends'
+      preLoaderRoute: typeof TabsProfileFriendsRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/profile/badges': {
+      id: '/_tabs/profile/badges'
+      path: '/profile/badges'
+      fullPath: '/profile/badges'
+      preLoaderRoute: typeof TabsProfileBadgesRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/organizations/$orgId': {
+      id: '/_tabs/organizations/$orgId'
+      path: '/organizations/$orgId'
+      fullPath: '/organizations/$orgId'
+      preLoaderRoute: typeof TabsOrganizationsOrgIdRouteImport
+      parentRoute: typeof TabsRoute
+    }
   }
 }
 
+interface TabsRouteChildren {
+  TabsCohortRoute: typeof TabsCohortRoute
+  TabsHomeRoute: typeof TabsHomeRoute
+  TabsMatchRoute: typeof TabsMatchRoute
+  TabsOrganizationsOrgIdRoute: typeof TabsOrganizationsOrgIdRoute
+  TabsProfileBadgesRoute: typeof TabsProfileBadgesRoute
+  TabsProfileFriendsRoute: typeof TabsProfileFriendsRoute
+  TabsProfileHistoryRoute: typeof TabsProfileHistoryRoute
+  TabsProfileReflectionsRoute: typeof TabsProfileReflectionsRoute
+  TabsOrganizationsIndexRoute: typeof TabsOrganizationsIndexRoute
+  TabsProfileIndexRoute: typeof TabsProfileIndexRoute
+}
+
+const TabsRouteChildren: TabsRouteChildren = {
+  TabsCohortRoute: TabsCohortRoute,
+  TabsHomeRoute: TabsHomeRoute,
+  TabsMatchRoute: TabsMatchRoute,
+  TabsOrganizationsOrgIdRoute: TabsOrganizationsOrgIdRoute,
+  TabsProfileBadgesRoute: TabsProfileBadgesRoute,
+  TabsProfileFriendsRoute: TabsProfileFriendsRoute,
+  TabsProfileHistoryRoute: TabsProfileHistoryRoute,
+  TabsProfileReflectionsRoute: TabsProfileReflectionsRoute,
+  TabsOrganizationsIndexRoute: TabsOrganizationsIndexRoute,
+  TabsProfileIndexRoute: TabsProfileIndexRoute,
+}
+
+const TabsRouteWithChildren = TabsRoute._addFileChildren(TabsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TabsRoute: TabsRouteWithChildren,
+  CohortChatRoute: CohortChatRoute,
+  ContinueTogetherRoute: ContinueTogetherRoute,
+  InviteRoute: InviteRoute,
+  ReflectionRoute: ReflectionRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  VolunteerDayRoute: VolunteerDayRoute,
+  ChatPersonIdRoute: ChatPersonIdRoute,
+  EventsEventIdRoute: EventsEventIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
