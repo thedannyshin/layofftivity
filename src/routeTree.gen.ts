@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VolunteerDayRouteImport } from './routes/volunteer-day'
+import { Route as ReflectionRouteImport } from './routes/reflection'
 import { Route as CohortChatRouteImport } from './routes/cohort-chat'
 import { Route as TabsRouteImport } from './routes/_tabs'
 import { Route as IndexRouteImport } from './routes/index'
@@ -20,6 +22,16 @@ import { Route as TabsCohortRouteImport } from './routes/_tabs/cohort'
 import { Route as TabsOrganizationsIndexRouteImport } from './routes/_tabs/organizations/index'
 import { Route as TabsOrganizationsOrgIdRouteImport } from './routes/_tabs/organizations/$orgId'
 
+const VolunteerDayRoute = VolunteerDayRouteImport.update({
+  id: '/volunteer-day',
+  path: '/volunteer-day',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReflectionRoute = ReflectionRouteImport.update({
+  id: '/reflection',
+  path: '/reflection',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CohortChatRoute = CohortChatRouteImport.update({
   id: '/cohort-chat',
   path: '/cohort-chat',
@@ -73,6 +85,8 @@ const TabsOrganizationsOrgIdRoute = TabsOrganizationsOrgIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cohort-chat': typeof CohortChatRoute
+  '/reflection': typeof ReflectionRoute
+  '/volunteer-day': typeof VolunteerDayRoute
   '/cohort': typeof TabsCohortRoute
   '/home': typeof TabsHomeRoute
   '/match': typeof TabsMatchRoute
@@ -84,6 +98,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cohort-chat': typeof CohortChatRoute
+  '/reflection': typeof ReflectionRoute
+  '/volunteer-day': typeof VolunteerDayRoute
   '/cohort': typeof TabsCohortRoute
   '/home': typeof TabsHomeRoute
   '/match': typeof TabsMatchRoute
@@ -97,6 +113,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_tabs': typeof TabsRouteWithChildren
   '/cohort-chat': typeof CohortChatRoute
+  '/reflection': typeof ReflectionRoute
+  '/volunteer-day': typeof VolunteerDayRoute
   '/_tabs/cohort': typeof TabsCohortRoute
   '/_tabs/home': typeof TabsHomeRoute
   '/_tabs/match': typeof TabsMatchRoute
@@ -110,6 +128,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/cohort-chat'
+    | '/reflection'
+    | '/volunteer-day'
     | '/cohort'
     | '/home'
     | '/match'
@@ -121,6 +141,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cohort-chat'
+    | '/reflection'
+    | '/volunteer-day'
     | '/cohort'
     | '/home'
     | '/match'
@@ -133,6 +155,8 @@ export interface FileRouteTypes {
     | '/'
     | '/_tabs'
     | '/cohort-chat'
+    | '/reflection'
+    | '/volunteer-day'
     | '/_tabs/cohort'
     | '/_tabs/home'
     | '/_tabs/match'
@@ -146,12 +170,28 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TabsRoute: typeof TabsRouteWithChildren
   CohortChatRoute: typeof CohortChatRoute
+  ReflectionRoute: typeof ReflectionRoute
+  VolunteerDayRoute: typeof VolunteerDayRoute
   ChatPersonIdRoute: typeof ChatPersonIdRoute
   EventsEventIdRoute: typeof EventsEventIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/volunteer-day': {
+      id: '/volunteer-day'
+      path: '/volunteer-day'
+      fullPath: '/volunteer-day'
+      preLoaderRoute: typeof VolunteerDayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reflection': {
+      id: '/reflection'
+      path: '/reflection'
+      fullPath: '/reflection'
+      preLoaderRoute: typeof ReflectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cohort-chat': {
       id: '/cohort-chat'
       path: '/cohort-chat'
@@ -247,6 +287,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TabsRoute: TabsRouteWithChildren,
   CohortChatRoute: CohortChatRoute,
+  ReflectionRoute: ReflectionRoute,
+  VolunteerDayRoute: VolunteerDayRoute,
   ChatPersonIdRoute: ChatPersonIdRoute,
   EventsEventIdRoute: EventsEventIdRoute,
 }
