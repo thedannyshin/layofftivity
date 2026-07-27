@@ -42,7 +42,7 @@ function Badges() {
         {earned.map((b) => {
           const Icon = icons[b.icon as keyof typeof icons];
           return (
-            <div key={b.id} className="rounded-2xl border border-border bg-accent-soft p-4">
+            <div key={b.id} className="rounded-2xl bg-accent-soft p-4">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent">
                 <Icon className="h-5 w-5 text-accent-foreground" />
               </span>
@@ -58,7 +58,7 @@ function Badges() {
         {locked.map((b) => {
           const Icon = icons[b.icon as keyof typeof icons];
           return (
-            <div key={b.id} className={cn("rounded-2xl border border-border bg-card p-4 opacity-70")}>
+            <div key={b.id} className={cn("rounded-2xl bg-card p-4 opacity-70")}>
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-secondary">
                 <Icon className="h-5 w-5 text-muted-foreground" />
               </span>

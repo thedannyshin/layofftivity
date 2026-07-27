@@ -99,7 +99,7 @@ function Invite() {
                 onClick={() => setKind(k)}
                 aria-pressed={selected}
                 className={cn(
-                  "flex w-full items-center gap-3 rounded-2xl border p-4 text-left transition-colors",
+                  "flex w-full items-center gap-3 rounded-2xl p-4 text-left transition-colors",
                   selected
                     ? "bg-primary-soft"
                     : "bg-secondary hover:bg-primary-soft/70",
@@ -130,7 +130,7 @@ function Invite() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="First name"
-          className="h-12 w-full rounded-xl border border-border bg-card px-4 text-[15px] outline-none focus:border-primary"
+          className="h-12 w-full rounded-xl bg-card px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
         />
 
         <SectionTitle>Message</SectionTitle>
@@ -158,7 +158,7 @@ function Invite() {
               {state.invitesSent.map((i, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-2.5 rounded-xl border border-border bg-card px-4 py-3"
+                  className="flex items-center gap-2.5 rounded-xl bg-card px-4 py-3"
                 >
                   <Check className="h-4 w-4 text-primary" />
                   <span className="text-[15px] font-semibold">{i}</span>

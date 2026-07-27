@@ -82,7 +82,7 @@ function Match() {
       <SectionTitle>Conversation starters</SectionTitle>
       <div className="space-y-3">
         {conversationStarters.map((c) => (
-          <div key={c} className="flex gap-3 rounded-2xl border border-border bg-card p-4">
+          <div key={c} className="flex gap-3 rounded-2xl bg-card p-4">
             <Quote className="h-4 w-4 shrink-0 text-primary" />
             <p className="text-[15px] leading-relaxed">{c}</p>
           </div>
@@ -98,7 +98,7 @@ function Match() {
               key={id}
               to="/chat/$personId"
               params={{ personId: id }}
-              className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+              className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
             >
               <Avatar src={p.photo} name={p.name} size={44} />
               <div className="min-w-0 flex-1">

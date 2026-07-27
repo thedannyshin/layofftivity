@@ -44,7 +44,7 @@ function Organizations() {
     <Screen>
       <TopBar title="Explore" subtitle="Organizations in the East Bay" />
 
-      <label className="flex items-center gap-2 rounded-xl border border-border bg-card px-3">
+      <label className="flex items-center gap-2 rounded-xl bg-card px-3">
         <Search className="h-4 w-4 text-muted-foreground" />
         <input
           value={query}
@@ -76,7 +76,7 @@ function Organizations() {
             key={o.id}
             to="/organizations/$orgId"
             params={{ orgId: o.id }}
-            className="flex items-start gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+            className="flex items-start gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
           >
             <OrgMark cover={o.cover} size={52} />
             <div className="min-w-0 flex-1">
@@ -99,7 +99,7 @@ function Organizations() {
           </Link>
         ))}
         {filtered.length === 0 && (
-          <div className="rounded-2xl border border-border bg-card p-6 text-center">
+          <div className="rounded-2xl bg-card p-6 text-center">
             <p className="text-[15px] font-semibold">Nothing matches that yet</p>
             <p className="mt-1 text-[13px] text-muted-foreground">
               Try a different cause, or clear the search to see all six organizations.
@@ -127,7 +127,7 @@ function Organizations() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+              className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
             >
               <div className="w-14 shrink-0 rounded-xl bg-secondary py-2 text-center">
                 <p className="text-[11px] font-bold text-muted-foreground uppercase">

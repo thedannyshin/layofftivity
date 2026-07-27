@@ -52,7 +52,7 @@ function EventDetail() {
         <Link
           to="/organizations/$orgId"
           params={{ orgId: org.id }}
-          className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+          className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
         >
           <OrgMark cover={org.cover} />
           <div className="min-w-0 flex-1">

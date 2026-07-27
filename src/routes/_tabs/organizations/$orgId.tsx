@@ -55,7 +55,7 @@ function OrgDetail() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className="block rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+              className="block rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
             >
               <div className="flex items-start justify-between gap-3">
                 <p className="text-[16px] leading-tight font-bold">{e.title}</p>
@@ -106,7 +106,7 @@ function OrgDetail() {
               key={o.id}
               to="/organizations/$orgId"
               params={{ orgId: o.id }}
-              className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+              className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
             >
               <OrgMark cover={o.cover} />
               <div className="min-w-0 flex-1">

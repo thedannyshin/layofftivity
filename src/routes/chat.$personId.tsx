@@ -105,7 +105,7 @@ function Chat() {
                 key={s}
                 type="button"
                 onClick={() => send(s)}
-                className="shrink-0 rounded-full border border-border bg-background px-3.5 py-2 text-[13px] font-semibold hover:border-primary/40"
+                className="shrink-0 rounded-full bg-secondary px-3.5 py-2 text-[13px] font-semibold"
               >
                 {s}
               </button>
@@ -122,7 +122,7 @@ function Chat() {
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               placeholder={`Message ${person.name.split(" ")[0]}`}
-              className="h-12 flex-1 rounded-xl border border-border bg-background px-4 text-[15px] outline-none focus:border-primary"
+              className="h-12 flex-1 rounded-xl bg-secondary px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
             />
             <button
               type="submit"

@@ -61,7 +61,7 @@ function Profile() {
       <SectionTitle>Your cohort</SectionTitle>
       <Link
         to="/cohort"
-        className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+        className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
       >
         <div className="min-w-0 flex-1">
           <p className="truncate text-[15px] font-bold">{cohort.name}</p>
@@ -117,7 +117,7 @@ function Profile() {
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-3 text-center">
+    <div className="rounded-2xl bg-card p-3 text-center">
       <p className="text-[22px] leading-none font-extrabold">{value}</p>
       <p className="mt-1 text-[12px] font-semibold text-muted-foreground">{label}</p>
     </div>
@@ -138,7 +138,7 @@ function Row({
   return (
     <Link
       to={to}
-      className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+      className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
     >
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
         {icon}

@@ -80,7 +80,7 @@ function ContinueTogether() {
               type="button"
               onClick={() => choose(o.id, o.title)}
               className={cn(
-                "flex w-full items-center gap-3 rounded-2xl border p-4 text-left transition-colors",
+                "flex w-full items-center gap-3 rounded-2xl p-4 text-left transition-colors",
                 selected
                   ? "bg-primary-soft"
                   : "bg-secondary hover:bg-primary-soft/70",

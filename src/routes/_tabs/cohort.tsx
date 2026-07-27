@@ -53,7 +53,7 @@ function Cohort() {
       <Link
         to="/events/$eventId"
         params={{ eventId: event.id }}
-        className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+        className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
       >
         <div className="min-w-0 flex-1">
           <p className="text-[13px] font-semibold text-primary">Next together</p>
@@ -72,7 +72,7 @@ function Cohort() {
             key={m.id}
             to="/chat/$personId"
             params={{ personId: m.id }}
-            className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+            className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
           >
             <Avatar src={m.photo} name={m.name} size={48} />
             <div className="min-w-0 flex-1">
@@ -119,7 +119,7 @@ function Cohort() {
       <SectionTitle>Group chat</SectionTitle>
       <Link
         to="/cohort-chat"
-        className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+        className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
       >
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
           <MessageCircle className="h-5 w-5 text-primary" />

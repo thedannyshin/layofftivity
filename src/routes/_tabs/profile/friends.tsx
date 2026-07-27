@@ -67,7 +67,7 @@ function FriendRow({ id, days }: { id: string; days: number }) {
     <Link
       to="/chat/$personId"
       params={{ personId: id }}
-      className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40 active:bg-secondary"
+      className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
     >
       <Avatar src={p.photo} name={p.name} size={48} />
       <div className="min-w-0 flex-1">

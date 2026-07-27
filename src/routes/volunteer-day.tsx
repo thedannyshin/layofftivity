@@ -70,7 +70,7 @@ function VolunteerDay() {
         {/* Navigation */}
         <SectionTitle>Getting there</SectionTitle>
         <Card>
-          <div className="flex h-32 items-center justify-center rounded-xl border border-border bg-secondary">
+          <div className="flex h-32 items-center justify-center rounded-xl bg-secondary">
             <div className="text-center">
               <MapPin className="mx-auto h-6 w-6 text-primary" />
               <p className="mt-1 text-[13px] font-semibold">{event.address}</p>
