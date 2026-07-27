@@ -99,7 +99,7 @@ function Onboarding() {
                 "No résumés, no pitches, no small talk about titles",
               ].map((line) => (
                 <li key={line} className="flex gap-3">
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary">
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-foreground bg-primary">
                     <Check className="h-3 w-3 text-primary-foreground" strokeWidth={3} />
                   </span>
                   <span className="text-[15px] text-foreground">{line}</span>
@@ -301,7 +301,7 @@ function SelectRow({
       </span>
       <span
         className={cn(
-          "flex h-6 w-6 shrink-0 items-center justify-center border transition-colors",
+          "flex h-6 w-6 shrink-0 items-center justify-center border-2 transition-colors",
           multi ? "rounded-md" : "rounded-full",
           selected ? "border-primary bg-primary" : "border-border",
         )}
