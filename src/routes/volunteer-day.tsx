@@ -121,13 +121,13 @@ function VolunteerDay() {
 
         {/* Timeline */}
         <SectionTitle>Timeline</SectionTitle>
-        <ol className="relative space-y-5 border-l border-border pl-6">
+        <ol className="relative space-y-5 pl-6 before:absolute before:top-2 before:bottom-2 before:left-0 before:w-px before:bg-secondary">
           {timeline.map((t, i) => (
             <li key={t.time} className="relative">
               <span
                 className={cn(
-                  "absolute top-1 -left-[31px] h-3 w-3 rounded-full border-2 border-background",
-                  state.checkedIn && i < 2 ? "bg-primary" : "bg-border",
+                  "absolute top-1 -left-[31px] h-3 w-3 rounded-full",
+                  state.checkedIn && i < 2 ? "bg-primary" : "bg-secondary",
                 )}
               />
               <p className="text-[12px] font-bold text-muted-foreground uppercase">{t.time}</p>

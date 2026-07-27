@@ -59,7 +59,7 @@ function ContinueTogether() {
       <div className="rounded-2xl bg-accent-soft p-5 text-center">
         <div className="flex justify-center -space-x-2">
           {members.map((m) => (
-            <Avatar key={m.id} src={m.photo} name={m.name} size={38} className="border-accent-soft" />
+            <Avatar key={m.id} src={m.photo} name={m.name} size={38} />
           ))}
         </div>
         <p className="mt-3 text-[17px] leading-snug font-bold text-accent-foreground">

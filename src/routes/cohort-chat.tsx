@@ -50,7 +50,7 @@ function CohortChat() {
           </Link>
           <div className="flex -space-x-2">
             {members.slice(0, 3).map((m) => (
-              <Avatar key={m.id} src={m.photo} name={m.name} size={30} className="border-card" />
+              <Avatar key={m.id} src={m.photo} name={m.name} size={30} />
             ))}
           </div>
           <div className="min-w-0 flex-1">

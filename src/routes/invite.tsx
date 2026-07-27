@@ -114,7 +114,7 @@ function Invite() {
                 </span>
                 <span
                   className={cn(
-                    "flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2",
+                    "flex h-6 w-6 shrink-0 items-center justify-center rounded-full",
                     selected ? "bg-primary" : "bg-secondary",
                   )}
                 >

@@ -90,10 +90,10 @@ function Home() {
             <MapPin className="h-4 w-4" /> {upcoming.location}
           </p>
         </div>
-        <div className="mt-4 flex items-center justify-between border-t border-primary-foreground/20 pt-4">
+        <div className="mt-4 flex items-center justify-between pt-4">
           <div className="flex -space-x-2">
             {members.slice(0, 5).map((m) => (
-              <Avatar key={m.id} src={m.photo} name={m.name} size={30} className="border-primary" />
+              <Avatar key={m.id} src={m.photo} name={m.name} size={30} />
             ))}
           </div>
           <span className="flex items-center gap-1 text-[14px] font-bold text-primary-foreground">
@@ -133,7 +133,7 @@ function Home() {
                 >
                   <span
                     className={cn(
-                      "flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2",
+                      "flex h-6 w-6 shrink-0 items-center justify-center rounded-md",
                       done ? "bg-primary" : "bg-secondary",
                     )}
                   >

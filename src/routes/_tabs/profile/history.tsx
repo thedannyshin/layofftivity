@@ -34,10 +34,10 @@ function HistoryScreen() {
       </Card>
 
       <SectionTitle>All shifts</SectionTitle>
-      <ol className="relative space-y-4 border-l border-border pl-6">
+      <ol className="relative space-y-4 pl-6 before:absolute before:top-2 before:bottom-2 before:left-0 before:w-px before:bg-secondary">
         {volunteerHistory.map((h) => (
           <li key={h.id} className="relative">
-            <span className="absolute top-1.5 -left-[31px] h-3 w-3 rounded-full border-2 border-background bg-primary" />
+            <span className="absolute top-1.5 -left-[31px] h-3 w-3 rounded-full bg-primary" />
             <p className="text-[12px] font-bold text-muted-foreground uppercase">{h.date}</p>
             <p className="text-[15px] font-bold">{h.title}</p>
             <p className="text-[13px] text-muted-foreground">{h.org}</p>
