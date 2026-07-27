@@ -148,7 +148,7 @@ function EventDetail() {
       </Screen>
 
       {!joined && (
-        <div className="fixed inset-x-0 bottom-0 border-t border-border bg-card">
+        <div className="fixed inset-x-0 bottom-0 bg-card">
           <div className="mx-auto w-full max-w-[430px] px-5 py-4">
             <Button size="lg" className="w-full" onClick={join}>
               Join this event

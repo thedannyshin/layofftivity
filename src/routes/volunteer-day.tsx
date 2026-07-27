@@ -41,7 +41,7 @@ function VolunteerDay() {
         <TopBar title="Saturday, August 8" subtitle={`${org.name} · ${event.time}`} back />
 
         {/* Check in */}
-        <Card className={cn(state.checkedIn && "border-primary bg-primary-soft")}>
+        <Card className={cn(state.checkedIn && "bg-primary-soft")}>
           {state.checkedIn ? (
             <>
               <div className="flex items-center gap-2">
@@ -138,7 +138,7 @@ function VolunteerDay() {
         </ol>
       </Screen>
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-border bg-card">
+      <div className="fixed inset-x-0 bottom-0 bg-card">
         <div className="mx-auto w-full max-w-[430px] px-5 py-4">
           <Button
             size="lg"

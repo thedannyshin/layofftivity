@@ -82,8 +82,8 @@ function ContinueTogether() {
               className={cn(
                 "flex w-full items-center gap-3 rounded-2xl border p-4 text-left transition-colors",
                 selected
-                  ? "border-primary bg-primary-soft"
-                  : "border-border bg-card hover:border-primary/40 active:bg-secondary",
+                  ? "bg-primary-soft"
+                  : "bg-secondary hover:bg-primary-soft/70",
               )}
             >
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft">

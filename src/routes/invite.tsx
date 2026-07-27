@@ -101,8 +101,8 @@ function Invite() {
                 className={cn(
                   "flex w-full items-center gap-3 rounded-2xl border p-4 text-left transition-colors",
                   selected
-                    ? "border-primary bg-primary-soft"
-                    : "border-border bg-card hover:border-primary/40",
+                    ? "bg-primary-soft"
+                    : "bg-secondary hover:bg-primary-soft/70",
                 )}
               >
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-card">
@@ -115,7 +115,7 @@ function Invite() {
                 <span
                   className={cn(
                     "flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2",
-                    selected ? "border-primary bg-primary" : "border-border",
+                    selected ? "bg-primary" : "bg-secondary",
                   )}
                 >
                   {selected && <Check className="h-3.5 w-3.5 text-primary-foreground" />}

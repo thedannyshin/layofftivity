@@ -224,7 +224,7 @@ function Onboarding() {
         </div>
       </Screen>
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-border bg-card">
+      <div className="fixed inset-x-0 bottom-0 bg-card">
         <div className="mx-auto flex w-full max-w-[430px] gap-3 px-5 py-4">
           <Button
             variant="quiet"
@@ -290,8 +290,8 @@ function SelectRow({
       className={cn(
         "flex w-full items-center gap-3 rounded-2xl border p-4 text-left transition-colors",
         selected
-          ? "border-primary bg-primary-soft"
-          : "border-border bg-card hover:border-primary/40 active:bg-secondary",
+          ? "bg-primary-soft"
+          : "bg-secondary hover:bg-primary-soft/70",
       )}
     >
       {icon}
@@ -303,7 +303,7 @@ function SelectRow({
         className={cn(
           "flex h-6 w-6 shrink-0 items-center justify-center border-2 transition-colors",
           multi ? "rounded-md" : "rounded-full",
-          selected ? "border-primary bg-primary" : "border-border",
+          selected ? "bg-primary" : "bg-secondary",
         )}
       >
         {selected && <Check className="h-3.5 w-3.5 text-primary-foreground" />}
@@ -329,8 +329,8 @@ function TagButton({
       className={cn(
         "rounded-full border px-4 py-2.5 text-[14px] font-semibold transition-colors",
         selected
-          ? "border-primary bg-primary text-primary-foreground"
-          : "border-border bg-card text-foreground hover:border-primary/40",
+          ? "bg-primary text-primary-foreground"
+          : "bg-secondary text-foreground hover:bg-primary-soft/70",
       )}
     >
       {label}

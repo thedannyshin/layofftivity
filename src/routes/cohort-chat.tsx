@@ -39,7 +39,7 @@ function CohortChat() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <header className="sticky top-0 z-20 border-b border-border bg-card">
+      <header className="sticky top-0 z-20 bg-card">
         <div className="mx-auto flex w-full max-w-[430px] items-center gap-3 px-3 py-3">
           <Link
             to="/cohort"
@@ -78,7 +78,7 @@ function CohortChat() {
                     "rounded-2xl px-4 py-2.5",
                     mine
                       ? "bg-primary text-primary-foreground"
-                      : "border border-border bg-card text-foreground",
+                      : "bg-secondary text-foreground",
                   )}
                 >
                   <p className="text-[15px] leading-relaxed">{m.text}</p>
@@ -97,7 +97,7 @@ function CohortChat() {
         })}
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-border bg-card">
+      <div className="fixed inset-x-0 bottom-0 bg-card">
         <div className="mx-auto w-full max-w-[430px] px-4 py-3">
           <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
             {["I'm in for Saturday", "Can I grab the last seat?", "Bringing extra gloves"].map((s) => (

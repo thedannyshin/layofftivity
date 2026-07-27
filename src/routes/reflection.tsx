@@ -68,8 +68,8 @@ function ReflectionScreen() {
               className={cn(
                 "rounded-full border px-4 py-2.5 text-[14px] font-semibold transition-colors",
                 mood === m
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border bg-card hover:border-primary/40",
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary hover:bg-primary-soft/70",
               )}
             >
               {m}
@@ -140,7 +140,7 @@ function ReflectionScreen() {
         </div>
       </Screen>
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-border bg-card">
+      <div className="fixed inset-x-0 bottom-0 bg-card">
         <div className="mx-auto w-full max-w-[430px] px-5 py-4">
           <Button size="lg" className="w-full" disabled={!mood || !note.trim()} onClick={save}>
             <Check />

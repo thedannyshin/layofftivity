@@ -169,8 +169,8 @@ function FilterChip({
       className={cn(
         "shrink-0 rounded-full border px-3.5 py-2 text-[13px] font-semibold transition-colors",
         active
-          ? "border-primary bg-primary text-primary-foreground"
-          : "border-border bg-card text-foreground hover:border-primary/40",
+          ? "bg-primary text-primary-foreground"
+          : "bg-secondary text-foreground hover:bg-primary-soft/70",
       )}
     >
       {label}

@@ -134,7 +134,7 @@ function Home() {
                   <span
                     className={cn(
                       "flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2",
-                      done ? "border-primary bg-primary" : "border-border",
+                      done ? "bg-primary" : "bg-secondary",
                     )}
                   >
                     {done && (
