@@ -1,23 +1,18 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, Clock, MapPin, Users } from "lucide-react";
 import { Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
-import { eventsForOrg, organizations } from "@/lib/data";
+import { eventsForOrg, orgById, organizations } from "@/lib/data";
 
 export const Route = createFileRoute("/_tabs/organizations/$orgId")({
-  loader: ({ params }) => {
-    const org = organizations.find((o) => o.id === params.orgId);
-    if (!org) throw notFound();
-    return { org };
-  },
-  head: ({ loaderData }) => {
-    const org = loaderData?.org;
+  head: ({ params }) => {
+    const org = orgById(params.orgId);
     return {
       meta: [
-        { title: `${org?.name ?? "Organization"} — Layofftivity` },
-        { name: "description", content: org?.mission ?? "Volunteer with a small team." },
-        { property: "og:title", content: org?.name ?? "Organization" },
-        { property: "og:description", content: org?.mission ?? "Volunteer with a small team." },
+        { title: `${org.name} — Layofftivity` },
+        { name: "description", content: org.mission },
+        { property: "og:title", content: org.name },
+        { property: "og:description", content: org.mission },
       ],
     };
   },
@@ -25,7 +20,8 @@ export const Route = createFileRoute("/_tabs/organizations/$orgId")({
 });
 
 function OrgDetail() {
-  const { org } = Route.useLoaderData();
+  const { orgId } = Route.useParams();
+  const org = orgById(orgId);
   const orgEvents = eventsForOrg(org.id);
 
   return (

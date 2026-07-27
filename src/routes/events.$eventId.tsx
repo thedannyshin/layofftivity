@@ -1,31 +1,31 @@
-import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 import { CalendarDays, Check, Clock, MapPin, Users } from "lucide-react";
 import { toast } from "sonner";
 import { Avatar, Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
-import { cohortMembers, events, orgById } from "@/lib/data";
+import { cohortMembers, eventById, orgById } from "@/lib/data";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/events/$eventId")({
-  loader: ({ params }) => {
-    const event = events.find((e) => e.id === params.eventId);
-    if (!event) throw notFound();
-    return { event };
+  head: ({ params }) => {
+    const event = eventById(params.eventId);
+    return {
+      meta: [
+        { title: `${event.title} — Layofftivity` },
+        { name: "description", content: event.description.slice(0, 155) },
+        { property: "og:title", content: event.title },
+        { property: "og:description", content: event.description.slice(0, 155) },
+      ],
+    };
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: `${loaderData?.event.title ?? "Event"} — Layofftivity` },
-      { name: "description", content: loaderData?.event.description.slice(0, 155) ?? "" },
-      { property: "og:title", content: loaderData?.event.title ?? "Volunteer event" },
-      { property: "og:description", content: loaderData?.event.description.slice(0, 155) ?? "" },
-    ],
-  }),
   component: EventDetail,
 });
 
 function EventDetail() {
-  const { event } = Route.useLoaderData();
+  const { eventId } = Route.useParams();
+  const event = eventById(eventId);
   const org = orgById(event.orgId);
   const { state, update } = useStore();
   const navigate = useNavigate();
@@ -168,7 +168,7 @@ function Detail({
   label,
   value,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   label: string;
   value: string;
 }) {
