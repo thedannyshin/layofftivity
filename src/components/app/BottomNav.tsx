@@ -16,7 +16,7 @@ export function BottomNav() {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-30 border-t-2 border-foreground bg-card">
       <ul className="mx-auto flex w-full max-w-[430px] items-stretch">
-        {items.map(({ to, label, icon: Icon }) => {
+        {items.map(({ to, label, icon: Icon }, i) => {
           const active = path === to || path.startsWith(to + "/");
           return (
             <li key={to} className="flex-1">
@@ -24,7 +24,8 @@ export function BottomNav() {
                 to={to}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex h-16 flex-col items-center justify-center gap-1 border-l-2 border-[var(--lo-fresh-sprout)] transition-colors first:border-l-0",
+                  "flex h-16 flex-col items-center justify-center gap-1 transition-colors",
+                  i > 0 && "border-l-2 border-[var(--lo-fresh-sprout)]",
                   active
                     ? "bg-secondary font-bold text-foreground"
                     : "text-muted-foreground hover:text-foreground",
