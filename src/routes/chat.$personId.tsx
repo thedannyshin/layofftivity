@@ -1,20 +1,15 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { ChevronLeft, Send } from "lucide-react";
 import { Avatar } from "@/components/app/Shell";
-import { byId, people } from "@/lib/data";
+import { byId } from "@/lib/data";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/chat/$personId")({
-  loader: ({ params }) => {
-    const person = people.find((p) => p.id === params.personId);
-    if (!person) throw notFound();
-    return { person };
-  },
-  head: ({ loaderData }) => ({
+  head: ({ params }) => ({
     meta: [
-      { title: `Chat with ${loaderData?.person.name ?? "a cohort member"} — Layofftivity` },
+      { title: `Chat with ${byId(params.personId).name} — Layofftivity` },
       {
         name: "description",
         content: "A one-to-one conversation with someone from your volunteer cohort.",
@@ -27,7 +22,8 @@ export const Route = createFileRoute("/chat/$personId")({
 });
 
 function Chat() {
-  const { person } = Route.useLoaderData();
+  const { personId } = Route.useParams();
+  const person = byId(personId);
   const { state, update } = useStore();
   const [draft, setDraft] = React.useState("");
   const messages = state.dmMessages.filter(
