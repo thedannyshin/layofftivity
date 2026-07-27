@@ -167,7 +167,7 @@ function FilterChip({
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "shrink-0 rounded-full border px-3.5 py-2 text-[13px] font-semibold transition-colors",
+        "shrink-0 rounded-full px-3.5 py-2 text-[13px] font-semibold transition-colors",
         active
           ? "bg-primary text-primary-foreground"
           : "bg-secondary text-foreground hover:bg-primary-soft/70",
