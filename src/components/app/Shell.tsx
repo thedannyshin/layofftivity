@@ -32,20 +32,20 @@ export function TopBar({
 }) {
   const router = useRouter();
   return (
-    <header className="sticky top-0 z-20 -mx-5 mb-4 border-b-2 border-border bg-background/95 px-5 pt-3 pb-3 backdrop-blur">
+    <header className="sticky top-0 z-20 -mx-5 mb-4 border-b border-border bg-background/95 px-5 pt-3 pb-3 backdrop-blur">
       <div className="flex items-center gap-2">
         {back && (
           <button
             type="button"
             aria-label="Go back"
             onClick={() => router.history.back()}
-            className="-ml-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-foreground transition-colors hover:bg-card active:bg-card"
+            className="-ml-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-foreground transition-colors hover:bg-secondary active:bg-secondary"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
         )}
         <div className="min-w-0 flex-1">
-          <h1 className="font-display truncate text-[20px] leading-tight">{title}</h1>
+          <h1 className="truncate text-[19px] leading-tight font-bold">{title}</h1>
           {subtitle && <p className="truncate text-[13px] text-muted-foreground">{subtitle}</p>}
         </div>
         {right}
@@ -65,9 +65,9 @@ export function SectionTitle({
 }) {
   return (
     <div className="mt-7 mb-3 flex items-baseline justify-between">
-      <h2 className="font-display text-[19px]">{children}</h2>
+      <h2 className="text-[17px] font-bold">{children}</h2>
       {action && to && (
-        <Link to={to} className="text-[13px] font-bold text-primary hover:underline">
+        <Link to={to} className="text-[13px] font-semibold text-primary hover:underline">
           {action}
         </Link>
       )}
@@ -85,7 +85,7 @@ export function Card({
   as?: "div" | "section";
 }) {
   return (
-    <As className={cn("rounded-2xl border-2 border-border bg-card p-4", className)}>{children}</As>
+    <As className={cn("rounded-2xl border border-border bg-card p-4", className)}>{children}</As>
   );
 }
 
@@ -99,10 +99,10 @@ export function Chip({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full border-2 px-3 py-1 text-[13px] font-bold",
-        tone === "neutral" && "border-border-soft bg-background text-foreground",
-        tone === "green" && "border-sprout bg-primary-soft text-foreground",
-        tone === "yellow" && "border-accent bg-accent-soft text-accent-foreground",
+        "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[12px] font-semibold",
+        tone === "neutral" && "bg-secondary text-muted-foreground",
+        tone === "green" && "bg-primary-soft text-primary",
+        tone === "yellow" && "bg-accent-soft text-accent-foreground",
       )}
     >
       {children}
@@ -129,7 +129,7 @@ export function Avatar({
       height={size}
       loading="lazy"
       style={{ width: size, height: size }}
-      className={cn("shrink-0 rounded-full border-2 border-border object-cover", className)}
+      className={cn("shrink-0 rounded-full border border-border object-cover", className)}
     />
   );
 }
