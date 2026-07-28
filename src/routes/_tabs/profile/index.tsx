@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { Award, BookHeart, ChevronRight, History, RotateCcw, UserRound } from "lucide-react";
-import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, staticCard, tapCard } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -137,7 +137,7 @@ function Profile() {
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div className="rounded-2xl bg-card p-3 text-center">
+    <div className={`${staticCard} p-3 text-center`}>
       <p className="text-[22px] leading-none font-extrabold">{value}</p>
       <p className="mt-1 text-[12px] font-semibold text-muted-foreground">{label}</p>
     </div>
