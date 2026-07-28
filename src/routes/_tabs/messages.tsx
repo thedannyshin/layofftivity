@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { Avatar, ListGroup, Screen, ScreenHero, tapPill, tapRow } from "@/components/app/Shell";
 import { sendMessage, useApp } from "@/lib/store";
 
-export const Route = createFileRoute("/_tabs/match")({
+export const Route = createFileRoute("/_tabs/messages")({
   head: () => ({
     meta: [
       { title: "Messages — Layofftivity" },
@@ -18,10 +18,10 @@ export const Route = createFileRoute("/_tabs/match")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Match,
+  component: MessagesHome,
 });
 
-function Match() {
+function MessagesHome() {
   const { state, update, matches, thread } = useApp();
   const navigate = useNavigate();
   const groupMessages = thread("group");
@@ -38,7 +38,7 @@ function Match() {
       time: "Just now",
     });
     toast.success(`${name.split(" ")[0]} knows you said hello`);
-    navigate({ to: "/chat/$personId", params: { personId } });
+    navigate({ to: "/messages/$personId", params: { personId } });
   };
 
   return (
@@ -47,17 +47,14 @@ function Match() {
         title="Messages"
         subtitle="Message 1:1 or in your group"
         right={
-          <Link
-            to="/invite"
-            className={tapPill}
-          >
+          <Link to="/invite" className={tapPill}>
             Add person
           </Link>
         }
       />
 
       <ListGroup>
-        <Link to="/cohort-chat" className={tapRow}>
+        <Link to="/messages/group" className={tapRow}>
           <Avatar name="Group" size={52} />
           <div className="min-w-0 flex-1 text-left">
             <p className="truncate text-[15px] font-extrabold">Crew messages</p>
@@ -72,18 +69,14 @@ function Match() {
           const greeted = state.matchGreeted.includes(m.id);
           const messages = thread(m.id);
           const last = messages[messages.length - 1];
-          const preview = last
-            ? last.text
-            : greeted
-              ? "Say hello to continue."
-              : "Say hello to start.";
+          const preview = last ? last.text : greeted ? "Say hello to continue." : "Say hello to start.";
           return (
             <button
               key={m.id}
               type="button"
               onClick={() => {
                 if (greeted) {
-                  navigate({ to: "/chat/$personId", params: { personId: m.id } });
+                  navigate({ to: "/messages/$personId", params: { personId: m.id } });
                   return;
                 }
                 greet(m.id, m.name);

@@ -6,7 +6,7 @@ import { byId, icebreakers, orgById } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/_tabs/cohort-chat")({
+export const Route = createFileRoute("/_tabs/messages/group")({
   head: () => ({
     meta: [
       { title: "Crew messages — Layofftivity" },
@@ -21,10 +21,10 @@ export const Route = createFileRoute("/_tabs/cohort-chat")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: GroupChat,
+  component: GroupMessages,
 });
 
-function GroupChat() {
+function GroupMessages() {
   const { update, thread, matches, guests, profile, initials, fullName, primaryEvent, isJoined } =
     useApp();
   const messages = thread("group");
@@ -52,10 +52,7 @@ function GroupChat() {
           subtitle={`${matches.length + 1 + guests.length} people`}
           back
           right={
-            <Link
-              to="/invite"
-              className={tapPill}
-            >
+            <Link to="/invite" className={tapPill}>
               Add person
             </Link>
           }
@@ -107,9 +104,7 @@ function GroupChat() {
         <div className="mt-4 space-y-3">
           {messages.length === 0 && (
             <div className="rounded-2xl bg-card p-4">
-              <p className="text-[14px] text-muted-foreground">
-                Nobody has spoken yet. Start with one of these.
-              </p>
+              <p className="text-[14px] text-muted-foreground">Nobody has spoken yet. Start with one of these.</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {icebreakers.slice(0, 4).map((q) => (
                   <button
@@ -147,15 +142,12 @@ function GroupChat() {
                   </div>
                   <p className="mt-1 text-[11px] text-muted-foreground">{m.time}</p>
                 </div>
-                {mine && (
-                  <Avatar src={profile.photo} name={fullName} initials={initials} size={30} />
-                )}
+                {mine && <Avatar src={profile.photo} name={fullName} initials={initials} size={30} />}
               </div>
             );
           })}
           <div ref={endRef} />
         </div>
-
       </Screen>
 
       <div className="fixed inset-x-0 bottom-16 z-20 bg-card">

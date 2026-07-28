@@ -54,7 +54,7 @@ function ContinueTogether() {
       time: "Just now",
     });
     toast.success(`${title} suggested to the group`);
-    navigate({ to: "/cohort-chat" });
+    navigate({ to: "/messages/group" });
   };
 
   return (

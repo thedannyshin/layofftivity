@@ -143,7 +143,7 @@ function VolunteerDay() {
               Directions
             </Button>
             <Button asChild variant="quiet" className="flex-1">
-              <Link to="/match">Open messages</Link>
+              <Link to="/messages">Open messages</Link>
             </Button>
           </div>
         </Card>

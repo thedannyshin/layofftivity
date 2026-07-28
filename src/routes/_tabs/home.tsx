@@ -153,11 +153,11 @@ function Home() {
           </p>
         )}
 
-      <SectionTitle action="Open messages" to="/match">
+      <SectionTitle action="Open messages" to="/messages">
         Your messages
       </SectionTitle>
       <ListGroup>
-        <Link to="/match" className={tapRow}>
+        <Link to="/messages" className={tapRow}>
           <Avatar name="Group" size={52} />
           <div className="min-w-0 flex-1 text-left">
             <p className="truncate text-[15px] font-extrabold">Messages</p>

@@ -40,7 +40,7 @@ function Friends() {
           return (
             <Link
               key={m.id}
-              to="/chat/$personId"
+              to="/messages/$personId"
               params={{ personId: m.id }}
               className={tapRow}
             >

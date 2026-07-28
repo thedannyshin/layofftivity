@@ -37,7 +37,7 @@ function EventDetail() {
   const join = () => {
     update((s) => ({ ...s, joinedEventIds: [...new Set([...s.joinedEventIds, event.id])] }));
     toast.success("You're in", { description: `${event.dateShort}, ${event.time}` });
-    navigate({ to: "/match" });
+    navigate({ to: "/messages" });
   };
 
   const leave = () => {

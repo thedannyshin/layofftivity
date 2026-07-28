@@ -6,7 +6,7 @@ import { byId, sharedWith } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/_tabs/chat/$personId")({
+export const Route = createFileRoute("/_tabs/messages/$personId")({
   head: ({ params }) => {
     const person = byId(params.personId);
     return {
@@ -23,10 +23,10 @@ export const Route = createFileRoute("/_tabs/chat/$personId")({
       ],
     };
   },
-  component: Chat,
+  component: DirectMessages,
 });
 
-function Chat() {
+function DirectMessages() {
   const { personId } = Route.useParams();
   const person = byId(personId);
   const { update, thread, prefs, profile, initials, fullName } = useApp();
@@ -84,9 +84,7 @@ function Chat() {
                   </div>
                   <p className="mt-1 text-[11px] text-muted-foreground">{m.time}</p>
                 </div>
-                {mine && (
-                  <Avatar src={profile.photo} name={fullName} initials={initials} size={30} />
-                )}
+                {mine && <Avatar src={profile.photo} name={fullName} initials={initials} size={30} />}
               </div>
             );
           })}
@@ -100,12 +98,7 @@ function Chat() {
 
         <div className="mt-5 flex flex-wrap gap-2">
           {suggestions.map((s) => (
-            <button
-              key={s}
-              type="button"
-              onClick={() => setValue(s)}
-              className={tapPill}
-            >
+            <button key={s} type="button" onClick={() => setValue(s)} className={tapPill}>
               {s}
             </button>
           ))}
