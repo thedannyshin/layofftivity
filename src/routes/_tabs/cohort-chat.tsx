@@ -9,13 +9,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/_tabs/cohort-chat")({
   head: () => ({
     meta: [
-      { title: "Crew chat — Layofftivity" },
+      { title: "Crew messages — Layofftivity" },
       {
         name: "description",
         content:
-          "Your volunteer crew chat: rides, timing, icebreakers, and the small talk that makes Saturday easier.",
+          "Your volunteer crew messages: rides, timing, icebreakers, and the small talk that makes Saturday easier.",
       },
-      { property: "og:title", content: "Your volunteer crew chat" },
+      { property: "og:title", content: "Your volunteer crew messages" },
       { property: "og:description", content: "Rides, timing, and the small talk in between." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -48,7 +48,7 @@ function GroupChat() {
     <div className="flex min-h-screen flex-col bg-background pb-32">
       <Screen>
         <ScreenHero
-          title="Crew chat"
+          title="Crew messages"
           subtitle={`${matches.length + 1 + guests.length} people`}
           back
           right={

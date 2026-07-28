@@ -153,41 +153,23 @@ function Home() {
           </p>
         )}
 
-      <SectionTitle action="Open chat" to="/match">
-        Your chats
+      <SectionTitle action="Open messages" to="/match">
+        Your messages
       </SectionTitle>
-      <Link
-        to="/match"
-        className={`${tapCard} block`}
-      >
-        <div className="flex items-center justify-between">
-          <div className="min-w-0">
-            <h3 className="truncate text-[16px] font-bold">Messages</h3>
-            <p className="mt-0.5 text-[13px] text-muted-foreground">
+      <ListGroup>
+        <Link to="/match" className={tapRow}>
+          <Avatar name="Group" size={52} />
+          <div className="min-w-0 flex-1 text-left">
+            <p className="truncate text-[15px] font-extrabold">Messages</p>
+            <p className="mt-0.5 line-clamp-1 text-[13px] text-muted-foreground">
               {state.matchGreeted.length
                 ? `${matches.length + 1 + guests.length} people, ${app.daysCompleted} day${app.daysCompleted === 1 ? "" : "s"} together`
                 : `Say hello to ${matches.map((m) => m.name.split(" ")[0]).join(" and ")}`}
             </p>
           </div>
           <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
-        </div>
-        <div className="mt-3 flex gap-2 overflow-x-auto no-scrollbar">
-          {matches.map((m) => (
-            <div key={m.id} className="w-14 shrink-0 text-center">
-              <Avatar src={m.photo} name={m.name} size={48} className="mx-auto" />
-              <p className="mt-1 truncate text-[11px] font-semibold text-muted-foreground">
-                {m.name.split(" ")[0]}
-              </p>
-            </div>
-          ))}
-          {guests.map((g) => (
-            <div key={g.id} className="w-14 shrink-0 text-center">
-              <Avatar name={g.name} size={48} className="mx-auto" />
-              <p className="mt-1 truncate text-[11px] font-semibold text-muted-foreground">Guest</p>
-            </div>
-          ))}
-        </div>
-      </Link>
+        </Link>
+      </ListGroup>
 
       <SectionTitle>Badges</SectionTitle>
       <Link to="/profile/badges" className={`${tapCard} block`}>

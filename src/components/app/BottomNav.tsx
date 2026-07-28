@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 const items = [
   { to: "/home", label: "Home", icon: Home },
   { to: "/organizations", label: "Explore", icon: Building2 },
-  { to: "/match", label: "Chat", icon: MessageCircle },
+  { to: "/match", label: "Messages", icon: MessageCircle },
   { to: "/profile/reflections", label: "Reflect", icon: BookHeart },
 ];
 

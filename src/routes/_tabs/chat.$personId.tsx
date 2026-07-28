@@ -11,12 +11,12 @@ export const Route = createFileRoute("/_tabs/chat/$personId")({
     const person = byId(params.personId);
     return {
       meta: [
-        { title: `Chat with ${person.name} — Layofftivity` },
+        { title: `Messages with ${person.name} — Layofftivity` },
         {
           name: "description",
           content: `Message ${person.name} before your volunteer day and figure out rides, timing, and who's bringing coffee.`,
         },
-        { property: "og:title", content: `Chat with ${person.name}` },
+        { property: "og:title", content: `Messages with ${person.name}` },
         { property: "og:description", content: person.bio },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },

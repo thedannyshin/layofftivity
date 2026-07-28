@@ -10,10 +10,10 @@ export const Route = createFileRoute("/_tabs/match")({
       { title: "Messages — Layofftivity" },
       {
         name: "description",
-        content: "Chat 1:1 with matched people or in your crew chat, before your next volunteer day.",
+        content: "Message 1:1 with matched people or in your crew messages, before your next volunteer day.",
       },
       { property: "og:title", content: "Messages — Layofftivity" },
-      { property: "og:description", content: "Chat 1:1 and in your matched group." },
+      { property: "og:description", content: "Message 1:1 and in your matched group." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -45,7 +45,7 @@ function Match() {
     <Screen>
       <ScreenHero
         title="Messages"
-        subtitle="Chat 1:1 or in your group"
+        subtitle="Message 1:1 or in your group"
         right={
           <Link
             to="/invite"
@@ -60,7 +60,7 @@ function Match() {
         <Link to="/cohort-chat" className={tapRow}>
           <Avatar name="Group" size={52} />
           <div className="min-w-0 flex-1 text-left">
-            <p className="truncate text-[15px] font-extrabold">Crew chat</p>
+            <p className="truncate text-[15px] font-extrabold">Crew messages</p>
             <p className="mt-0.5 line-clamp-1 text-[13px] text-muted-foreground">
               {groupLast ? groupLast.text : "Start with an icebreaker below."}
             </p>
