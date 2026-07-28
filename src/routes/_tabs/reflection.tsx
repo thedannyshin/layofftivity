@@ -65,7 +65,11 @@ function ReflectionScreen() {
               type="button"
               onClick={() => setMood(m)}
               aria-pressed={mood === m}
-              className={mood === m ? tapPillActive : tapPill}
+              className={
+                mood === m
+                  ? tapPillActive
+                  : "inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-muted-foreground/35 bg-transparent px-3.5 py-2 text-[13px] font-semibold text-muted-foreground cursor-pointer transition-colors duration-[120ms] hover:bg-card active:bg-card focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft"
+              }
             >
               {m}
             </button>

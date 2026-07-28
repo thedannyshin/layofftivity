@@ -203,10 +203,15 @@ function InviteScreen() {
                   <span
                     className={cn(
                       "flex h-6 w-6 shrink-0 items-center justify-center rounded-full",
-                      selected ? "bg-primary" : "bg-card",
+                      selected ? "bg-primary" : "bg-transparent border border-muted-foreground/35",
                     )}
                   >
-                    {selected && <Check className="h-3.5 w-3.5 text-primary-foreground" />}
+                    <Check
+                      className={cn(
+                        "h-3.5 w-3.5",
+                        selected ? "text-primary-foreground" : "text-muted-foreground",
+                      )}
+                    />
                   </span>
                 </button>
               );

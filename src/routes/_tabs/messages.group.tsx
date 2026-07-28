@@ -71,9 +71,11 @@ function GroupMessages() {
           className="mt-3 block rounded-2xl bg-primary p-5 transition-colors hover:bg-primary/95 active:bg-primary/90"
         >
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-lg border border-primary-foreground/50 px-2.5 py-1 text-[12px] font-bold text-primary-foreground">
-              {joined ? "You're going" : "See the details"}
-            </span>
+            {joined && (
+              <span className="rounded-lg border border-primary-foreground/50 px-2.5 py-1 text-[12px] font-bold text-primary-foreground">
+                You're going
+              </span>
+            )}
             <span className="text-[13px] font-semibold text-primary-foreground/80">{org.name}</span>
           </div>
 

@@ -134,14 +134,18 @@ function Home() {
                 <span
                   className={cn(
                     "flex h-6 w-6 shrink-0 items-center justify-center rounded-md",
-                    g.done ? "bg-primary" : "bg-card",
+                    g.done ? "bg-primary" : "bg-transparent border border-muted-foreground/35",
                   )}
                 >
-                  {g.done && (
-                    <svg viewBox="0 0 20 20" className="h-3.5 w-3.5 fill-primary-foreground">
-                      <path d="M7.6 14.2 3.8 10.4l1.4-1.4 2.4 2.4 6.2-6.2 1.4 1.4z" />
-                    </svg>
-                  )}
+                  <svg
+                    viewBox="0 0 20 20"
+                    className={cn(
+                      "h-3.5 w-3.5",
+                      g.done ? "fill-primary-foreground" : "fill-muted-foreground",
+                    )}
+                  >
+                    <path d="M7.6 14.2 3.8 10.4l1.4-1.4 2.4 2.4 6.2-6.2 1.4 1.4z" />
+                  </svg>
                 </span>
                 <span
                   className={cn(
@@ -169,13 +173,19 @@ function Home() {
           return (
             <div
               key={badge.id}
-              className={badge.earned ? staticCardAccent : cn(staticCard, "opacity-70")}
+              className={cn(
+                "flex flex-col items-center text-center",
+                badge.earned ? staticCardAccent : "rounded-2xl bg-card p-4 opacity-70",
+                badge.earned && "ring-1 ring-accent/60 shadow-[0_10px_30px_rgba(120,190,140,0.18)]",
+              )}
               title={badge.detail}
             >
               <span
                 className={cn(
-                  "flex h-11 w-11 items-center justify-center rounded-xl",
-                  badge.earned ? "bg-accent" : "bg-card",
+                  "flex h-11 w-11 items-center justify-center rounded-full",
+                  badge.earned
+                    ? "bg-accent shadow-[0_0_0_6px_rgba(180,220,190,0.45)]"
+                    : "bg-background",
                 )}
               >
                 <Icon
@@ -185,7 +195,7 @@ function Home() {
                   )}
                 />
               </span>
-              <p className="mt-3 text-[13px] leading-tight font-bold">{badge.name}</p>
+              <p className="mt-3 text-center text-[13px] leading-tight font-bold">{badge.name}</p>
             </div>
           );
         })}
