@@ -128,7 +128,7 @@ function Organizations() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className={`${tapCard} flex items-center gap-3`}
+              className={tapRow}
             >
               <div className="w-14 shrink-0 rounded-xl bg-secondary py-2 text-center">
                 <p className="text-[11px] font-bold text-muted-foreground uppercase">
@@ -148,7 +148,7 @@ function Organizations() {
             </Link>
           );
         })}
-      </div>
+      </ListGroup>
     </Screen>
   );
 }
