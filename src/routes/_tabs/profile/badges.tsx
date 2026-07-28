@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BookOpen, Car, Medal, Repeat, Sunrise, UserPlus } from "lucide-react";
-import { Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Screen, SectionTitle, TopBar, staticCard, staticCardAccent } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
