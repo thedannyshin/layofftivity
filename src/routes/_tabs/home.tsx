@@ -138,12 +138,12 @@ function Home() {
             />
           ))}
         </div>
-        <ul className="mt-4 space-y-1">
+        <ul className="mt-4 space-y-2">
           {goals.map((g) => (
             <li key={g.id}>
               <Link
                 to={g.to}
-                className="flex w-full items-center gap-3 rounded-xl py-2.5 text-left transition-colors hover:bg-secondary active:bg-secondary"
+                className="flex w-full cursor-pointer items-center gap-3 rounded-xl bg-secondary/60 px-3 py-2.5 text-left transition-colors hover:bg-secondary active:bg-primary-soft"
               >
                 <span
                   className={cn(
@@ -165,7 +165,7 @@ function Home() {
                 >
                   {g.label}
                 </span>
-                {!g.done && <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />}
+                <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
               </Link>
             </li>
           ))}
