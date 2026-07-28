@@ -56,10 +56,12 @@ function EventDetail() {
       <Screen>
         <TopBar title={event.title} subtitle={org.name} back />
 
+        <CoverPhoto cover={org.cover} alt={org.name} className="h-44 rounded-2xl" />
+
         <Link
           to="/organizations/$orgId"
           params={{ orgId: org.id }}
-          className={`${tapCard} flex items-center gap-3`}
+          className={`${tapCard} mt-3 flex items-center gap-3`}
         >
           <OrgMark cover={org.cover} />
           <div className="min-w-0 flex-1">
