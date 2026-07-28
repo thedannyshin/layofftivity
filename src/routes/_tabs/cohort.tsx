@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Car, Check, ChevronRight, MapPin, MessageCircle, Quote, UserPlus } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, staticCard, tapCard, tapCardAccent } from "@/components/app/Shell";
+import { Avatar, Card, Chip, ListGroup, Screen, SectionTitle, TopBar, staticCard, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { byId, cohort, icebreakers, introductions, orgById, sharedWith, transportation } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -65,13 +65,13 @@ function Group() {
       </Link>
 
       <SectionTitle>Members</SectionTitle>
-      <div className="space-y-3">
+      <ListGroup>
         {matches.map((m) => (
           <Link
             key={m.id}
             to="/chat/$personId"
             params={{ personId: m.id }}
-            className={`${tapCard} flex items-center gap-3`}
+            className={tapRow}
           >
             <Avatar src={m.photo} name={m.name} size={48} />
             <div className="min-w-0 flex-1">
@@ -88,7 +88,7 @@ function Group() {
         ))}
 
         {guests.map((g) => (
-          <div key={g.id} className={`${staticCard} flex items-center gap-3`}>
+          <div key={g.id} className="flex items-center gap-3 px-4 py-3.5">
             <Avatar name={g.name} size={48} />
             <div className="min-w-0 flex-1">
               <p className="truncate text-[15px] font-bold">{g.name}</p>
@@ -99,7 +99,7 @@ function Group() {
             <Chip tone="yellow">Guest</Chip>
           </div>
         ))}
-      </div>
+      </ListGroup>
 
       {guests.length === 0 && (
         <Link
@@ -186,7 +186,7 @@ function Group() {
       </div>
 
       <SectionTitle>Rides</SectionTitle>
-      <div className="space-y-3">
+      <ListGroup>
         {transportation.map((t) => {
           const driver = byId(t.driverId);
           const claimed = state.rideClaimed === t.driverId;
@@ -198,7 +198,7 @@ function Group() {
               type="button"
               onClick={() => !full && claimRide(t.driverId)}
               disabled={full}
-              className={`${tapCard} flex w-full items-center gap-3`}
+              className={tapRow}
             >
               <Avatar src={driver.photo} name={driver.name} size={44} />
               <div className="min-w-0 flex-1">
@@ -224,7 +224,7 @@ function Group() {
             </button>
           );
         })}
-      </div>
+      </ListGroup>
 
       <SectionTitle>Where to meet</SectionTitle>
       <Card>
