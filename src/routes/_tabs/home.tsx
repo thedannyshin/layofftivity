@@ -125,26 +125,14 @@ function Home() {
 
       <SectionTitle>This week's goals</SectionTitle>
       <Card>
-        <div className="flex items-baseline justify-between">
-          <p className="text-[15px] font-semibold">
-            {doneCount} of {goals.length} done
-          </p>
-          <p className="text-[13px] text-muted-foreground">Updates as you go</p>
-        </div>
-        <div className="mt-3 flex gap-1.5">
-          {goals.map((g) => (
-            <div
-              key={g.id}
-              className={cn("h-2 flex-1 rounded-full", g.done ? "bg-accent" : "bg-secondary")}
-            />
-          ))}
-        </div>
-        <ul className="mt-4 space-y-2">
-          {goals.map((g) => (
-            <li key={g.id}>
+        <Ring value={doneCount} total={goals.length} label="done this week" />
+      </Card>
+      <ListGroup className="mt-3">
+        {goals.map((g) => (
               <Link
+                key={g.id}
                 to={g.to}
-                className="flex w-full cursor-pointer items-center gap-3 rounded-xl bg-secondary/60 px-3 py-2.5 text-left transition-colors hover:bg-secondary active:bg-primary-soft"
+                className={tapRow}
               >
                 <span
                   className={cn(
@@ -168,16 +156,14 @@ function Home() {
                 </span>
                 <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
               </Link>
-            </li>
-          ))}
-        </ul>
+        ))}
+      </ListGroup>
         {doneCount === goals.length && (
-          <p className="mt-2 rounded-xl bg-accent-soft px-3 py-2.5 text-[13px] font-semibold text-accent-foreground">
+          <p className="mt-3 rounded-xl bg-accent-soft px-3 py-2.5 text-[13px] font-semibold text-accent-foreground">
             That's the whole week. {app.daysCompleted} volunteer{" "}
             {app.daysCompleted === 1 ? "day" : "days"} in.
           </p>
         )}
-      </Card>
 
       <SectionTitle action="Open group" to="/cohort">
         Your group
