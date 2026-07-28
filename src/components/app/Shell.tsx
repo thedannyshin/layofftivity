@@ -266,6 +266,9 @@ export function Deck({ children }: { children: ReactNode }) {
 
 export const deckItem = "w-[78%] shrink-0 snap-start rounded-2xl bg-card p-4";
 
+/** Tappable card inside a horizontal deck/carousel (photo on top, text below). */
+export const deckCard = `w-[78%] shrink-0 snap-start overflow-hidden rounded-2xl bg-card ${tapBase} hover:bg-secondary/70 active:bg-secondary`;
+
 /** Circular progress ring with the number inside — a count, not a sentence. */
 export function Ring({
   value,

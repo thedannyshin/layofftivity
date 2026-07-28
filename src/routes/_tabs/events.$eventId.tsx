@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { CalendarDays, Check, Clock, MapPin, Users, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { Avatar, Card, Chip, Clamp, FactGrid, Meta, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
-import { OrgMark } from "@/components/app/OrgMark";
+import { CoverPhoto, OrgMark } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { eventById, orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -56,10 +56,12 @@ function EventDetail() {
       <Screen>
         <TopBar title={event.title} subtitle={org.name} back />
 
+        <CoverPhoto cover={org.cover} alt={org.name} className="h-44 rounded-2xl" />
+
         <Link
           to="/organizations/$orgId"
           params={{ orgId: org.id }}
-          className={`${tapCard} flex items-center gap-3`}
+          className={`${tapCard} mt-3 flex items-center gap-3`}
         >
           <OrgMark cover={org.cover} />
           <div className="min-w-0 flex-1">

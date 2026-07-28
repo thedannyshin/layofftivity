@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, MapPin, Users } from "lucide-react";
-import { Card, Chip, Clamp, ListGroup, Meta, Screen, SectionTitle, TopBar, tapCard, tapRow } from "@/components/app/Shell";
-import { OrgMark } from "@/components/app/OrgMark";
+import { Card, Chip, Clamp, Deck, Meta, Screen, SectionTitle, TopBar, deckCard } from "@/components/app/Shell";
+import { CoverPhoto } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { eventsForOrg, orgById, organizations } from "@/lib/data";
 
@@ -29,14 +29,12 @@ function OrgDetail() {
     <Screen>
       <TopBar title={org.name} subtitle={org.neighborhood} back />
 
-      <div className="flex items-center gap-4">
-        <OrgMark cover={org.cover} size={64} />
-        <div>
-          <p className="text-[13px] font-semibold text-primary">{org.cause}</p>
-          <p className="mt-1 text-[14px] text-muted-foreground">
-            {org.volunteersThisMonth} volunteers this month
-          </p>
-        </div>
+      <CoverPhoto cover={org.cover} alt={org.name} className="h-44 rounded-2xl" />
+      <div className="mt-3">
+        <p className="text-[13px] font-semibold text-primary">{org.cause}</p>
+        <p className="mt-1 text-[14px] text-muted-foreground">
+          {org.volunteersThisMonth} volunteers this month
+        </p>
       </div>
 
       <p className="mt-5 text-[17px] leading-snug font-bold">{org.mission}</p>
@@ -52,14 +50,16 @@ function OrgDetail() {
 
       <SectionTitle>Volunteer opportunities</SectionTitle>
       {orgEvents.length > 0 ? (
-        <div className="space-y-3">
+        <Deck>
           {orgEvents.map((e) => (
             <Link
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className={`${tapCard} block`}
+              className={deckCard}
             >
+              <CoverPhoto cover={org.cover} alt={e.title} className="h-28" />
+              <div className="p-4">
               <div className="flex items-start justify-between gap-3">
                 <p className="text-[16px] leading-tight font-bold">{e.title}</p>
                 <ChevronRight className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" />
@@ -82,9 +82,10 @@ function OrgDetail() {
                   {e.spotsFilled}/{e.spotsTotal} joined
                 </Chip>
               </div>
+              </div>
             </Link>
           ))}
-        </div>
+        </Deck>
       ) : (
         <Card>
           <p className="text-[15px] font-semibold">No open shifts right now</p>
@@ -96,26 +97,25 @@ function OrgDetail() {
       )}
 
       <SectionTitle>Also working on {org.cause.toLowerCase()}</SectionTitle>
-      <ListGroup>
+      <Deck>
         {organizations
           .filter((o) => o.id !== org.id)
-          .slice(0, 2)
+          .slice(0, 4)
           .map((o) => (
             <Link
               key={o.id}
               to="/organizations/$orgId"
               params={{ orgId: o.id }}
-              className={tapRow}
+              className={`${deckCard} w-[62%]`}
             >
-              <OrgMark cover={o.cover} />
-              <div className="min-w-0 flex-1">
+              <CoverPhoto cover={o.cover} alt={o.name} className="h-24" />
+              <div className="p-3.5">
                 <p className="truncate text-[15px] font-bold">{o.name}</p>
                 <Meta items={[o.cause, o.neighborhood]} />
               </div>
-              <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
             </Link>
           ))}
-      </ListGroup>
+      </Deck>
     </Screen>
   );
 }
