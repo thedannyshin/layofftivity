@@ -100,7 +100,7 @@
   --lo-elevation-dark: 6px 6px 0 var(--lo-dark-green);
   --lo-elevation-press: 2px 2px 0 var(--lo-dark-green);
 
-  --radius: 1.25rem;
+  --radius: 0.875rem;
   --background: var(--lo-sprout-tint);
   --foreground: var(--lo-dark-green);
   --card: oklch(1 0 0);
