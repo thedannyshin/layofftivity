@@ -68,12 +68,14 @@
    * Reduced palette: one green family + one gold accent + paper/ink neutrals.
    * Every legacy --lo-* token now aliases one of these five values.
    */
+  /* Lightness ladder with clear steps so surfaces never read as the same shade:
+     1.00 card / 0.975 paper / 0.93 muted / 0.87 soft fill / 0.54 action / 0.33 ink */
   --lo-ink: oklch(0.33 0.07 152); /* deep green text */
   --lo-green: oklch(0.54 0.16 150); /* action green, AA on white text */
-  --lo-green-soft: oklch(0.925 0.075 152); /* green wash */
-  --lo-gold: oklch(0.878 0.175 92); /* accent */
-  --lo-gold-soft: oklch(0.957 0.068 95); /* accent wash */
-  --lo-paper: oklch(0.981 0.022 130); /* app background */
+  --lo-green-soft: oklch(0.87 0.095 152); /* green wash */
+  --lo-gold: oklch(0.855 0.18 92); /* accent */
+  --lo-gold-soft: oklch(0.925 0.095 95); /* accent wash */
+  --lo-paper: oklch(0.975 0.018 130); /* app background */
 
   /* Legacy aliases — kept so existing utilities resolve to the reduced set */
   --lo-dark-green: var(--lo-ink);
@@ -108,9 +110,9 @@
   --primary: var(--lo-action-green);
   --primary-foreground: oklch(1 0 0);
   --primary-soft: var(--lo-green-soft);
-  --secondary: oklch(0.945 0.048 145);
+  --secondary: oklch(0.93 0.055 145);
   --secondary-foreground: var(--lo-dark-green);
-  --muted: oklch(0.955 0.03 140);
+  --muted: oklch(0.93 0.03 140);
   --muted-foreground: oklch(0.5 0.05 150);
   --accent: var(--lo-sunshine-gold);
   --accent-foreground: var(--lo-dark-green);
