@@ -118,10 +118,9 @@ function Organizations() {
             </Button>
           </div>
         )}
-      </div>
 
       <SectionTitle>Happening soon</SectionTitle>
-      <div className="space-y-3">
+      <ListGroup>
         {soon.map((e) => {
           const org = orgById(e.orgId);
           return (
