@@ -3,6 +3,20 @@ import { ChevronLeft } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
+/**
+ * One shared look for every tappable card in the app.
+ * If a surface uses this class, it must be a real link/button with one primary action.
+ */
+export const tapCard =
+  "cursor-pointer rounded-2xl bg-card p-4 text-left transition-colors hover:bg-secondary/70 active:bg-secondary disabled:pointer-events-none disabled:opacity-60";
+
+/** Same look, for the accent (gold) variant of a tappable card. */
+export const tapCardAccent =
+  "cursor-pointer rounded-2xl bg-accent-soft p-4 text-left transition-colors hover:bg-accent-soft/80 active:bg-accent-soft/70";
+
+/** Static (non-tappable) card surface. */
+export const staticCard = "rounded-2xl bg-card p-4";
+
 export function Screen({
   children,
   className,
@@ -77,7 +91,7 @@ export function SectionTitle({
       {action && to && (
         <Link
           to={to}
-          className="rounded-full bg-secondary px-3 py-1.5 text-[13px] font-bold text-primary transition-colors hover:bg-primary-soft active:bg-primary-soft"
+          className="inline-flex h-10 shrink-0 cursor-pointer items-center rounded-full bg-secondary px-5 text-[13px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft"
         >
           {action}
         </Link>
