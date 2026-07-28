@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Users } from "lucide-react";
-import { Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Card, Meta, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { eventById, orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
