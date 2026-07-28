@@ -38,11 +38,10 @@ function Badges() {
 
   return (
     <Screen>
-      <TopBar
-        title="Badges"
-        back
-        right={<Ring value={earned.length} total={badges.length} size={44} />}
-      />
+      <TopBar title="Badges" back />
+      <div className="-mt-2 mb-2">
+        <Ring value={earned.length} total={badges.length} size={48} label="earned" />
+      </div>
 
       {earned.length > 0 && <SectionTitle>Earned</SectionTitle>}
       <div className="grid grid-cols-2 gap-3">
