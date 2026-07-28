@@ -123,11 +123,11 @@ function Home() {
         </div>
       </Link>
 
-      <SectionTitle>This week's goals</SectionTitle>
-      <Card>
-        <Ring value={doneCount} total={goals.length} label="done this week" />
-      </Card>
-      <ListGroup className="mt-3">
+      <div className="mt-8 mb-3 flex items-center justify-between gap-3">
+        <h2 className="lo-display text-[18px]">This week</h2>
+        <Ring value={doneCount} total={goals.length} size={44} />
+      </div>
+      <ListGroup>
         {goals.map((g) => (
               <Link
                 key={g.id}
