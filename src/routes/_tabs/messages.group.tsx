@@ -35,6 +35,7 @@ function GroupMessages() {
   const { update, thread, matches, guests, profile, initials, fullName, primaryEvent, isJoined } =
     useApp();
   const messages = thread("group");
+  const groupLabel = formatFirstNames(matches.slice(0, 3).map((person) => person.name));
   const org = orgById(primaryEvent.orgId);
   const joined = isJoined(primaryEvent.id);
   const [value, setValue] = React.useState("");
@@ -55,7 +56,7 @@ function GroupMessages() {
     <div className="flex min-h-screen flex-col bg-background pb-32">
       <Screen>
         <ScreenHero
-          title="Crew messages"
+          title={groupLabel}
           subtitle={`${matches.length + 1 + guests.length} people`}
           back
           right={
@@ -186,4 +187,14 @@ function GroupMessages() {
       </div>
     </div>
   );
+}
+
+function formatFirstNames(names: string[]) {
+  const firstNames = names
+    .map((name) => name.split(" ")[0])
+    .filter(Boolean);
+
+  if (firstNames.length <= 1) return firstNames[0] ?? "Your group";
+  if (firstNames.length === 2) return `${firstNames[0]} and ${firstNames[1]}`;
+  return `${firstNames.slice(0, -1).join(", ")}, and ${firstNames[firstNames.length - 1]}`;
 }
