@@ -64,23 +64,33 @@
 }
 
 :root {
-  /* Layofftivity design system — palette inherited from Touch Grass */
-  --lo-dark-green: oklch(0.322 0.066 146.3);
-  --lo-grass-green: oklch(0.719 0.194 149.9);
-  /* Accessible action green: passes AA with white text */
-  --lo-action-green: oklch(0.545 0.148 149.9);
-  --lo-fresh-sprout: oklch(0.84 0.137 134);
-  --lo-sunshine-gold: oklch(0.867 0.177 90.8);
-  --lo-lemonade: oklch(0.887 0.182 109.9);
-  --lo-sprout-tint: oklch(0.973 0.016 138.7);
-  --lo-gold-tint: oklch(0.958 0.062 95);
-  --lo-green-muted: oklch(0.44 0.062 147.1);
-  --lo-green-faint: oklch(0.662 0.051 148.7);
-  --lo-green-line: oklch(0.865 0.03 142.2);
-  --lo-green-disabled: oklch(0.956 0.01 140.5);
-  --lo-green-glow: oklch(0.925 0.058 152);
-  --lo-hatch-green: oklch(0.937 0.034 138.6);
-  --lo-hatch-gold: oklch(0.952 0.072 93.8);
+  /*
+   * Reduced palette: one green family + one gold accent + paper/ink neutrals.
+   * Every legacy --lo-* token now aliases one of these five values.
+   */
+  --lo-ink: oklch(0.33 0.07 152); /* deep green text */
+  --lo-green: oklch(0.54 0.16 150); /* action green, AA on white text */
+  --lo-green-soft: oklch(0.925 0.075 152); /* green wash */
+  --lo-gold: oklch(0.878 0.175 92); /* accent */
+  --lo-gold-soft: oklch(0.957 0.068 95); /* accent wash */
+  --lo-paper: oklch(0.981 0.022 130); /* app background */
+
+  /* Legacy aliases — kept so existing utilities resolve to the reduced set */
+  --lo-dark-green: var(--lo-ink);
+  --lo-grass-green: var(--lo-green);
+  --lo-action-green: var(--lo-green);
+  --lo-fresh-sprout: var(--lo-green-soft);
+  --lo-sunshine-gold: var(--lo-gold);
+  --lo-lemonade: var(--lo-gold);
+  --lo-sprout-tint: var(--lo-paper);
+  --lo-gold-tint: var(--lo-gold-soft);
+  --lo-green-muted: oklch(0.5 0.05 150);
+  --lo-green-faint: oklch(0.5 0.05 150);
+  --lo-green-line: var(--lo-green-soft);
+  --lo-green-disabled: var(--lo-green-soft);
+  --lo-green-glow: var(--lo-green-soft);
+  --lo-hatch-green: var(--lo-green-soft);
+  --lo-hatch-gold: var(--lo-gold-soft);
 
   /* Elevation is drawn, never blurred */
   --lo-stroke: 2px;
@@ -97,15 +107,15 @@
   --popover-foreground: var(--lo-dark-green);
   --primary: var(--lo-action-green);
   --primary-foreground: oklch(1 0 0);
-  --primary-soft: var(--lo-green-glow);
-  --secondary: oklch(0.928 0.032 140);
+  --primary-soft: var(--lo-green-soft);
+  --secondary: oklch(0.945 0.048 145);
   --secondary-foreground: var(--lo-dark-green);
-  --muted: var(--lo-green-disabled);
-  --muted-foreground: var(--lo-green-muted);
+  --muted: oklch(0.955 0.03 140);
+  --muted-foreground: oklch(0.5 0.05 150);
   --accent: var(--lo-sunshine-gold);
   --accent-foreground: var(--lo-dark-green);
   --accent-soft: var(--lo-gold-tint);
-  --destructive: oklch(0.573 0.151 37.4);
+  --destructive: oklch(0.6 0.15 37.4);
   --destructive-foreground: oklch(0.99 0 0);
   --border: var(--lo-dark-green);
   --input: var(--lo-green-line);
@@ -169,9 +179,10 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family:
-      Bitter,
-      Georgia,
-      serif;
+      Nunito,
+      ui-sans-serif,
+      system-ui,
+      sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 
