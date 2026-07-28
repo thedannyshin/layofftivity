@@ -145,10 +145,10 @@ function Group() {
       </Link>
 
       <SectionTitle>Introductions</SectionTitle>
-      <div className="space-y-3">
+      <div className="space-y-5">
         {introductions
           .filter((i) => memberIds.includes(i.personId))
-          .slice(0, 3)
+          .slice(0, 2)
           .map((intro) => {
             const p = byId(intro.personId);
             return (
@@ -160,28 +160,30 @@ function Group() {
                     <p className="text-[12px] text-muted-foreground">{intro.when}</p>
                   </div>
                 </div>
-                <p className="mt-3 text-[15px] leading-relaxed">{intro.text}</p>
+                <div className="mt-2">
+                  <Clamp lines={2}>{intro.text}</Clamp>
+                </div>
               </Card>
             );
           })}
         {introductions.filter((i) => memberIds.includes(i.personId)).length === 0 && (
           <Card>
             <p className="text-[15px] leading-relaxed text-muted-foreground">
-              Your group is brand new. Post the first introduction in the group chat.
+              No introductions yet.
             </p>
           </Card>
         )}
       </div>
 
       <SectionTitle>Icebreakers</SectionTitle>
-      <div className="space-y-3">
-        {icebreakers.slice(0, 3).map((q) => (
-          <div key={q} className={`${staticCard} flex gap-3`}>
-            <Quote className="h-4 w-4 shrink-0 text-primary" />
-            <p className="text-[15px] leading-relaxed">{q}</p>
+      <Deck>
+        {icebreakers.slice(0, 4).map((q) => (
+          <div key={q} className={deckItem}>
+            <Quote className="h-4 w-4 text-primary" />
+            <p className="mt-2 text-[15px] leading-relaxed">{q}</p>
           </div>
         ))}
-      </div>
+      </Deck>
 
       <SectionTitle>Rides</SectionTitle>
       <ListGroup>
