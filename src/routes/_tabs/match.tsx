@@ -51,14 +51,6 @@ function Match() {
     <Screen>
       <TopBar title="You've been matched" subtitle="Meet your volunteer group" />
 
-      <Card variant="accent">
-        <p className="text-[15px] font-semibold text-accent-foreground">
-          {matches.length === 1 ? "1 person" : `${matches.length} people`} · same causes · same time
-          slot
-        </p>
-        <Meta className="mt-0.5" items={[state.onboarding.location || "Near you"]} />
-      </Card>
-
       <SectionTitle>Your matches</SectionTitle>
       <div className="space-y-4">
         {matches.map((m) => {
@@ -122,28 +114,7 @@ function Match() {
         </div>
       </Link>
 
-      <SectionTitle>Bring one friend</SectionTitle>
-      <p className="text-[14px] text-muted-foreground">One guest each. No account — they just RSVP.</p>
-      <div className="mt-3 space-y-3">
-        <Button asChild variant="soft" size="lg" className="w-full">
-          <Link to="/invite">
-            <UserPlus />
-            {state.invites.length ? "Manage your invitation" : "Invite a friend"}
-          </Link>
-        </Button>
-        <Button asChild variant="quiet" size="lg" className="w-full">
-          <Link to="/cohort">Open your group</Link>
-        </Button>
-      </div>
-
-      {guests.length > 0 && (
-        <p className="mt-4 text-center text-[13px] text-muted-foreground">
-          {guests.map((g) => g.name).join(", ")} accepted and will join you as{" "}
-          {guests.length === 1 ? "a guest" : "guests"}.
-        </p>
-      )}
-
-      <div className={`${staticCard} mt-6 flex gap-3`}>
+      <div className={`${staticCard} mt-8 flex gap-3`}>
         <Quote className="h-4 w-4 shrink-0 text-primary" />
         <p className="text-[14px] leading-relaxed text-muted-foreground">
           Matched on causes, interests, and availability — nothing else.
