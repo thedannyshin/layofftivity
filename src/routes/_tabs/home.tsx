@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, Clock, MapPin, Sparkles, Users } from "lucide-react";
-import { Avatar, Card, Chip, Screen, SectionTitle, tapCard, tapCardAccent } from "@/components/app/Shell";
+import { Avatar, Card, Chip, ListGroup, Screen, SectionTitle, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { events, orgById } from "@/lib/data";
@@ -234,7 +234,7 @@ function Home() {
       <SectionTitle action="See all" to="/organizations">
         Recommended for you
       </SectionTitle>
-      <div className="space-y-3">
+      <ListGroup>
         {recommended.map((e) => {
           const eOrg = orgById(e.orgId);
           const isIn = isJoined(e.id);
@@ -243,7 +243,7 @@ function Home() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className={`${tapCard} flex items-center gap-3`}
+              className={tapRow}
             >
               <OrgMark cover={eOrg.cover} />
               <div className="min-w-0 flex-1">
@@ -267,7 +267,7 @@ function Home() {
             </Link>
           );
         })}
-      </div>
+      </ListGroup>
 
       <div className="mt-6">
         <Button asChild variant="quiet" size="lg" className="w-full">

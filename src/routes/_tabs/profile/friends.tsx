@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageCircle } from "lucide-react";
-import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, staticCard, tapCard } from "@/components/app/Shell";
+import { Avatar, Card, Chip, ListGroup, Screen, SectionTitle, TopBar, tapRow } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { sharedWith } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -34,7 +34,7 @@ function Friends() {
       />
 
       <SectionTitle>Your matches</SectionTitle>
-      <div className="space-y-3">
+      <ListGroup>
         {matches.map((m) => {
           const messages = thread(m.id).length;
           return (
@@ -42,7 +42,7 @@ function Friends() {
               key={m.id}
               to="/chat/$personId"
               params={{ personId: m.id }}
-              className={`${tapCard} flex items-center gap-3`}
+              className={tapRow}
             >
               <Avatar src={m.photo} name={m.name} size={48} />
               <div className="min-w-0 flex-1">
@@ -61,13 +61,13 @@ function Friends() {
             </Link>
           );
         })}
-      </div>
+      </ListGroup>
 
       <SectionTitle>Guests</SectionTitle>
       {guests.length ? (
-        <div className="space-y-3">
+        <ListGroup>
           {guests.map((g) => (
-            <div key={g.id} className={`${staticCard} flex items-center gap-3`}>
+            <div key={g.id} className="flex items-center gap-3 px-4 py-3.5">
               <Avatar name={g.name} size={48} />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-bold">{g.name}</p>
@@ -78,7 +78,7 @@ function Friends() {
               <Chip tone="yellow">Guest</Chip>
             </div>
           ))}
-        </div>
+        </ListGroup>
       ) : (
         <Card>
           <p className="text-[15px] leading-relaxed text-muted-foreground">
