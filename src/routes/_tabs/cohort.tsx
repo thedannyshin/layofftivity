@@ -66,26 +66,34 @@ function Group() {
 
       <SectionTitle>Members</SectionTitle>
       <ListGroup>
-        {matches.map((m) => (
-          <Link
-            key={m.id}
-            to="/chat/$personId"
-            params={{ personId: m.id }}
-            className={tapRow}
-          >
-            <Avatar src={m.photo} name={m.name} size={48} />
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-[15px] font-bold">{m.name}</p>
-            <Meta
-              items={[
-                m.formerRole,
-                (sharedWith(m, prefs).length ? sharedWith(m, prefs) : m.interests)[0],
-              ]}
-            />
-            </div>
-            <MessageCircle className="h-5 w-5 shrink-0 text-muted-foreground" />
-          </Link>
-        ))}
+        {matches.map((m) => {
+          const intro = introductions.find((i) => i.personId === m.id);
+          return (
+            <Link
+              key={m.id}
+              to="/chat/$personId"
+              params={{ personId: m.id }}
+              className={`${tapRow} items-start`}
+            >
+              <Avatar src={m.photo} name={m.name} size={48} />
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[15px] font-bold">{m.name}</p>
+                <Meta
+                  items={[
+                    m.formerRole,
+                    (sharedWith(m, prefs).length ? sharedWith(m, prefs) : m.interests)[0],
+                  ]}
+                />
+                {intro && (
+                  <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-muted-foreground">
+                    “{intro.text}”
+                  </p>
+                )}
+              </div>
+              <MessageCircle className="mt-1 h-5 w-5 shrink-0 text-muted-foreground" />
+            </Link>
+          );
+        })}
 
         {guests.map((g) => (
           <div key={g.id} className="flex items-center gap-3 px-4 py-3.5">
@@ -144,47 +152,6 @@ function Group() {
         )}
       </Link>
 
-      <SectionTitle>Introductions</SectionTitle>
-      <div className="space-y-5">
-        {introductions
-          .filter((i) => memberIds.includes(i.personId))
-          .slice(0, 2)
-          .map((intro) => {
-            const p = byId(intro.personId);
-            return (
-              <Card key={intro.personId}>
-                <div className="flex items-center gap-3">
-                  <Avatar src={p.photo} name={p.name} size={40} />
-                  <div className="min-w-0">
-                    <p className="truncate text-[14px] font-bold">{p.name}</p>
-                    <p className="text-[12px] text-muted-foreground">{intro.when}</p>
-                  </div>
-                </div>
-                <div className="mt-2">
-                  <Clamp lines={2}>{intro.text}</Clamp>
-                </div>
-              </Card>
-            );
-          })}
-        {introductions.filter((i) => memberIds.includes(i.personId)).length === 0 && (
-          <Card>
-            <p className="text-[15px] leading-relaxed text-muted-foreground">
-              No introductions yet.
-            </p>
-          </Card>
-        )}
-      </div>
-
-      <SectionTitle>Icebreakers</SectionTitle>
-      <Deck>
-        {icebreakers.slice(0, 4).map((q) => (
-          <div key={q} className={deckItem}>
-            <Quote className="h-4 w-4 text-primary" />
-            <p className="mt-2 text-[15px] leading-relaxed">{q}</p>
-          </div>
-        ))}
-      </Deck>
-
       <SectionTitle>Rides</SectionTitle>
       <ListGroup>
         {transportation.map((t) => {
@@ -222,18 +189,6 @@ function Group() {
           );
         })}
       </ListGroup>
-
-      <SectionTitle>Where to meet</SectionTitle>
-      <Card>
-        <p className="flex items-start gap-2 text-[15px] font-semibold">
-          <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-          {cohort.meetupSpot}
-        </p>
-        <p className="mt-1 pl-6 text-[13px] text-muted-foreground">{cohort.meetupTime}</p>
-        <Button asChild className="mt-4 w-full">
-          <Link to="/volunteer-day">Open the volunteer day</Link>
-        </Button>
-      </Card>
     </Screen>
   );
 }
