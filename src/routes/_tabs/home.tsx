@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, Clock, MapPin, Sparkles, Users } from "lucide-react";
-import { Avatar, Card, Chip, Screen, SectionTitle, tapCard, tapCardAccent } from "@/components/app/Shell";
+import { Avatar, Card, Chip, ListGroup, Screen, SectionTitle, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { events, orgById } from "@/lib/data";
