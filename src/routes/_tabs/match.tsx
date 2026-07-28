@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Check, MessageCircle, Quote, UserPlus } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, staticCard, tapCard } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Clamp, Meta, Screen, SectionTitle, TopBar, staticCard, tapCard } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { orgById, sharedWith } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
@@ -52,11 +52,11 @@ function Match() {
       <TopBar title="You've been matched" subtitle="Meet your volunteer group" />
 
       <Card variant="accent">
-        <p className="text-[15px] leading-relaxed text-accent-foreground">
-          {matches.length === 1 ? "One person" : `${matches.length} people`} near{" "}
-          {state.onboarding.location || "you"} chose the same causes and the same time slot. Say
-          hello, then join your first activity together.
+        <p className="text-[15px] font-semibold text-accent-foreground">
+          {matches.length === 1 ? "1 person" : `${matches.length} people`} · same causes · same time
+          slot
         </p>
+        <Meta className="mt-0.5" items={[state.onboarding.location || "Near you"]} />
       </Card>
 
       <SectionTitle>Your matches</SectionTitle>
@@ -70,22 +70,19 @@ function Match() {
                 <Avatar src={m.photo} name={m.name} size={64} />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[17px] font-extrabold">{m.name}</p>
-                  <p className="truncate text-[13px] text-muted-foreground">{m.formerRole}</p>
-                  <p className="truncate text-[13px] text-muted-foreground">{m.city}</p>
+                  <Meta items={[m.formerRole, m.city]} />
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {(shared.length ? shared : m.causes).slice(0, 3).map((s) => (
+                      <Chip key={s} tone="green">
+                        <Check className="h-3 w-3" />
+                        {s}
+                      </Chip>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <p className="mt-3 text-[15px] leading-relaxed">{m.bio}</p>
-
-              <p className="mt-4 text-[12px] font-bold text-muted-foreground uppercase">
-                What you share
-              </p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {(shared.length ? shared : m.causes).map((s) => (
-                  <Chip key={s} tone="green">
-                    <Check className="h-3 w-3" />
-                    {s}
-                  </Chip>
-                ))}
+              <div className="mt-3">
+                <Clamp lines={2}>{m.bio}</Clamp>
               </div>
 
               <div className="mt-4 flex gap-2">
@@ -126,9 +123,7 @@ function Match() {
       </Link>
 
       <SectionTitle>Bring one friend</SectionTitle>
-      <p className="text-[15px] leading-relaxed text-muted-foreground">
-        Everyone in the group can invite one friend as a guest. No account needed — they just RSVP.
-      </p>
+      <p className="text-[14px] text-muted-foreground">One guest each. No account — they just RSVP.</p>
       <div className="mt-3 space-y-3">
         <Button asChild variant="soft" size="lg" className="w-full">
           <Link to="/invite">
@@ -150,9 +145,8 @@ function Match() {
 
       <div className={`${staticCard} mt-6 flex gap-3`}>
         <Quote className="h-4 w-4 shrink-0 text-primary" />
-        <p className="text-[15px] leading-relaxed">
-          Matches are based on causes, interests, and when you can show up — nothing else. We'd
-          rather you know a few people well than scroll past hundreds.
+        <p className="text-[14px] leading-relaxed text-muted-foreground">
+          Matched on causes, interests, and availability — nothing else.
         </p>
       </div>
     </Screen>

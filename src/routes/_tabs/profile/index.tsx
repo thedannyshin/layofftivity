@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { Award, BookHeart, ChevronRight, History, RotateCcw, UserRound } from "lucide-react";
-import { Avatar, Card, Chip, ListGroup, Screen, SectionTitle, TopBar, staticCard, tapCard, tapRow } from "@/components/app/Shell";
+import { Avatar, Card, Chip, ListGroup, Meta, Screen, SectionTitle, TopBar, staticCard, tapCard, tapRow } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -45,10 +45,7 @@ function Profile() {
         <Avatar src={profile.photo} name={fullName} initials={initials} size={72} />
         <div className="min-w-0">
           <h2 className="text-[20px] font-extrabold">{fullName}</h2>
-          <p className="text-[13px] text-muted-foreground">
-            {state.onboarding.laidOff || "New here"}
-          </p>
-          <p className="text-[13px] text-muted-foreground">{state.onboarding.location}</p>
+          <Meta items={[state.onboarding.laidOff || "New here", state.onboarding.location]} />
         </div>
       </div>
 
@@ -79,25 +76,25 @@ function Profile() {
           to="/profile/friends"
           icon={<UserRound className="h-5 w-5 text-primary" />}
           title="People"
-          detail={`${matches.length + guests.length} in your group`}
+          detail={`${matches.length + guests.length}`}
         />
         <Row
           to="/profile/history"
           icon={<History className="h-5 w-5 text-primary" />}
           title="Volunteer history"
-          detail={`${daysCompleted} shift${daysCompleted === 1 ? "" : "s"} · ${hours} hours`}
+          detail={`${daysCompleted} · ${hours}h`}
         />
         <Row
           to="/profile/reflections"
           icon={<BookHeart className="h-5 w-5 text-primary" />}
           title="Reflection history"
-          detail={`${state.reflections.length} private ${state.reflections.length === 1 ? "entry" : "entries"}`}
+          detail={`${state.reflections.length}`}
         />
         <Row
           to="/profile/badges"
           icon={<Award className="h-5 w-5 text-primary" />}
           title="Badges"
-          detail={`${earned} of ${badges.length} earned`}
+          detail={`${earned}/${badges.length}`}
         />
       </ListGroup>
 
@@ -160,9 +157,9 @@ function Row({
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
         {icon}
       </span>
-      <span className="min-w-0 flex-1">
-        <span className="block text-[15px] font-bold">{title}</span>
-        <span className="block text-[13px] text-muted-foreground">{detail}</span>
+      <span className="min-w-0 flex-1 truncate text-[15px] font-bold">{title}</span>
+      <span className="shrink-0 text-[14px] font-bold text-muted-foreground tabular-nums">
+        {detail}
       </span>
       <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
     </Link>

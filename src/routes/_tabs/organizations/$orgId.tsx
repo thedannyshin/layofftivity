@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays, ChevronRight, Clock, MapPin, Users } from "lucide-react";
-import { Card, Chip, ListGroup, Screen, SectionTitle, TopBar, tapCard, tapRow } from "@/components/app/Shell";
+import { CalendarDays, ChevronRight, MapPin, Users } from "lucide-react";
+import { Card, Chip, Clamp, ListGroup, Meta, Screen, SectionTitle, TopBar, tapCard, tapRow } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { eventsForOrg, orgById, organizations } from "@/lib/data";
@@ -40,7 +40,9 @@ function OrgDetail() {
       </div>
 
       <p className="mt-5 text-[17px] leading-snug font-bold">{org.mission}</p>
-      <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">{org.about}</p>
+      <div className="mt-3 text-muted-foreground">
+        <Clamp lines={2}>{org.about}</Clamp>
+      </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
         {org.tags.map((t) => (
@@ -62,21 +64,22 @@ function OrgDetail() {
                 <p className="text-[16px] leading-tight font-bold">{e.title}</p>
                 <ChevronRight className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" />
               </div>
-              <div className="mt-2.5 space-y-1.5 text-[13px] text-muted-foreground">
+              <div className="mt-2 space-y-1 text-[13px] text-muted-foreground">
                 <p className="flex items-center gap-2">
-                  <CalendarDays className="h-4 w-4" /> {e.date}
+                  <CalendarDays className="h-4 w-4 shrink-0" />
+                  <span className="truncate">
+                    {e.dateShort} · {e.time}
+                  </span>
                 </p>
                 <p className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" /> {e.time}
-                </p>
-                <p className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" /> {e.location}
+                  <MapPin className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{e.location}</span>
                 </p>
               </div>
               <div className="mt-3 flex items-center gap-1.5">
                 <Chip tone={e.spotsTotal - e.spotsFilled <= 2 ? "yellow" : "green"}>
                   <Users className="h-3 w-3" />
-                  {e.spotsFilled} of {e.spotsTotal} joined
+                  {e.spotsFilled}/{e.spotsTotal} joined
                 </Chip>
               </div>
             </Link>
@@ -85,9 +88,7 @@ function OrgDetail() {
       ) : (
         <Card>
           <p className="text-[15px] font-semibold">No open shifts right now</p>
-          <p className="mt-1 text-[13px] text-muted-foreground">
-            New dates post on Mondays. In the meantime, other organizations have space this week.
-          </p>
+          <p className="mt-1 text-[13px] text-muted-foreground">New dates post Mondays.</p>
           <Button asChild variant="quiet" className="mt-3">
             <Link to="/organizations">Browse other organizations</Link>
           </Button>
@@ -109,9 +110,7 @@ function OrgDetail() {
               <OrgMark cover={o.cover} />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-bold">{o.name}</p>
-                <p className="truncate text-[13px] text-muted-foreground">
-                  {o.cause} · {o.neighborhood}
-                </p>
+                <Meta items={[o.cause, o.neighborhood]} />
               </div>
               <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
             </Link>

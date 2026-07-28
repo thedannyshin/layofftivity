@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Car, Check, ChevronRight, MapPin, MessageCircle, Quote, UserPlus } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, ListGroup, Screen, SectionTitle, TopBar, staticCard, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Clamp, Deck, ListGroup, Meta, Screen, SectionTitle, TopBar, deckItem, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { byId, cohort, icebreakers, introductions, orgById, sharedWith, transportation } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -76,12 +76,12 @@ function Group() {
             <Avatar src={m.photo} name={m.name} size={48} />
             <div className="min-w-0 flex-1">
               <p className="truncate text-[15px] font-bold">{m.name}</p>
-              <p className="truncate text-[13px] text-muted-foreground">{m.formerRole}</p>
-              <p className="mt-1.5 truncate text-[12px] text-muted-foreground">
-                {(sharedWith(m, prefs).length ? sharedWith(m, prefs) : m.interests)
-                  .slice(0, 3)
-                  .join(" · ")}
-              </p>
+            <Meta
+              items={[
+                m.formerRole,
+                (sharedWith(m, prefs).length ? sharedWith(m, prefs) : m.interests)[0],
+              ]}
+            />
             </div>
             <MessageCircle className="h-5 w-5 shrink-0 text-muted-foreground" />
           </Link>
@@ -92,9 +92,7 @@ function Group() {
             <Avatar name={g.name} size={48} />
             <div className="min-w-0 flex-1">
               <p className="truncate text-[15px] font-bold">{g.name}</p>
-              <p className="truncate text-[13px] text-muted-foreground">
-                Invited by you · {g.relation}
-              </p>
+              <Meta items={["Invited by you", g.relation]} />
             </div>
             <Chip tone="yellow">Guest</Chip>
           </div>
@@ -147,10 +145,10 @@ function Group() {
       </Link>
 
       <SectionTitle>Introductions</SectionTitle>
-      <div className="space-y-3">
+      <div className="space-y-5">
         {introductions
           .filter((i) => memberIds.includes(i.personId))
-          .slice(0, 3)
+          .slice(0, 2)
           .map((intro) => {
             const p = byId(intro.personId);
             return (
@@ -162,28 +160,30 @@ function Group() {
                     <p className="text-[12px] text-muted-foreground">{intro.when}</p>
                   </div>
                 </div>
-                <p className="mt-3 text-[15px] leading-relaxed">{intro.text}</p>
+                <div className="mt-2">
+                  <Clamp lines={2}>{intro.text}</Clamp>
+                </div>
               </Card>
             );
           })}
         {introductions.filter((i) => memberIds.includes(i.personId)).length === 0 && (
           <Card>
             <p className="text-[15px] leading-relaxed text-muted-foreground">
-              Your group is brand new. Post the first introduction in the group chat.
+              No introductions yet.
             </p>
           </Card>
         )}
       </div>
 
       <SectionTitle>Icebreakers</SectionTitle>
-      <div className="space-y-3">
-        {icebreakers.slice(0, 3).map((q) => (
-          <div key={q} className={`${staticCard} flex gap-3`}>
-            <Quote className="h-4 w-4 shrink-0 text-primary" />
-            <p className="text-[15px] leading-relaxed">{q}</p>
+      <Deck>
+        {icebreakers.slice(0, 4).map((q) => (
+          <div key={q} className={deckItem}>
+            <Quote className="h-4 w-4 text-primary" />
+            <p className="mt-2 text-[15px] leading-relaxed">{q}</p>
           </div>
         ))}
-      </div>
+      </Deck>
 
       <SectionTitle>Rides</SectionTitle>
       <ListGroup>
@@ -203,12 +203,9 @@ function Group() {
               <Avatar src={driver.photo} name={driver.name} size={44} />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-bold">{driver.name.split(" ")[0]} is driving</p>
-                <p className="truncate text-[13px] text-muted-foreground">
-                  {t.note} · leaves {t.departs}
-                </p>
-                <p className="text-[12px] text-muted-foreground">
-                  {t.seatsTotal - taken} of {t.seatsTotal} seats open
-                </p>
+                <Meta
+                  items={[t.departs, `${t.seatsTotal - taken}/${t.seatsTotal} seats`, t.note]}
+                />
               </div>
               {claimed ? (
                 <Chip tone="green">

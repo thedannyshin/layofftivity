@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays, ChevronRight, Clock, MapPin, Sparkles, Users } from "lucide-react";
-import { Avatar, Card, Chip, ListGroup, Screen, SectionTitle, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
+import { CalendarDays, ChevronRight, MapPin, Sparkles, Users } from "lucide-react";
+import { Avatar, Card, Chip, ListGroup, Meta, Ring, Screen, SectionTitle, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { events, orgById } from "@/lib/data";
@@ -96,15 +96,16 @@ function Home() {
         <h3 className="mt-3 text-[20px] leading-tight font-bold text-primary-foreground">
           {primaryEvent.title}
         </h3>
-        <div className="mt-3 space-y-1.5 text-[14px] text-primary-foreground/90">
+        <div className="mt-3 space-y-1 text-[14px] text-primary-foreground/90">
           <p className="flex items-center gap-2">
-            <CalendarDays className="h-4 w-4" /> {primaryEvent.date}
+            <CalendarDays className="h-4 w-4 shrink-0" />
+            <span className="truncate">
+              {primaryEvent.dateShort} · {primaryEvent.time}
+            </span>
           </p>
           <p className="flex items-center gap-2">
-            <Clock className="h-4 w-4" /> {primaryEvent.time}
-          </p>
-          <p className="flex items-center gap-2">
-            <MapPin className="h-4 w-4" /> {primaryEvent.location}
+            <MapPin className="h-4 w-4 shrink-0" />
+            <span className="truncate">{primaryEvent.location}</span>
           </p>
         </div>
         <div className="mt-4 flex items-center justify-between pt-4">
@@ -122,28 +123,16 @@ function Home() {
         </div>
       </Link>
 
-      <SectionTitle>This week's goals</SectionTitle>
-      <Card>
-        <div className="flex items-baseline justify-between">
-          <p className="text-[15px] font-semibold">
-            {doneCount} of {goals.length} done
-          </p>
-          <p className="text-[13px] text-muted-foreground">Updates as you go</p>
-        </div>
-        <div className="mt-3 flex gap-1.5">
-          {goals.map((g) => (
-            <div
-              key={g.id}
-              className={cn("h-2 flex-1 rounded-full", g.done ? "bg-accent" : "bg-secondary")}
-            />
-          ))}
-        </div>
-        <ul className="mt-4 space-y-2">
-          {goals.map((g) => (
-            <li key={g.id}>
+      <div className="mt-8 mb-3 flex items-center justify-between gap-3">
+        <h2 className="lo-display text-[18px]">This week</h2>
+        <Ring value={doneCount} total={goals.length} size={44} />
+      </div>
+      <ListGroup>
+        {goals.map((g) => (
               <Link
+                key={g.id}
                 to={g.to}
-                className="flex w-full cursor-pointer items-center gap-3 rounded-xl bg-secondary/60 px-3 py-2.5 text-left transition-colors hover:bg-secondary active:bg-primary-soft"
+                className={tapRow}
               >
                 <span
                   className={cn(
@@ -167,16 +156,14 @@ function Home() {
                 </span>
                 <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
               </Link>
-            </li>
-          ))}
-        </ul>
+        ))}
+      </ListGroup>
         {doneCount === goals.length && (
-          <p className="mt-2 rounded-xl bg-accent-soft px-3 py-2.5 text-[13px] font-semibold text-accent-foreground">
+          <p className="mt-3 rounded-xl bg-accent-soft px-3 py-2.5 text-[13px] font-semibold text-accent-foreground">
             That's the whole week. {app.daysCompleted} volunteer{" "}
             {app.daysCompleted === 1 ? "day" : "days"} in.
           </p>
         )}
-      </Card>
 
       <SectionTitle action="Open group" to="/cohort">
         Your group

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BookOpen, Car, Medal, Repeat, Sunrise, UserPlus } from "lucide-react";
-import { Screen, SectionTitle, TopBar, staticCard, staticCardAccent } from "@/components/app/Shell";
+import { Ring, Screen, SectionTitle, TopBar, staticCard, staticCardAccent } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -38,14 +38,12 @@ function Badges() {
 
   return (
     <Screen>
-      <TopBar title="Badges" subtitle={`${earned.length} of ${badges.length} earned`} back />
+      <TopBar title="Badges" back />
+      <div className="-mt-2 mb-2">
+        <Ring value={earned.length} total={badges.length} size={48} label="earned" />
+      </div>
 
-      <SectionTitle>Earned</SectionTitle>
-      {earned.length === 0 && (
-        <p className={cn(staticCard, "text-[15px] leading-relaxed text-muted-foreground")}>
-          Nothing earned yet. Badges unlock as you show up — starting with your first shift.
-        </p>
-      )}
+      {earned.length > 0 && <SectionTitle>Earned</SectionTitle>}
       <div className="grid grid-cols-2 gap-3">
         {earned.map((b) => {
           const Icon = icons[b.icon as keyof typeof icons];
@@ -55,23 +53,21 @@ function Badges() {
                 <Icon className="h-5 w-5 text-accent-foreground" />
               </span>
               <p className="mt-3 text-[15px] leading-tight font-bold">{b.name}</p>
-              <p className="mt-1 text-[12px] text-muted-foreground">{b.detail}</p>
             </div>
           );
         })}
       </div>
 
       <SectionTitle>Still ahead</SectionTitle>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-3 gap-x-3 gap-y-5">
         {locked.map((b) => {
           const Icon = icons[b.icon as keyof typeof icons];
           return (
-            <div key={b.id} className={cn(staticCard, "opacity-70")}>
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-secondary">
+            <div key={b.id} className={cn(staticCard, "text-center opacity-70")} title={b.detail}>
+              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-secondary">
                 <Icon className="h-5 w-5 text-muted-foreground" />
               </span>
-              <p className="mt-3 text-[15px] leading-tight font-bold">{b.name}</p>
-              <p className="mt-1 text-[12px] text-muted-foreground">{b.detail}</p>
+              <p className="mt-2 text-[12px] leading-tight font-bold">{b.name}</p>
             </div>
           );
         })}
