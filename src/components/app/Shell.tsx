@@ -42,11 +42,11 @@ export function ListGroup({ children, className }: { children: ReactNode; classN
 
 /** Tappable pill (chips, quick replies, filters) — same language as Button. */
 export const tapPill =
-  "inline-flex shrink-0 items-center gap-1.5 rounded-full bg-secondary px-3.5 py-2 text-[13px] font-semibold text-foreground cursor-pointer transition-colors duration-[120ms] hover:bg-primary-soft active:bg-primary-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft";
+  "inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-secondary px-3.5 py-2 text-[13px] font-semibold text-foreground cursor-pointer transition-colors duration-[120ms] hover:bg-primary-soft active:bg-primary-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft";
 
 /** Selected state of a tappable pill. */
 export const tapPillActive =
-  "inline-flex shrink-0 items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-[13px] font-semibold text-primary-foreground cursor-pointer transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft";
+  "inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-[13px] font-semibold text-primary-foreground cursor-pointer transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft";
 
 /** One shared look for selectable option rows (onboarding, invite, continue together). */
 export function selectRow(selected: boolean) {
@@ -79,7 +79,7 @@ export function BackButton({ onClick, className }: { onClick: () => void; classN
       aria-label="Go back"
       onClick={onClick}
       className={cn(
-        "flex h-11 shrink-0 items-center gap-1 rounded-full bg-secondary px-3.5 text-[13px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft",
+        "flex h-11 shrink-0 items-center gap-1 rounded-xl bg-secondary px-3.5 text-[13px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft",
         className,
       )}
     >
@@ -130,7 +130,7 @@ export function SectionTitle({
       {action && to && (
         <Link
           to={to}
-          className="inline-flex h-10 shrink-0 cursor-pointer items-center rounded-full bg-secondary px-5 text-[13px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft"
+          className="inline-flex h-10 shrink-0 cursor-pointer items-center rounded-xl bg-secondary px-5 text-[13px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft"
         >
           {action}
         </Link>
@@ -172,7 +172,7 @@ export function Chip({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full px-3 py-1 text-[13px] font-semibold",
+        "inline-flex items-center gap-1 rounded-lg px-3 py-1 text-[13px] font-semibold",
         tone === "neutral" && "bg-secondary text-foreground",
         tone === "green" && "bg-primary-soft text-foreground",
         tone === "yellow" && "bg-accent-soft text-accent-foreground",
@@ -229,7 +229,7 @@ export function Clamp({
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="mt-1.5 cursor-pointer rounded-full bg-secondary px-3 py-1.5 text-[12px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft"
+          className="mt-1.5 cursor-pointer rounded-lg bg-secondary px-3 py-1.5 text-[12px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft"
         >
           {open ? "Less" : "Read more"}
         </button>

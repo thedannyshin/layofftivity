@@ -442,7 +442,7 @@ function SelectRow({
       <span
         className={cn(
           "flex h-6 w-6 shrink-0 items-center justify-center transition-colors",
-          multi ? "rounded-md" : "rounded-full",
+          multi ? "rounded-md" : "rounded-xl",
           selected ? "bg-primary" : "bg-card",
         )}
       >

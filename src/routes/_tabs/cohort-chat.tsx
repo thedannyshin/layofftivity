@@ -124,13 +124,13 @@ function GroupChat() {
             onChange={(e) => setValue(e.target.value)}
             placeholder="Message the group"
             aria-label="Message the group"
-            className="h-12 flex-1 rounded-full bg-secondary px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
+            className="h-12 flex-1 rounded-xl bg-secondary px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
           />
           <button
             type="submit"
             aria-label="Send message"
             disabled={!value.trim()}
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground disabled:opacity-40"
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground disabled:opacity-40"
           >
             <Send className="h-5 w-5" />
           </button>
