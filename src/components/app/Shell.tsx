@@ -19,6 +19,23 @@ export function Screen({
   );
 }
 
+export function BackButton({ onClick, className }: { onClick: () => void; className?: string }) {
+  return (
+    <button
+      type="button"
+      aria-label="Go back"
+      onClick={onClick}
+      className={cn(
+        "flex h-11 shrink-0 items-center gap-1 rounded-full bg-secondary px-3.5 text-[13px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft",
+        className,
+      )}
+    >
+      <ChevronLeft className="h-4 w-4" />
+      Back
+    </button>
+  );
+}
+
 export function TopBar({
   title,
   subtitle,
@@ -34,17 +51,7 @@ export function TopBar({
   return (
     <header className="sticky top-0 z-20 -mx-5 mb-4 bg-background/95 px-5 pt-3 pb-3 backdrop-blur">
       <div className="flex items-center gap-2">
-        {back && (
-          <button
-            type="button"
-            aria-label="Go back"
-            onClick={() => router.history.back()}
-            className="flex h-11 shrink-0 items-center gap-1 rounded-full bg-secondary px-3.5 text-[13px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft"
-          >
-            <ChevronLeft className="h-4 w-4" />
-            Back
-          </button>
-        )}
+        {back && <BackButton onClick={() => router.history.back()} />}
         <div className="min-w-0 flex-1">
           <h1 className="lo-display truncate text-[20px] leading-tight">{title}</h1>
           {subtitle && <p className="truncate text-[13px] text-muted-foreground">{subtitle}</p>}
