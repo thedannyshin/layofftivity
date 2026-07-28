@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
-import { ArrowRight, Camera, Check, ImagePlus, MapPin, Trash2 } from "lucide-react";
+import { ArrowRight, Camera, Check, ChevronLeft, ImagePlus, MapPin, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, Screen } from "@/components/app/Shell";
 import { LogoMark } from "@/components/app/LogoMark";
@@ -172,6 +172,17 @@ function Onboarding() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Screen className="flex flex-1 flex-col pt-4">
+        <div className="pt-2">
+          <button
+            type="button"
+            aria-label="Go back"
+            onClick={() => setStep((s) => s - 1)}
+            className="flex h-11 shrink-0 items-center gap-1 rounded-full bg-secondary px-3.5 text-[13px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Back
+          </button>
+        </div>
         <div className="flex items-center gap-2 pt-2">
           {steps.map((s, i) => (
             <div
@@ -376,14 +387,6 @@ function Onboarding() {
 
       <div className="fixed inset-x-0 bottom-0 bg-card">
         <div className="mx-auto flex w-full max-w-[430px] gap-3 px-5 py-4">
-          <Button
-            variant="quiet"
-            size="lg"
-            className="px-6"
-            onClick={() => setStep((s) => s - 1)}
-          >
-            Back
-          </Button>
           <Button
             size="lg"
             className="flex-1"
