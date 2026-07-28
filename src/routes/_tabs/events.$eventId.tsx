@@ -1,11 +1,13 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { CalendarDays, Check, Clock, MapPin, Users } from "lucide-react";
+import { CalendarDays, Check, ChevronDown, ChevronUp, Clock, MapPin, Users } from "lucide-react";
+import * as React from "react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Clamp, FactGrid, Screen, ScreenHero, SectionTitle } from "@/components/app/Shell";
+import { Avatar, Card, Chip, FactGrid, Screen, ScreenHero, SectionTitle } from "@/components/app/Shell";
 import { CoverPhoto } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { eventById, orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_tabs/events/$eventId")({
   head: ({ params }) => {
@@ -30,10 +32,12 @@ function EventDetail() {
   const org = orgById(event.orgId);
   const { update, matches, guests, isJoined } = useApp();
   const navigate = useNavigate();
+  const [descriptionOpen, setDescriptionOpen] = React.useState(false);
   const joined = isJoined(event.id);
   const attending = joined ? [...matches] : [];
   const attendingGuests = joined ? guests.filter((g) => g.eventId === event.id) : [];
   const filled = event.spotsFilled + (joined ? 1 + attendingGuests.length : 0);
+  const longDescription = event.description.length > 95;
   const join = () => {
     update((s) => ({ ...s, joinedEventIds: [...new Set([...s.joinedEventIds, event.id])] }));
     toast.success("You're in", { description: `${event.dateShort}, ${event.time}` });
@@ -56,8 +60,27 @@ function EventDetail() {
 
         <CoverPhoto cover={org.cover} alt={org.name} className="h-44 rounded-2xl" />
 
-        <SectionTitle>What you'll do</SectionTitle>
-        <Clamp lines={2}>{event.description}</Clamp>
+        <div className="mt-8 mb-3 flex items-center justify-between gap-3">
+          <h2 className="lo-display text-[18px]">What you'll do</h2>
+          {longDescription && (
+            <button
+              type="button"
+              aria-label={descriptionOpen ? "Show less" : "Show more"}
+              onClick={() => setDescriptionOpen((open) => !open)}
+              className="inline-flex shrink-0 items-center rounded-full border border-muted-foreground/35 bg-transparent p-1 text-foreground transition-colors hover:bg-card active:bg-card"
+            >
+              {descriptionOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            </button>
+          )}
+        </div>
+        <p
+          className={cn(
+            "text-[15px] leading-relaxed",
+            !descriptionOpen && "line-clamp-2",
+          )}
+        >
+          {event.description}
+        </p>
 
         <SectionTitle>Details</SectionTitle>
         <FactGrid

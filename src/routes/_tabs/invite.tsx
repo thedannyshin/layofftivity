@@ -228,7 +228,7 @@ function InviteScreen() {
                     "flex flex-1 cursor-pointer flex-col items-center gap-1 rounded-2xl py-3 text-[13px] font-bold transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft",
                     selected
                       ? "bg-primary text-primary-foreground"
-                      : "bg-secondary text-foreground hover:bg-primary-soft/70 active:bg-primary-soft",
+                      : "bg-card text-foreground",
                   )}
                 >
                   <Icon className="h-4 w-4" />

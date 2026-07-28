@@ -64,7 +64,7 @@ function Badges() {
           const Icon = icons[b.icon as keyof typeof icons];
           return (
             <div key={b.id} className={cn(staticCard, "text-center opacity-70")} title={b.detail}>
-              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-secondary">
+              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-card">
                 <Icon className="h-5 w-5 text-muted-foreground" />
               </span>
               <p className="mt-2 text-[12px] leading-tight font-bold">{b.name}</p>

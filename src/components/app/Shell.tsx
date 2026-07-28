@@ -1,5 +1,5 @@
 import { Link, useRouter } from "@tanstack/react-router";
-import { ArrowLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronRight, ChevronUp } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -21,7 +21,7 @@ export const staticCard = "rounded-2xl px-0.5 py-1";
 export const staticCardAccent = `${cardBase} bg-accent-soft/70`;
 
 /** Tappable card. */
-export const tapCard = `${cardBase} bg-card ${tapBase} hover:bg-secondary/70 active:bg-secondary`;
+export const tapCard = `${cardBase} bg-card ${tapBase}`;
 
 /** Tappable accent card. */
 export const tapCardAccent = `${cardBase} bg-accent-soft ${tapBase} hover:bg-accent-soft/80 active:bg-accent-soft/70`;
@@ -30,7 +30,7 @@ export const tapCardAccent = `${cardBase} bg-accent-soft ${tapBase} hover:bg-acc
  * Grouped list: many tappable rows share ONE container instead of one box each.
  * Use <ListGroup> around rows that use `tapRow`.
  */
-export const tapRow = `flex w-full items-center gap-3 px-4 py-3.5 ${tapBase} hover:bg-secondary/60 active:bg-secondary`;
+export const tapRow = `flex w-full items-center gap-3 px-4 py-3.5 bg-card ${tapBase}`;
 
 export function ListGroup({ children, className }: { children: ReactNode; className?: string }) {
   return (
@@ -42,7 +42,7 @@ export function ListGroup({ children, className }: { children: ReactNode; classN
 
 /** Tappable pill (chips, quick replies, filters) — same language as Button. */
 export const tapPill =
-  "inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-secondary px-3.5 py-2 text-[13px] font-semibold text-foreground cursor-pointer transition-colors duration-[120ms] hover:bg-primary-soft active:bg-primary-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft";
+  "inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-[13px] font-semibold text-primary-foreground cursor-pointer transition-colors duration-[120ms] hover:bg-primary/90 active:bg-primary/85 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft";
 
 /** Selected state of a tappable pill. */
 export const tapPillActive =
@@ -52,7 +52,7 @@ export const tapPillActive =
 export function selectRow(selected: boolean) {
   return cn(
     "flex w-full items-center gap-3 rounded-2xl p-4 text-left cursor-pointer transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft",
-    selected ? "bg-accent-soft" : "bg-secondary hover:bg-primary-soft/70 active:bg-primary-soft",
+    selected ? "bg-accent-soft" : "bg-card",
   );
 }
 
@@ -79,7 +79,7 @@ export function BackButton({ onClick, className }: { onClick: () => void; classN
       aria-label="Go back"
       onClick={onClick}
       className={cn(
-        "flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft",
+        "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-muted-foreground/35 bg-transparent text-foreground transition-colors hover:bg-card active:bg-card",
         className,
       )}
     >
@@ -122,7 +122,7 @@ export function ScreenHero({
           {eyebrow && (
             <p className="text-[13px] font-semibold text-muted-foreground">{eyebrow}</p>
           )}
-          <h1 className={cn("lo-display text-[26px] leading-tight", eyebrow && "mt-1")}>
+          <h1 className={cn("lo-display truncate whitespace-nowrap text-[26px] leading-tight", eyebrow && "mt-1")}>
             {title}
           </h1>
         </div>
@@ -243,9 +243,10 @@ export function Clamp({
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="mt-1.5 cursor-pointer rounded-lg bg-secondary px-3 py-1.5 text-[12px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft"
+          aria-label={open ? "Show less" : "Show more"}
+          className="mt-1.5 inline-flex cursor-pointer items-center rounded-full border border-muted-foreground/35 bg-transparent p-1 text-foreground transition-colors hover:bg-card active:bg-card"
         >
-          {open ? "Less" : "Read more"}
+          {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
       )}
     </div>
@@ -282,7 +283,7 @@ export const deckItem =
   "w-[78%] shrink-0 snap-start snap-always rounded-2xl bg-card p-4";
 
 /** Tappable card inside a horizontal deck/carousel (photo on top, text below). */
-export const deckCard = `w-[78%] shrink-0 snap-start snap-always overflow-hidden rounded-2xl bg-card ${tapBase} hover:bg-secondary/70 active:bg-secondary`;
+export const deckCard = `w-[78%] shrink-0 snap-start snap-always overflow-hidden rounded-2xl bg-card ${tapBase}`;
 
 /** Circular progress ring with the number inside — a count, not a sentence. */
 export function Ring({

@@ -37,6 +37,13 @@ export const Route = createFileRoute("/")({
 });
 
 const steps = ["You", "Photo", "Why", "Timing", "Interests", "Causes", "Availability", "Location"];
+
+function formatNamePart(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/(^|[\s'-])[a-z]/g, (match) => match.toUpperCase());
+}
+
 async function fileToSquareDataUrl(file: File, size = 256) {
   const bitmap = await createImageBitmap(file);
   const side = Math.min(bitmap.width, bitmap.height);
@@ -112,9 +119,11 @@ function Onboarding() {
   const finish = () => {
     finishing.current = true;
     const prefs = { interests, causes, availability };
+    const normalizedFirstName = formatNamePart(firstName).trim();
+    const normalizedLastName = formatNamePart(lastName).trim();
     update((s) => ({
       ...s,
-      profile: { firstName: firstName.trim(), lastName: lastName.trim(), photo },
+      profile: { firstName: normalizedFirstName, lastName: normalizedLastName, photo },
       onboarding: { complete: true, reasons, laidOff, interests, causes, availability, location },
       matchIds: matchPeople(prefs).map((p) => p.id),
     }));
@@ -180,7 +189,7 @@ function Onboarding() {
                 </span>
                 <input
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => setFirstName(formatNamePart(e.target.value))}
                   autoComplete="given-name"
                   placeholder="Alex"
                   className="h-12 w-full rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/40"
@@ -192,7 +201,7 @@ function Onboarding() {
                 </span>
                 <input
                   value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => setLastName(formatNamePart(e.target.value))}
                   autoComplete="family-name"
                   placeholder="Rivera"
                   className="h-12 w-full rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/40"
@@ -424,10 +433,15 @@ function SelectRow({
         className={cn(
           "flex h-6 w-6 shrink-0 items-center justify-center transition-colors",
           multi ? "rounded-md" : "rounded-xl",
-          selected ? "bg-primary" : "bg-card",
+          selected ? "bg-primary" : "bg-transparent border border-muted-foreground/35",
         )}
       >
-        {selected && <Check className="h-3.5 w-3.5 text-primary-foreground" />}
+        <Check
+          className={cn(
+            "h-3.5 w-3.5",
+            selected ? "text-primary-foreground" : "text-muted-foreground",
+          )}
+        />
       </span>
     </button>
   );
@@ -447,7 +461,11 @@ function TagButton({
       type="button"
       onClick={onClick}
       aria-pressed={selected}
-      className={selected ? tapPillActive : tapPill}
+      className={
+        selected
+          ? tapPillActive
+          : "inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-muted-foreground/35 bg-transparent px-3.5 py-2 text-[13px] font-semibold text-muted-foreground cursor-pointer transition-colors duration-[120ms] hover:bg-card active:bg-card focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft"
+      }
     >
       {label}
     </button>

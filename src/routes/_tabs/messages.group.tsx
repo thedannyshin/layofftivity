@@ -6,6 +6,13 @@ import { byId, icebreakers, orgById } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
+const icebreakerLabels: Record<string, string> = {
+  "What's one thing you're doing with your week now that you couldn't before?": "Your week",
+  "What did you think you'd miss about work, but don't?": "Work surprises",
+  "What's the smallest good thing that happened to you this week?": "Small wins",
+  "If Saturday mornings were yours forever, how would you spend them?": "Saturday mornings",
+};
+
 export const Route = createFileRoute("/_tabs/messages/group")({
   head: () => ({
     meta: [
@@ -103,17 +110,17 @@ function GroupMessages() {
 
         <div className="mt-4 space-y-3">
           {messages.length === 0 && (
-            <div className="rounded-2xl bg-card p-4">
-              <p className="text-[14px] text-muted-foreground">Nobody has spoken yet. Start with one of these.</p>
+            <div>
+              <p className="text-[14px] font-semibold text-muted-foreground">Icebreaker</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {icebreakers.slice(0, 4).map((q) => (
                   <button
                     key={q}
                     type="button"
                     onClick={() => setValue(q)}
-                    className="rounded-lg bg-secondary px-3 py-2 text-left text-[13px] font-semibold transition-colors hover:bg-primary-soft active:bg-primary-soft"
+                    className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-muted-foreground/35 bg-transparent px-3.5 py-2 text-[13px] font-semibold text-foreground cursor-pointer transition-colors duration-[120ms] hover:bg-card active:bg-card focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft"
                   >
-                    {q}
+                    {icebreakerLabels[q] ?? q}
                   </button>
                 ))}
               </div>
@@ -163,7 +170,7 @@ function GroupMessages() {
             onChange={(e) => setValue(e.target.value)}
             placeholder="Message the crew"
             aria-label="Message the crew"
-            className="h-12 flex-1 rounded-xl bg-secondary px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
+            className="h-12 flex-1 rounded-xl bg-card px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
           />
           <button
             type="submit"

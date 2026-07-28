@@ -20,6 +20,7 @@ import { Route as TabsReflectionRouteImport } from './routes/_tabs/reflection'
 import { Route as TabsVolunteerDayRouteImport } from './routes/_tabs/volunteer-day'
 import { Route as RsvpInviteIdRouteImport } from './routes/rsvp.$inviteId'
 import { Route as TabsEventsEventIdRouteImport } from './routes/_tabs/events.$eventId'
+import { Route as TabsMessagesIndexRouteImport } from './routes/_tabs/messages.index'
 import { Route as TabsMessagesPersonIdRouteImport } from './routes/_tabs/messages.$personId'
 import { Route as TabsMessagesGroupRouteImport } from './routes/_tabs/messages.group'
 import { Route as TabsOrganizationsIndexRouteImport } from './routes/_tabs/organizations/index'
@@ -83,6 +84,11 @@ const TabsEventsEventIdRoute = TabsEventsEventIdRouteImport.update({
   id: '/events/$eventId',
   path: '/events/$eventId',
   getParentRoute: () => TabsRoute,
+} as any)
+const TabsMessagesIndexRoute = TabsMessagesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TabsMessagesRoute,
 } as any)
 const TabsMessagesPersonIdRoute = TabsMessagesPersonIdRouteImport.update({
   id: '/$personId',
@@ -148,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/profile/friends': typeof TabsProfileFriendsRoute
   '/profile/history': typeof TabsProfileHistoryRoute
   '/profile/reflections': typeof TabsProfileReflectionsRoute
+  '/messages/': typeof TabsMessagesIndexRoute
   '/organizations/': typeof TabsOrganizationsIndexRoute
   '/profile/': typeof TabsProfileIndexRoute
 }
@@ -157,7 +164,6 @@ export interface FileRoutesByTo {
   '/continue-together': typeof TabsContinueTogetherRoute
   '/home': typeof TabsHomeRoute
   '/invite': typeof TabsInviteRoute
-  '/messages': typeof TabsMessagesRouteWithChildren
   '/reflection': typeof TabsReflectionRoute
   '/volunteer-day': typeof TabsVolunteerDayRoute
   '/rsvp/$inviteId': typeof RsvpInviteIdRoute
@@ -169,6 +175,7 @@ export interface FileRoutesByTo {
   '/profile/friends': typeof TabsProfileFriendsRoute
   '/profile/history': typeof TabsProfileHistoryRoute
   '/profile/reflections': typeof TabsProfileReflectionsRoute
+  '/messages': typeof TabsMessagesIndexRoute
   '/organizations': typeof TabsOrganizationsIndexRoute
   '/profile': typeof TabsProfileIndexRoute
 }
@@ -192,6 +199,7 @@ export interface FileRoutesById {
   '/_tabs/profile/friends': typeof TabsProfileFriendsRoute
   '/_tabs/profile/history': typeof TabsProfileHistoryRoute
   '/_tabs/profile/reflections': typeof TabsProfileReflectionsRoute
+  '/_tabs/messages/': typeof TabsMessagesIndexRoute
   '/_tabs/organizations/': typeof TabsOrganizationsIndexRoute
   '/_tabs/profile/': typeof TabsProfileIndexRoute
 }
@@ -215,6 +223,7 @@ export interface FileRouteTypes {
     | '/profile/friends'
     | '/profile/history'
     | '/profile/reflections'
+    | '/messages/'
     | '/organizations/'
     | '/profile/'
   fileRoutesByTo: FileRoutesByTo
@@ -224,7 +233,6 @@ export interface FileRouteTypes {
     | '/continue-together'
     | '/home'
     | '/invite'
-    | '/messages'
     | '/reflection'
     | '/volunteer-day'
     | '/rsvp/$inviteId'
@@ -236,6 +244,7 @@ export interface FileRouteTypes {
     | '/profile/friends'
     | '/profile/history'
     | '/profile/reflections'
+    | '/messages'
     | '/organizations'
     | '/profile'
   id:
@@ -258,6 +267,7 @@ export interface FileRouteTypes {
     | '/_tabs/profile/friends'
     | '/_tabs/profile/history'
     | '/_tabs/profile/reflections'
+    | '/_tabs/messages/'
     | '/_tabs/organizations/'
     | '/_tabs/profile/'
   fileRoutesById: FileRoutesById
@@ -348,6 +358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TabsEventsEventIdRouteImport
       parentRoute: typeof TabsRoute
     }
+    '/_tabs/messages/': {
+      id: '/_tabs/messages/'
+      path: '/'
+      fullPath: '/messages/'
+      preLoaderRoute: typeof TabsMessagesIndexRouteImport
+      parentRoute: typeof TabsMessagesRoute
+    }
     '/_tabs/messages/$personId': {
       id: '/_tabs/messages/$personId'
       path: '/$personId'
@@ -417,11 +434,13 @@ declare module '@tanstack/react-router' {
 interface TabsMessagesRouteChildren {
   TabsMessagesPersonIdRoute: typeof TabsMessagesPersonIdRoute
   TabsMessagesGroupRoute: typeof TabsMessagesGroupRoute
+  TabsMessagesIndexRoute: typeof TabsMessagesIndexRoute
 }
 
 const TabsMessagesRouteChildren: TabsMessagesRouteChildren = {
   TabsMessagesPersonIdRoute: TabsMessagesPersonIdRoute,
   TabsMessagesGroupRoute: TabsMessagesGroupRoute,
+  TabsMessagesIndexRoute: TabsMessagesIndexRoute,
 }
 
 const TabsMessagesRouteWithChildren = TabsMessagesRoute._addFileChildren(

@@ -111,7 +111,7 @@ function ReflectionScreen() {
             <button
               type="button"
               onClick={() => setPhotos((p) => p + 1)}
-              className="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl bg-secondary text-muted-foreground"
+              className="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl bg-primary text-primary-foreground"
             >
               <Camera className="h-5 w-5" />
               <span className="text-[11px] font-semibold">Add</span>

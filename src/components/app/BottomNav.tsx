@@ -29,11 +29,11 @@ export function BottomNav() {
                   "flex h-16 flex-col items-center justify-center gap-1 transition-colors",
                   i > 0 && "",
                   active
-                    ? "bg-secondary font-bold text-foreground"
+                    ? "bg-primary font-bold text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground",
                 )}
               >
-                <Icon className={cn("h-[22px] w-[22px]", active && "stroke-[2.4] text-primary")} />
+                <Icon className={cn("h-[22px] w-[22px]", active && "stroke-[2.4] text-primary-foreground")} />
                 <span className="text-[12px] font-semibold">{label}</span>
               </Link>
             </li>

@@ -29,7 +29,7 @@ export function OrgMark({
       alt={alt}
       loading="lazy"
       style={{ width: size, height: size }}
-      className={cn("shrink-0 rounded-xl bg-secondary object-cover", className)}
+      className={cn("shrink-0 rounded-xl bg-card object-cover", className)}
     />
   );
 }
@@ -49,7 +49,7 @@ export function CoverPhoto({
       src={coverSrc(cover)}
       alt={alt}
       loading="lazy"
-      className={cn("h-32 w-full bg-secondary object-cover", className)}
+      className={cn("h-32 w-full bg-card object-cover", className)}
     />
   );
 }

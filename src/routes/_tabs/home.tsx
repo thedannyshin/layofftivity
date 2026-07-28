@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Award, CalendarDays, ChevronRight, MapPin } from "lucide-react";
-import { Avatar, Card, Chip, ListGroup, Ring, Screen, ScreenHero, SectionTitle, tapCard, tapRow } from "@/components/app/Shell";
+import { BookOpen, CalendarDays, Car, ChevronRight, MapPin, Medal, Repeat, Sunrise, UserPlus } from "lucide-react";
+import { Avatar, Card, Chip, ListGroup, Ring, Screen, ScreenHero, SectionTitle, staticCard, staticCardAccent, tapRow } from "@/components/app/Shell";
 import { orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -25,6 +25,15 @@ export const Route = createFileRoute("/_tabs/home")({
   }),
   component: Home,
 });
+
+const badgeIcons = {
+  sunrise: Sunrise,
+  repeat: Repeat,
+  car: Car,
+  book: BookOpen,
+  userplus: UserPlus,
+  medal: Medal,
+};
 
 function Home() {
   const app = useApp();
@@ -125,7 +134,7 @@ function Home() {
                 <span
                   className={cn(
                     "flex h-6 w-6 shrink-0 items-center justify-center rounded-md",
-                    g.done ? "bg-primary" : "bg-secondary",
+                    g.done ? "bg-primary" : "bg-card",
                   )}
                 >
                   {g.done && (
@@ -154,29 +163,33 @@ function Home() {
         )}
 
       <SectionTitle>Badges</SectionTitle>
-      <Link to="/profile/badges" className={`${tapCard} block`}>
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex min-w-0 items-center gap-3">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
-              <Award className="h-5 w-5 text-primary" />
-            </span>
-            <div className="min-w-0">
-              <p className="truncate text-[15px] font-bold">
-                {earnedBadges.length} of {badges.length} earned
-              </p>
-              <p className="truncate text-[13px] text-muted-foreground">
-                {earnedBadges.length
-                  ? earnedBadges
-                      .slice(0, 2)
-                      .map((badge) => badge.name)
-                      .join(", ")
-                  : "Your volunteer milestones live here."}
-              </p>
+      <div className="grid grid-cols-3 gap-3">
+        {badges.map((badge) => {
+          const Icon = badgeIcons[badge.icon as keyof typeof badgeIcons];
+          return (
+            <div
+              key={badge.id}
+              className={badge.earned ? staticCardAccent : cn(staticCard, "opacity-70")}
+              title={badge.detail}
+            >
+              <span
+                className={cn(
+                  "flex h-11 w-11 items-center justify-center rounded-xl",
+                  badge.earned ? "bg-accent" : "bg-card",
+                )}
+              >
+                <Icon
+                  className={cn(
+                    "h-5 w-5",
+                    badge.earned ? "text-accent-foreground" : "text-muted-foreground",
+                  )}
+                />
+              </span>
+              <p className="mt-3 text-[13px] leading-tight font-bold">{badge.name}</p>
             </div>
-          </div>
-          <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
-        </div>
-      </Link>
+          );
+        })}
+      </div>
 
       <SectionTitle>Preferences</SectionTitle>
       <Card>
