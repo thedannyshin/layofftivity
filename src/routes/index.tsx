@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
 import { ArrowRight, Camera, Check, ImagePlus, MapPin, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Avatar, BackButton, Screen, staticCard } from "@/components/app/Shell";
+import { Avatar, BackButton, Screen, selectRow, staticCard, tapPill, tapPillActive } from "@/components/app/Shell";
 import { LogoMark } from "@/components/app/LogoMark";
 import {
   availabilityOptions,
@@ -432,10 +432,7 @@ function SelectRow({
       type="button"
       onClick={onClick}
       aria-pressed={selected}
-      className={cn(
-        "flex w-full items-center gap-3 rounded-2xl p-4 text-left transition-colors",
-        selected ? "bg-accent-soft" : "bg-secondary hover:bg-primary-soft/70",
-      )}
+      className={selectRow(selected)}
     >
       {icon}
       <span className="min-w-0 flex-1">
@@ -469,12 +466,7 @@ function TagButton({
       type="button"
       onClick={onClick}
       aria-pressed={selected}
-      className={cn(
-        "rounded-full px-4 py-2.5 text-[14px] font-semibold transition-colors",
-        selected
-          ? "bg-primary text-primary-foreground"
-          : "bg-secondary text-foreground hover:bg-primary-soft/70",
-      )}
+      className={selected ? tapPillActive : tapPill}
     >
       {label}
     </button>
