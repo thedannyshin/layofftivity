@@ -1,55 +1,82 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
-import { ArrowRight, Check, MapPin } from "lucide-react";
+import { ArrowRight, Camera, Check, ImagePlus, MapPin, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Screen } from "@/components/app/Shell";
+import { Avatar, Screen } from "@/components/app/Shell";
 import { LogoMark } from "@/components/app/LogoMark";
-import { causeOptions, interestOptions } from "@/lib/data";
+import {
+  availabilityOptions,
+  causeOptions,
+  cityOptions,
+  interestOptions,
+  laidOffOptions,
+  matchPeople,
+  reasonOptions,
+} from "@/lib/data";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Welcome to Layofftivity — Find your volunteer cohort" },
+      { title: "Welcome to Layofftivity — Find your volunteer group" },
       {
         name: "description",
         content:
-          "Answer six short questions and get matched with a small volunteer cohort of former tech professionals near you.",
+          "Answer a few short questions and get matched with a small volunteer group of former tech professionals near you.",
       },
       { property: "og:title", content: "Welcome to Layofftivity" },
       {
         property: "og:description",
-        content: "Six short questions, then meet the small group you'll show up with every week.",
+        content: "A few short questions, then meet the small group you'll show up with every week.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Onboarding,
 });
 
-const reasons = [
-  { id: "routine", title: "I need structure in my week", detail: "Something to get up for on a set day." },
-  { id: "people", title: "I want to be around people again", detail: "Not networking. Just company." },
-  { id: "purpose", title: "I want my time to matter", detail: "Do something useful while I figure out what's next." },
-  { id: "reset", title: "I need to get out of my head", detail: "The job search is loud. I want a break from it." },
-];
+const steps = ["You", "Photo", "Why", "Timing", "Interests", "Causes", "Availability", "Location"];
 
-const laidOffOptions = ["In the last month", "1–3 months ago", "3–6 months ago", "Over 6 months ago", "Not laid off, but searching"];
-const availabilityOptions = ["Saturday mornings", "Saturday afternoons", "Sunday mornings", "Weekday mornings", "Weekday evenings"];
-const cities = ["Oakland, CA", "Berkeley, CA", "Alameda, CA", "Emeryville, CA", "San Francisco, CA"];
-
-const steps = ["Why", "Timing", "Interests", "Causes", "Availability", "Location"];
+async function fileToSquareDataUrl(file: File, size = 256) {
+  const bitmap = await createImageBitmap(file);
+  const side = Math.min(bitmap.width, bitmap.height);
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+  ctx.drawImage(
+    bitmap,
+    (bitmap.width - side) / 2,
+    (bitmap.height - side) / 2,
+    side,
+    side,
+    0,
+    0,
+    size,
+    size,
+  );
+  return canvas.toDataURL("image/jpeg", 0.82);
+}
 
 function Onboarding() {
   const navigate = useNavigate();
   const { state, hydrated, update } = useStore();
   const [step, setStep] = React.useState(-1);
-  const [reason, setReason] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [photo, setPhoto] = React.useState<string | null>(null);
+  const [reasons, setReasons] = React.useState<string[]>([]);
   const [laidOff, setLaidOff] = React.useState("");
   const [interests, setInterests] = React.useState<string[]>([]);
   const [causes, setCauses] = React.useState<string[]>([]);
   const [availability, setAvailability] = React.useState<string[]>([]);
   const [location, setLocation] = React.useState("");
+
+  const uploadRef = React.useRef<HTMLInputElement>(null);
+  const cameraRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (hydrated && state.onboarding.complete) navigate({ to: "/home", replace: true });
@@ -58,8 +85,22 @@ function Onboarding() {
   const toggle = (list: string[], set: (v: string[]) => void, value: string) =>
     set(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
 
+  const onPickPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    try {
+      const url = await fileToSquareDataUrl(file);
+      if (url) setPhoto(url);
+    } catch {
+      /* ignore unreadable files */
+    }
+  };
+
   const canContinue = [
-    !!reason,
+    firstName.trim().length > 0 && lastName.trim().length > 0,
+    true,
+    reasons.length > 0,
     !!laidOff,
     interests.length > 0,
     causes.length > 0,
@@ -68,11 +109,14 @@ function Onboarding() {
   ][step];
 
   const finish = () => {
+    const prefs = { interests, causes, availability };
     update((s) => ({
       ...s,
-      onboarding: { complete: true, reason, laidOff, interests, causes, availability, location },
+      profile: { firstName: firstName.trim(), lastName: lastName.trim(), photo },
+      onboarding: { complete: true, reasons, laidOff, interests, causes, availability, location },
+      matchIds: matchPeople(prefs).map((p) => p.id),
     }));
-    navigate({ to: "/home" });
+    navigate({ to: "/match" });
   };
 
   if (step === -1) {
@@ -88,14 +132,14 @@ function Onboarding() {
               Belonging comes from showing up with the same people.
             </h1>
             <p className="mt-4 text-[16px] leading-relaxed text-muted-foreground">
-              Layofftivity places you in a small cohort of former tech professionals who volunteer
+              Layofftivity places you in a small group of former tech professionals who volunteer
               together, week after week. Not a job board. Not networking. Just a standing reason to
               be somewhere with people who get it.
             </p>
             <ul className="mt-8 space-y-3">
               {[
-                "Six people, one cause, the same morning each week",
-                "Meet one cohort member before your first day",
+                "A small group, one cause, the same morning each week",
+                "Meet your matches before your first volunteer day",
                 "No résumés, no pitches, no small talk about titles",
               ].map((line) => (
                 <li key={line} className="flex gap-3">
@@ -113,7 +157,7 @@ function Onboarding() {
               <ArrowRight />
             </Button>
             <p className="mt-3 text-center text-[13px] text-muted-foreground">
-              Six short questions. About two minutes.
+              Eight short questions. About two minutes.
             </p>
           </div>
         </Screen>
@@ -136,37 +180,133 @@ function Onboarding() {
           ))}
         </div>
         <p className="mt-4 text-[13px] font-semibold text-muted-foreground">
-          Step {step + 1} of 6
+          Step {step + 1} of {steps.length}
         </p>
 
         <div className="flex-1 pb-32">
           {step === 0 && (
+            <Question title="What should we call you?" hint="Your group sees your first and last name.">
+              <label className="block">
+                <span className="mb-1.5 block text-[13px] font-bold text-muted-foreground">
+                  First name
+                </span>
+                <input
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  autoComplete="given-name"
+                  placeholder="Alex"
+                  className="h-12 w-full rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/40"
+                />
+              </label>
+              <label className="block">
+                <span className="mb-1.5 block text-[13px] font-bold text-muted-foreground">
+                  Last name
+                </span>
+                <input
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  autoComplete="family-name"
+                  placeholder="Rivera"
+                  className="h-12 w-full rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/40"
+                />
+              </label>
+            </Question>
+          )}
+
+          {step === 1 && (
+            <Question
+              title="Add a profile photo"
+              hint="A face makes the first Saturday easier. You can skip and use your initials."
+            >
+              <div className="flex flex-col items-center gap-4 rounded-2xl bg-card p-6">
+                <Avatar
+                  src={photo}
+                  name={`${firstName} ${lastName}`.trim() || "You"}
+                  size={112}
+                  initials={
+                    (firstName.trim()[0] ?? "") + (lastName.trim()[0] ?? "") || "?"
+                  }
+                />
+                <p className="text-[13px] text-muted-foreground">
+                  {photo ? "Looking good." : "Using your initials for now."}
+                </p>
+              </div>
+              <input
+                ref={uploadRef}
+                type="file"
+                accept="image/*"
+                className="sr-only"
+                onChange={onPickPhoto}
+              />
+              <input
+                ref={cameraRef}
+                type="file"
+                accept="image/*"
+                capture="user"
+                className="sr-only"
+                onChange={onPickPhoto}
+              />
+              <Button size="lg" className="w-full" onClick={() => uploadRef.current?.click()}>
+                <ImagePlus />
+                Upload a photo
+              </Button>
+              <Button
+                variant="soft"
+                size="lg"
+                className="w-full"
+                onClick={() => cameraRef.current?.click()}
+              >
+                <Camera />
+                Take a photo
+              </Button>
+              {photo && (
+                <Button
+                  variant="quiet"
+                  size="lg"
+                  className="w-full"
+                  onClick={() => setPhoto(null)}
+                >
+                  <Trash2 />
+                  Remove photo
+                </Button>
+              )}
+            </Question>
+          )}
+
+          {step === 2 && (
             <Question
               title="Why are you here?"
-              hint="Pick the one that's most true today. You can change it later."
+              hint="Choose as many as you'd like. You can change this later."
             >
-              {reasons.map((r) => (
+              {reasonOptions.map((r) => (
                 <SelectRow
                   key={r.id}
-                  selected={reason === r.id}
+                  selected={reasons.includes(r.id)}
                   title={r.title}
                   detail={r.detail}
-                  onClick={() => setReason(r.id)}
+                  multi
+                  onClick={() => toggle(reasons, setReasons, r.id)}
                 />
               ))}
             </Question>
           )}
 
-          {step === 1 && (
-            <Question title="When were you laid off?" hint="This helps us group people at a similar point.">
+          {step === 3 && (
+            <Question
+              title="When were you laid off?"
+              hint="This helps us group people at a similar point."
+            >
               {laidOffOptions.map((o) => (
                 <SelectRow key={o} selected={laidOff === o} title={o} onClick={() => setLaidOff(o)} />
               ))}
             </Question>
           )}
 
-          {step === 2 && (
-            <Question title="What do you enjoy?" hint="Choose a few. Shared interests make first conversations easier.">
+          {step === 4 && (
+            <Question
+              title="What do you enjoy?"
+              hint="Choose as many as you'd like. Shared interests make first conversations easier."
+            >
               <div className="flex flex-wrap gap-2">
                 {interestOptions.map((o) => (
                   <TagButton
@@ -180,8 +320,8 @@ function Onboarding() {
             </Question>
           )}
 
-          {step === 3 && (
-            <Question title="What causes pull at you?" hint="Your cohort forms around one of these.">
+          {step === 5 && (
+            <Question title="Which causes matter to you?" hint="Choose as many as you'd like.">
               {causeOptions.map((o) => (
                 <SelectRow
                   key={o}
@@ -194,8 +334,11 @@ function Onboarding() {
             </Question>
           )}
 
-          {step === 4 && (
-            <Question title="When can you show up?" hint="Consistency matters more than frequency. One slot is plenty.">
+          {step === 6 && (
+            <Question
+              title="When can you show up?"
+              hint="Choose as many as you'd like. Consistency matters more than frequency."
+            >
               {availabilityOptions.map((o) => (
                 <SelectRow
                   key={o}
@@ -208,9 +351,12 @@ function Onboarding() {
             </Question>
           )}
 
-          {step === 5 && (
-            <Question title="Where are you based?" hint="We only match cohorts within a short drive of each other.">
-              {cities.map((o) => (
+          {step === 7 && (
+            <Question
+              title="Where are you based?"
+              hint="We only match groups within a short drive of each other."
+            >
+              {cityOptions.map((o) => (
                 <SelectRow
                   key={o}
                   selected={location === o}
@@ -238,9 +384,9 @@ function Onboarding() {
             size="lg"
             className="flex-1"
             disabled={!canContinue}
-            onClick={() => (step === 5 ? finish() : setStep((s) => s + 1))}
+            onClick={() => (step === steps.length - 1 ? finish() : setStep((s) => s + 1))}
           >
-            {step === 5 ? "Find my cohort" : "Continue"}
+            {step === steps.length - 1 ? "Find my group" : step === 1 && !photo ? "Skip for now" : "Continue"}
             <ArrowRight />
           </Button>
         </div>
@@ -289,9 +435,7 @@ function SelectRow({
       aria-pressed={selected}
       className={cn(
         "flex w-full items-center gap-3 rounded-2xl p-4 text-left transition-colors",
-        selected
-          ? "bg-accent-soft"
-          : "bg-secondary hover:bg-primary-soft/70",
+        selected ? "bg-accent-soft" : "bg-secondary hover:bg-primary-soft/70",
       )}
     >
       {icon}
