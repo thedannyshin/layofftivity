@@ -118,13 +118,10 @@ function VolunteerDay() {
 
         <SectionTitle>Getting there</SectionTitle>
         <Card>
-          <div className="flex h-32 items-center justify-center rounded-xl bg-secondary">
-            <div className="text-center">
-              <MapPin className="mx-auto h-6 w-6 text-primary" />
-              <p className="mt-1 text-[13px] font-semibold">{event.address}</p>
-              <p className="text-[12px] text-muted-foreground">Tap directions for live routing</p>
-            </div>
-          </div>
+          <p className="flex items-start gap-2 text-[14px] font-semibold">
+            <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+            {event.address}
+          </p>
           <p className="mt-3 text-[14px] font-semibold">{cohort.meetupSpot}</p>
           <p className="text-[13px] text-muted-foreground">{cohort.meetupTime}</p>
           <div className="mt-3 flex gap-2">
