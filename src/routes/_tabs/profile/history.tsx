@@ -37,7 +37,7 @@ function HistoryScreen() {
       {daysCompleted === 0 ? (
         <Card>
           <p className="text-[15px] leading-relaxed text-muted-foreground">
-            Nothing here yet. Once you check in and finish a shift, it lands on this timeline.
+            No shifts yet. Finished shifts land on this timeline.
           </p>
           <Button asChild className="mt-4 w-full">
             <Link to="/organizations">Find your first activity</Link>
@@ -45,14 +45,6 @@ function HistoryScreen() {
         </Card>
       ) : (
         <>
-          <Card className="bg-primary-soft">
-            <p className="text-[15px] leading-relaxed font-semibold text-primary">
-              {daysCompleted === 1
-                ? "One shift down. The second one is the one that builds the habit."
-                : `${daysCompleted} shifts with the same people. That's the pattern that builds belonging.`}
-            </p>
-          </Card>
-
           <SectionTitle>All shifts</SectionTitle>
           <ol className="relative space-y-4 pl-6 before:absolute before:top-2 before:bottom-2 before:left-0 before:w-px before:bg-secondary">
             {items.map((h) => {
@@ -63,13 +55,7 @@ function HistoryScreen() {
                   <span className="absolute top-1.5 -left-[31px] h-3 w-3 rounded-full bg-primary" />
                   <p className="text-[12px] font-bold text-muted-foreground uppercase">{h.date}</p>
                   <p className="text-[15px] font-bold">{event.title}</p>
-                  <p className="text-[13px] text-muted-foreground">{org.name}</p>
-                  <div className="mt-1.5 flex gap-2">
-                    <Chip>{h.hours} hours</Chip>
-                    <Chip tone="green">
-                      <Users className="h-3 w-3" /> With your group
-                    </Chip>
-                  </div>
+                  <Meta items={[org.name, `${h.hours}h`, "With your group"]} />
                 </li>
               );
             })}
