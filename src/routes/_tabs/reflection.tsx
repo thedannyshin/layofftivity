@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
 import { Camera, Check, X } from "lucide-react";
 import { toast } from "sonner";
-import { Card, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Card, Screen, SectionTitle, TopBar, tapPill, tapPillActive } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { moods } from "@/lib/data";
 import { useApp } from "@/lib/store";
