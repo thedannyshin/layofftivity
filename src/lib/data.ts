@@ -18,6 +18,8 @@ export const people: Person[] = [
     formerRole: "Staff Engineer, laid off in February",
     city: "Berkeley, CA",
     interests: ["Food security", "Cooking", "Cycling", "Documentaries"],
+    causes: ["Food security"],
+    availability: ["Saturday mornings"],
     bio: "Twelve years shipping backend systems. Now learning to cook for twenty people at once.",
   },
   {
@@ -27,6 +29,8 @@ export const people: Person[] = [
     formerRole: "Engineering Manager, laid off in January",
     city: "Oakland, CA",
     interests: ["Mentoring youth", "Basketball", "Jazz", "Gardening"],
+    causes: ["Mentoring youth"],
+    availability: ["Saturday mornings"],
     bio: "Missing the part of management I actually loved: helping people find their footing.",
   },
   {
@@ -36,6 +40,8 @@ export const people: Person[] = [
     formerRole: "Data Scientist, laid off in March",
     city: "Alameda, CA",
     interests: ["Environment", "Trail running", "Baking", "Birding"],
+    causes: ["Environment"],
+    availability: ["Sunday mornings"],
     bio: "Trading dashboards for dirt under my fingernails, at least on weekends.",
   },
   {
@@ -45,6 +51,8 @@ export const people: Person[] = [
     formerRole: "Product Marketing Lead, laid off in April",
     city: "Emeryville, CA",
     interests: ["Housing", "Woodworking", "Live music", "Cooking"],
+    causes: ["Housing"],
+    availability: ["Saturday afternoons"],
     bio: "Good at organizing things. Currently organizing my own week.",
   },
   {
@@ -54,6 +62,8 @@ export const people: Person[] = [
     formerRole: "UX Researcher, laid off in February",
     city: "Oakland, CA",
     interests: ["Animal welfare", "Gardening", "Pottery", "Hiking"],
+    causes: ["Animal welfare"],
+    availability: ["Saturday mornings"],
     bio: "I ask a lot of questions. Mostly the useful kind.",
   },
   {
@@ -63,6 +73,8 @@ export const people: Person[] = [
     formerRole: "iOS Engineer, laid off in March",
     city: "San Leandro, CA",
     interests: ["Food security", "Soccer", "Photography", "Cycling"],
+    causes: ["Food security"],
+    availability: ["Saturday mornings"],
     bio: "Quiet at first, then you can't get me to stop talking about bread.",
   },
   {
@@ -72,6 +84,8 @@ export const people: Person[] = [
     formerRole: "Technical Program Manager, laid off in January",
     city: "Berkeley, CA",
     interests: ["Literacy", "Books", "Swimming", "Cooking"],
+    causes: ["Literacy"],
+    availability: ["Weekday evenings"],
     bio: "Spreadsheets by trade, story time by choice.",
   },
   {
@@ -81,6 +95,8 @@ export const people: Person[] = [
     formerRole: "Security Engineer, laid off in April",
     city: "Oakland, CA",
     interests: ["Environment", "Kayaking", "Chess", "Coffee"],
+    causes: ["Environment"],
+    availability: ["Saturday mornings"],
     bio: "Happier outdoors than in a standup.",
   },
   {
@@ -90,6 +106,8 @@ export const people: Person[] = [
     formerRole: "Design Systems Lead, laid off in March",
     city: "Alameda, CA",
     interests: ["Housing", "Running", "Ceramics", "Baking"],
+    causes: ["Housing"],
+    availability: ["Saturday mornings"],
     bio: "Rebuilding a week that has shape to it.",
   },
   {
@@ -99,6 +117,8 @@ export const people: Person[] = [
     formerRole: "Sales Engineer, laid off in February",
     city: "Oakland, CA",
     interests: ["Mentoring youth", "Cooking", "Cycling", "Podcasts"],
+    causes: ["Mentoring youth"],
+    availability: ["Weekday mornings"],
     bio: "I talk to strangers for a living. Turns out I missed doing it in person.",
   },
   {
@@ -108,6 +128,8 @@ export const people: Person[] = [
     formerRole: "Content Strategist, laid off in April",
     city: "Berkeley, CA",
     interests: ["Animal welfare", "Hiking", "Writing", "Gardening"],
+    causes: ["Animal welfare"],
+    availability: ["Sunday mornings"],
     bio: "Two rescue dogs, one very open calendar.",
   },
 ];
@@ -318,8 +340,6 @@ export const eventsForOrg = (orgId: string) => events.filter((e) => e.orgId === 
 
 export const cohort = {
   name: "Saturday Crew · Harvest Table",
-  formed: "Formed 6 weeks ago",
-  daysTogether: 4,
   memberIds: ["maya", "daniel", "priya", "james", "sofia", "tomas"],
   meetupSpot: "Blue awning by the loading bay, 1420 Peralta St",
   meetupTime: "8:45 AM, fifteen minutes before the shift",
@@ -391,48 +411,15 @@ export const timeline = [
 ];
 
 export const badges = [
-  { id: "first", name: "First Saturday", detail: "Showed up for your first shift", earned: true, icon: "sunrise" },
-  { id: "three", name: "Three in a Row", detail: "Same cohort, three weeks running", earned: true, icon: "repeat" },
-  { id: "driver", name: "Ride Giver", detail: "Drove someone to a volunteer day", earned: true, icon: "car" },
-  { id: "journal", name: "Reflected Five Times", detail: "Five journal entries after shifts", earned: true, icon: "book" },
-  { id: "inviter", name: "Brought Someone", detail: "Invited a friend who joined a day", earned: false, icon: "userplus" },
-  { id: "ten", name: "Ten Days In", detail: "Ten volunteer days completed", earned: false, icon: "medal" },
+  { id: "first", name: "First Saturday", detail: "Show up for your first shift", icon: "sunrise" },
+  { id: "three", name: "Three in a Row", detail: "Volunteer three times", icon: "repeat" },
+  { id: "connector", name: "Said Hello", detail: "Start a conversation with your group", icon: "car" },
+  { id: "journal", name: "Reflected Five Times", detail: "Five journal entries after shifts", icon: "book" },
+  { id: "inviter", name: "Brought Someone", detail: "Invite a friend who accepts", icon: "userplus" },
+  { id: "ten", name: "Ten Days In", detail: "Ten volunteer days completed", icon: "medal" },
 ];
 
-export const volunteerHistory = [
-  { id: "h1", title: "Saturday Grocery Box Pack", org: "Harvest Table Food Bank", date: "August 1", hours: 2.5, withCohort: true },
-  { id: "h2", title: "Saturday Grocery Box Pack", org: "Harvest Table Food Bank", date: "July 25", hours: 2.5, withCohort: true },
-  { id: "h3", title: "Fruitvale Free Fridge Restock", org: "Casa Verde Community Gardens", date: "July 19", hours: 2, withCohort: false },
-  { id: "h4", title: "Saturday Grocery Box Pack", org: "Harvest Table Food Bank", date: "July 18", hours: 2.5, withCohort: true },
-  { id: "h5", title: "Strawberry Creek Ivy Removal", org: "Creek Keepers Alliance", date: "July 12", hours: 2.5, withCohort: false },
-];
 
-export const seedReflections = [
-  {
-    id: "r1",
-    date: "August 1",
-    mood: "Steady",
-    gratitude: "Priya saved me a seat in the car without me asking.",
-    note: "Third Saturday with the same six people. Nobody asked what I do for work. It was the first morning in months where I wasn't performing.",
-    photos: 2,
-  },
-  {
-    id: "r2",
-    date: "July 25",
-    mood: "Lighter",
-    gratitude: "Tomás remembered I don't drink coffee and brought tea.",
-    note: "Hit 180 boxes. I laughed out loud twice. Small thing, but I noticed it.",
-    photos: 1,
-  },
-  {
-    id: "r3",
-    date: "July 18",
-    mood: "Tired but good",
-    gratitude: "Getting through a whole morning without checking LinkedIn.",
-    note: "Still awkward on arrival, easier by the coffee break. Sofia and I ended up talking the whole second rotation.",
-    photos: 0,
-  },
-];
 
 export const moods = ["Heavy", "Uneasy", "Steady", "Lighter", "Genuinely good"] as const;
 
@@ -490,3 +477,75 @@ export const continueOptions = [
     icon: "calendarcheck",
   },
 ];
+export const reasonOptions = [
+  { id: "routine", title: "I need structure in my week", detail: "Something to get up for on a set day." },
+  { id: "people", title: "I want to be around people again", detail: "Not networking. Just company." },
+  { id: "purpose", title: "I want my time to matter", detail: "Do something useful while I figure out what's next." },
+  { id: "reset", title: "I need to get out of my head", detail: "The job search is loud. I want a break from it." },
+];
+
+export const laidOffOptions = [
+  "In the last month",
+  "1–3 months ago",
+  "3–6 months ago",
+  "Over 6 months ago",
+  "Not laid off, but searching",
+];
+
+export const availabilityOptions = [
+  "Saturday mornings",
+  "Saturday afternoons",
+  "Sunday mornings",
+  "Weekday mornings",
+  "Weekday evenings",
+];
+
+export const cityOptions = [
+  "Oakland, CA",
+  "Berkeley, CA",
+  "Alameda, CA",
+  "Emeryville, CA",
+  "San Francisco, CA",
+];
+
+export type Prefs = { interests: string[]; causes: string[]; availability: string[] };
+
+export function scorePerson(p: Person, prefs: Prefs) {
+  const shared = (a: string[], b: string[]) => a.filter((x) => b.includes(x));
+  return (
+    shared(p.causes, prefs.causes).length * 3 +
+    shared(p.interests, prefs.interests).length * 2 +
+    shared(p.availability, prefs.availability).length * 2
+  );
+}
+
+export function sharedWith(p: Person, prefs: Prefs) {
+  return [
+    ...p.causes.filter((c) => prefs.causes.includes(c)),
+    ...p.interests.filter((i) => prefs.interests.includes(i)),
+    ...p.availability.filter((a) => prefs.availability.includes(a)),
+  ];
+}
+
+/** Deterministic: the two best-matched people for a set of preferences. */
+export function matchPeople(prefs: Prefs, count = 2) {
+  return [...people]
+    .map((p) => ({ p, s: scorePerson(p, prefs) }))
+    .sort((a, b) => b.s - a.s || a.p.name.localeCompare(b.p.name))
+    .slice(0, count)
+    .map((x) => x.p);
+}
+
+/** The event that best fits the user's causes + availability. */
+export function matchEvent(prefs: Prefs) {
+  const scored = events.map((e) => {
+    const org = orgById(e.orgId);
+    let s = 0;
+    if (prefs.causes.includes(org.cause)) s += 3;
+    if (prefs.availability.some((a) => e.date.startsWith(a.split(" ")[0]))) s += 2;
+    if (e.spotsTotal - e.spotsFilled > 0) s += 1;
+    return { e, s };
+  });
+  scored.sort((a, b) => b.s - a.s);
+  return scored[0].e;
+}
