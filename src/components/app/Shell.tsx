@@ -79,12 +79,11 @@ export function BackButton({ onClick, className }: { onClick: () => void; classN
       aria-label="Go back"
       onClick={onClick}
       className={cn(
-        "flex h-11 shrink-0 items-center gap-1 rounded-xl bg-secondary px-3.5 text-[13px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft",
+        "flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft",
         className,
       )}
     >
-      <ChevronLeft className="h-4 w-4" />
-      Back
+      <ChevronLeft className="h-5 w-5" />
     </button>
   );
 }
