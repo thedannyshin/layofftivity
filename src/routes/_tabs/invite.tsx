@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { Briefcase, Check, Copy, Heart, Mail, MessageSquare, Users, X } from "lucide-react";
 import { toast } from "sonner";
-import { Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Card, Chip, Screen, SectionTitle, TopBar, selectRow } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { orgById } from "@/lib/data";
 import { useApp, type Invite as InviteType, type InviteStatus } from "@/lib/store";
@@ -191,10 +191,7 @@ function InviteScreen() {
                   type="button"
                   onClick={() => setKind(k)}
                   aria-pressed={selected}
-                  className={cn(
-                    "flex w-full items-center gap-3 rounded-2xl p-4 text-left transition-colors",
-                    selected ? "bg-accent-soft" : "bg-secondary hover:bg-primary-soft/70",
-                  )}
+                  className={selectRow(selected)}
                 >
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-card">
                     <Icon className="h-5 w-5 text-primary" />
@@ -228,8 +225,10 @@ function InviteScreen() {
                   onClick={() => setChannel(c.id)}
                   aria-pressed={selected}
                   className={cn(
-                    "flex flex-1 flex-col items-center gap-1 rounded-2xl py-3 text-[13px] font-bold transition-colors",
-                    selected ? "bg-primary text-primary-foreground" : "bg-secondary text-foreground",
+                    "flex flex-1 cursor-pointer flex-col items-center gap-1 rounded-2xl py-3 text-[13px] font-bold transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft",
+                    selected
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-secondary text-foreground hover:bg-primary-soft/70 active:bg-primary-soft",
                   )}
                 >
                   <Icon className="h-4 w-4" />
