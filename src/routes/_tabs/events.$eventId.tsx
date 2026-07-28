@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { CalendarDays, Check, Clock, MapPin, Users, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { Avatar, Card, Chip, Clamp, FactGrid, Meta, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
-import { OrgMark } from "@/components/app/OrgMark";
+import { CoverPhoto, OrgMark } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { eventById, orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
