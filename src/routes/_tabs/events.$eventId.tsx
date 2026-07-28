@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { cohortMembers, eventById, orgById } from "@/lib/data";
 import { useStore } from "@/lib/store";
 
-export const Route = createFileRoute("/events/$eventId")({
+export const Route = createFileRoute("/_tabs/events/$eventId")({
   head: ({ params }) => {
     const event = eventById(params.eventId);
     return {

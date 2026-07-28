@@ -8,7 +8,7 @@ import { moods } from "@/lib/data";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/reflection")({
+export const Route = createFileRoute("/_tabs/reflection")({
   head: () => ({
     meta: [
       { title: "Reflect on today — Layofftivity" },

@@ -8,7 +8,7 @@ import { eventById } from "@/lib/data";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/invite")({
+export const Route = createFileRoute("/_tabs/invite")({
   head: () => ({
     meta: [
       { title: "Invite someone — Layofftivity" },

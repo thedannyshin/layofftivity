@@ -6,7 +6,7 @@ import { byId } from "@/lib/data";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/chat/$personId")({
+export const Route = createFileRoute("/_tabs/chat/$personId")({
   head: ({ params }) => ({
     meta: [
       { title: `Chat with ${byId(params.personId).name} — Layofftivity` },

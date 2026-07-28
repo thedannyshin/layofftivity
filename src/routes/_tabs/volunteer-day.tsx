@@ -7,7 +7,7 @@ import { cohort, cohortMembers, eventById, orgById, timeline } from "@/lib/data"
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/volunteer-day")({
+export const Route = createFileRoute("/_tabs/volunteer-day")({
   head: () => ({
     meta: [
       { title: "Volunteer day — Layofftivity" },

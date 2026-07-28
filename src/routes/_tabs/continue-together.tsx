@@ -14,7 +14,7 @@ const icons = {
   calendarcheck: CalendarCheck,
 };
 
-export const Route = createFileRoute("/continue-together")({
+export const Route = createFileRoute("/_tabs/continue-together")({
   head: () => ({
     meta: [
       { title: "Continue together — Layofftivity" },

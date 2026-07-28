@@ -6,7 +6,7 @@ import { byId, cohort, cohortMembers, you } from "@/lib/data";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/cohort-chat")({
+export const Route = createFileRoute("/_tabs/cohort-chat")({
   head: () => ({
     meta: [
       { title: "Saturday Crew group chat — Layofftivity" },
