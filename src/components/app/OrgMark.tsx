@@ -1,24 +1,55 @@
-import { Apple, Trees, BookOpen, Sprout, PawPrint, KeyRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const marks: Record<string, { icon: typeof Apple; tone: string }> = {
-  harvest: { icon: Apple, tone: "bg-primary-soft text-primary" },
-  creek: { icon: Trees, tone: "bg-primary-soft text-primary" },
-  books: { icon: BookOpen, tone: "bg-accent-soft text-accent-foreground" },
-  garden: { icon: Sprout, tone: "bg-primary-soft text-primary" },
-  paws: { icon: PawPrint, tone: "bg-accent-soft text-accent-foreground" },
-  keys: { icon: KeyRound, tone: "bg-secondary text-foreground" },
+const covers: Record<string, string> = {
+  harvest: "/orgs/harvest.jpg",
+  creek: "/orgs/creek.jpg",
+  books: "/orgs/books.jpg",
+  garden: "/orgs/garden.jpg",
+  paws: "/orgs/paws.jpg",
+  keys: "/orgs/keys.jpg",
 };
 
-export function OrgMark({ cover, size = 48 }: { cover: string; size?: number }) {
-  const mark = marks[cover] ?? marks.harvest;
-  const Icon = mark.icon;
+export const coverSrc = (cover: string) => covers[cover] ?? covers.harvest;
+
+/** Small square photo thumbnail for an organization. */
+export function OrgMark({
+  cover,
+  size = 48,
+  alt = "",
+  className,
+}: {
+  cover: string;
+  size?: number;
+  alt?: string;
+  className?: string;
+}) {
   return (
-    <div
+    <img
+      src={coverSrc(cover)}
+      alt={alt}
+      loading="lazy"
       style={{ width: size, height: size }}
-      className={cn("flex shrink-0 items-center justify-center rounded-xl", mark.tone)}
-    >
-      <Icon style={{ width: size * 0.46, height: size * 0.46 }} />
-    </div>
+      className={cn("shrink-0 rounded-xl bg-secondary object-cover", className)}
+    />
+  );
+}
+
+/** Wide photo banner used at the top of carousel cards. */
+export function CoverPhoto({
+  cover,
+  alt,
+  className,
+}: {
+  cover: string;
+  alt: string;
+  className?: string;
+}) {
+  return (
+    <img
+      src={coverSrc(cover)}
+      alt={alt}
+      loading="lazy"
+      className={cn("h-32 w-full bg-secondary object-cover", className)}
+    />
   );
 }
