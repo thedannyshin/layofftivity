@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TabsRouteImport } from './routes/_tabs'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RsvpInviteIdRouteImport } from './routes/rsvp.$inviteId'
 import { Route as TabsVolunteerDayRouteImport } from './routes/_tabs/volunteer-day'
 import { Route as TabsReflectionRouteImport } from './routes/_tabs/reflection'
 import { Route as TabsMatchRouteImport } from './routes/_tabs/match'
@@ -42,6 +43,11 @@ const TabsRoute = TabsRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RsvpInviteIdRoute = RsvpInviteIdRouteImport.update({
+  id: '/rsvp/$inviteId',
+  path: '/rsvp/$inviteId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TabsVolunteerDayRoute = TabsVolunteerDayRouteImport.update({
@@ -141,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/match': typeof TabsMatchRoute
   '/reflection': typeof TabsReflectionRoute
   '/volunteer-day': typeof TabsVolunteerDayRoute
+  '/rsvp/$inviteId': typeof RsvpInviteIdRoute
   '/chat/$personId': typeof TabsChatPersonIdRoute
   '/events/$eventId': typeof TabsEventsEventIdRoute
   '/organizations/$orgId': typeof TabsOrganizationsOrgIdRoute
@@ -162,6 +169,7 @@ export interface FileRoutesByTo {
   '/match': typeof TabsMatchRoute
   '/reflection': typeof TabsReflectionRoute
   '/volunteer-day': typeof TabsVolunteerDayRoute
+  '/rsvp/$inviteId': typeof RsvpInviteIdRoute
   '/chat/$personId': typeof TabsChatPersonIdRoute
   '/events/$eventId': typeof TabsEventsEventIdRoute
   '/organizations/$orgId': typeof TabsOrganizationsOrgIdRoute
@@ -185,6 +193,7 @@ export interface FileRoutesById {
   '/_tabs/match': typeof TabsMatchRoute
   '/_tabs/reflection': typeof TabsReflectionRoute
   '/_tabs/volunteer-day': typeof TabsVolunteerDayRoute
+  '/rsvp/$inviteId': typeof RsvpInviteIdRoute
   '/_tabs/chat/$personId': typeof TabsChatPersonIdRoute
   '/_tabs/events/$eventId': typeof TabsEventsEventIdRoute
   '/_tabs/organizations/$orgId': typeof TabsOrganizationsOrgIdRoute
@@ -208,6 +217,7 @@ export interface FileRouteTypes {
     | '/match'
     | '/reflection'
     | '/volunteer-day'
+    | '/rsvp/$inviteId'
     | '/chat/$personId'
     | '/events/$eventId'
     | '/organizations/$orgId'
@@ -229,6 +239,7 @@ export interface FileRouteTypes {
     | '/match'
     | '/reflection'
     | '/volunteer-day'
+    | '/rsvp/$inviteId'
     | '/chat/$personId'
     | '/events/$eventId'
     | '/organizations/$orgId'
@@ -251,6 +262,7 @@ export interface FileRouteTypes {
     | '/_tabs/match'
     | '/_tabs/reflection'
     | '/_tabs/volunteer-day'
+    | '/rsvp/$inviteId'
     | '/_tabs/chat/$personId'
     | '/_tabs/events/$eventId'
     | '/_tabs/organizations/$orgId'
@@ -266,6 +278,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TabsRoute: typeof TabsRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  RsvpInviteIdRoute: typeof RsvpInviteIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -289,6 +302,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rsvp/$inviteId': {
+      id: '/rsvp/$inviteId'
+      path: '/rsvp/$inviteId'
+      fullPath: '/rsvp/$inviteId'
+      preLoaderRoute: typeof RsvpInviteIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_tabs/volunteer-day': {
@@ -459,6 +479,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TabsRoute: TabsRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  RsvpInviteIdRoute: RsvpInviteIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
