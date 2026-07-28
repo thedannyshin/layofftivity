@@ -67,16 +67,18 @@
   /* Layofftivity design system — palette inherited from Touch Grass */
   --lo-dark-green: oklch(0.322 0.066 146.3);
   --lo-grass-green: oklch(0.719 0.194 149.9);
+  /* Accessible action green: passes AA with white text */
+  --lo-action-green: oklch(0.545 0.148 149.9);
   --lo-fresh-sprout: oklch(0.84 0.137 134);
   --lo-sunshine-gold: oklch(0.867 0.177 90.8);
   --lo-lemonade: oklch(0.887 0.182 109.9);
-  --lo-sprout-tint: oklch(0.977 0.014 138.7);
-  --lo-gold-tint: oklch(0.975 0.038 93.8);
-  --lo-green-muted: oklch(0.425 0.079 147.1);
+  --lo-sprout-tint: oklch(0.973 0.016 138.7);
+  --lo-gold-tint: oklch(0.958 0.062 95);
+  --lo-green-muted: oklch(0.44 0.062 147.1);
   --lo-green-faint: oklch(0.662 0.051 148.7);
   --lo-green-line: oklch(0.865 0.03 142.2);
   --lo-green-disabled: oklch(0.956 0.01 140.5);
-  --lo-green-glow: oklch(0.952 0.031 157.2);
+  --lo-green-glow: oklch(0.925 0.058 152);
   --lo-hatch-green: oklch(0.937 0.034 138.6);
   --lo-hatch-gold: oklch(0.952 0.072 93.8);
 
@@ -93,10 +95,10 @@
   --card-foreground: var(--lo-dark-green);
   --popover: oklch(1 0 0);
   --popover-foreground: var(--lo-dark-green);
-  --primary: var(--lo-grass-green);
+  --primary: var(--lo-action-green);
   --primary-foreground: oklch(1 0 0);
   --primary-soft: var(--lo-green-glow);
-  --secondary: var(--lo-sprout-tint);
+  --secondary: oklch(0.928 0.032 140);
   --secondary-foreground: var(--lo-dark-green);
   --muted: var(--lo-green-disabled);
   --muted-foreground: var(--lo-green-muted);
