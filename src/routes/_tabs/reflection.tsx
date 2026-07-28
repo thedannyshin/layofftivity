@@ -125,7 +125,7 @@ function ReflectionScreen() {
             <Card key={r.id}>
               <div className="flex items-center justify-between">
                 <p className="text-[14px] font-bold">{r.date}</p>
-                <span className="rounded-full bg-accent-soft px-2.5 py-1 text-[12px] font-semibold text-accent-foreground">
+                <span className="rounded-lg border border-accent px-2.5 py-1 text-[12px] font-semibold text-accent-foreground">
                   {r.mood}
                 </span>
               </div>
