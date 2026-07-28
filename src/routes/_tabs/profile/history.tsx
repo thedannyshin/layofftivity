@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Card, Meta, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Card, Meta, Screen, ScreenHero, SectionTitle } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { eventById, orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -27,9 +27,9 @@ function HistoryScreen() {
 
   return (
     <Screen>
-      <TopBar
+      <ScreenHero
         title="Volunteer history"
-        subtitle={`${daysCompleted} shift${daysCompleted === 1 ? "" : "s"} · ${hours} hours`}
+        subtitle={`${daysCompleted} shift${daysCompleted === 1 ? "" : "s"}, ${hours} hours`}
         back
       />
 

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Camera } from "lucide-react";
-import { Card, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Card, Screen, ScreenHero, SectionTitle } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { useApp } from "@/lib/store";
 
@@ -26,7 +26,7 @@ function Reflections() {
 
   return (
     <Screen>
-      <TopBar title="Reflection history" subtitle="Private to you" back />
+      <ScreenHero title="Reflection history" subtitle="Private to you" back />
 
       {state.reflections.length === 0 ? (
         <Card>

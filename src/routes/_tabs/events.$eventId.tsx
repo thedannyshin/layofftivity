@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { CalendarDays, Check, Clock, MapPin, Users } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Clamp, FactGrid, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Clamp, FactGrid, Screen, ScreenHero, SectionTitle } from "@/components/app/Shell";
 import { CoverPhoto } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { eventById, orgById } from "@/lib/data";
@@ -36,7 +36,7 @@ function EventDetail() {
   const filled = event.spotsFilled + (joined ? 1 + attendingGuests.length : 0);
   const join = () => {
     update((s) => ({ ...s, joinedEventIds: [...new Set([...s.joinedEventIds, event.id])] }));
-    toast.success("You're in", { description: `${event.dateShort} · ${event.time}` });
+    toast.success("You're in", { description: `${event.dateShort}, ${event.time}` });
     navigate({ to: "/cohort" });
   };
 
@@ -52,7 +52,7 @@ function EventDetail() {
   return (
     <div className="min-h-screen bg-background pb-40">
       <Screen>
-        <TopBar title={event.title} subtitle={org.name} back />
+        <ScreenHero title={event.title} eyebrow={org.name} subtitle={event.dateShort} back />
 
         <CoverPhoto cover={org.cover} alt={org.name} className="h-44 rounded-2xl" />
 

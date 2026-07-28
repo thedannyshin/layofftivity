@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Check, MapPin, Navigation, Users } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Screen, ScreenHero, SectionTitle } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { cohort, orgById, timeline } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -72,7 +72,12 @@ function VolunteerDay() {
   return (
     <div className="min-h-screen bg-background pb-40">
       <Screen>
-        <TopBar title={event.date} subtitle={`${org.name} · ${event.time}`} back />
+        <ScreenHero
+          title={event.title}
+          eyebrow={org.name}
+          subtitle={`${event.dateShort}, ${event.time}`}
+          back
+        />
 
         {!joined ? (
           <Card variant="accent">

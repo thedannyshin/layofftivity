@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, MapPin, Users } from "lucide-react";
-import { Card, Chip, Clamp, Deck, Meta, Screen, SectionTitle, TopBar, deckCard } from "@/components/app/Shell";
+import { Card, Chip, Clamp, Deck, Meta, Screen, ScreenHero, SectionTitle, deckCard } from "@/components/app/Shell";
 import { CoverPhoto } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { eventsForOrg, orgById, organizations } from "@/lib/data";
@@ -27,7 +27,7 @@ function OrgDetail() {
 
   return (
     <Screen>
-      <TopBar title={org.name} subtitle={org.neighborhood} back />
+      <ScreenHero title={org.name} subtitle={org.cause} back />
 
       <CoverPhoto cover={org.cover} alt={org.name} className="h-44 rounded-2xl" />
       <div className="mt-3">
@@ -68,7 +68,7 @@ function OrgDetail() {
                 <p className="flex items-center gap-2">
                   <CalendarDays className="h-4 w-4 shrink-0" />
                   <span className="truncate">
-                    {e.dateShort} · {e.time}
+                    {e.dateShort}, {e.time}
                   </span>
                 </p>
                 <p className="flex items-center gap-2">

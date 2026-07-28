@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
 import { Camera, Check, X } from "lucide-react";
 import { toast } from "sonner";
-import { Card, Screen, SectionTitle, TopBar, tapPill, tapPillActive } from "@/components/app/Shell";
+import { Card, Screen, ScreenHero, SectionTitle, tapPill, tapPillActive } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { moods } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -55,7 +55,7 @@ function ReflectionScreen() {
   return (
     <div className="min-h-screen bg-background pb-40">
       <Screen>
-        <TopBar title="How was today?" subtitle="Private. Nobody in your group sees this." back />
+        <ScreenHero title="How was today?" subtitle="Private to you" back />
 
         <SectionTitle>Mood</SectionTitle>
         <div className="flex flex-wrap gap-2">
@@ -122,7 +122,7 @@ function ReflectionScreen() {
         {state.reflections.length > 0 && (
           <p className="mt-8 text-[13px] text-muted-foreground">
             {state.reflections.length} earlier reflection
-            {state.reflections.length === 1 ? "" : "s"} saved ·{" "}
+            {state.reflections.length === 1 ? "" : "s"} saved.{" "}
             <Link to="/profile/reflections" className="font-bold text-primary underline">
               Read them
             </Link>

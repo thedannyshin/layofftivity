@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageCircle } from "lucide-react";
-import { Avatar, Card, Chip, ListGroup, Screen, SectionTitle, TopBar, tapRow } from "@/components/app/Shell";
+import { Avatar, Card, Chip, ListGroup, Screen, ScreenHero, SectionTitle, tapRow } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { sharedWith } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -27,7 +27,7 @@ function Friends() {
 
   return (
     <Screen>
-      <TopBar
+      <ScreenHero
         title="People"
         subtitle={`${matches.length + guests.length} in your group`}
         back
@@ -48,13 +48,13 @@ function Friends() {
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-bold">{m.name}</p>
                 <p className="truncate text-[13px] text-muted-foreground">
-                  {daysCompleted} day{daysCompleted === 1 ? "" : "s"} together ·{" "}
+                  {daysCompleted} day{daysCompleted === 1 ? "" : "s"} together,{" "}
                   {messages ? `${messages} messages` : "no messages yet"}
                 </p>
                 <p className="mt-1.5 truncate text-[12px] text-muted-foreground">
                   {(sharedWith(m, prefs).length ? sharedWith(m, prefs) : m.interests)
                     .slice(0, 3)
-                    .join(" · ")}
+                    .join(", ")}
                 </p>
               </div>
               <MessageCircle className="h-5 w-5 shrink-0 text-muted-foreground" />
@@ -72,7 +72,7 @@ function Friends() {
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-bold">{g.name}</p>
                 <p className="truncate text-[13px] text-muted-foreground">
-                  Invited by you · {g.relation}
+                  Invited by you, {g.relation}
                 </p>
               </div>
               <Chip>Guest</Chip>

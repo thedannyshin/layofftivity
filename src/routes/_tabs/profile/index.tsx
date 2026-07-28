@@ -1,9 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { Award, BookHeart, ChevronRight, History, RotateCcw, UserRound } from "lucide-react";
-import { Avatar, Card, Chip, ListGroup, Meta, Screen, SectionTitle, TopBar, staticCard, tapCard, tapRow } from "@/components/app/Shell";
+import { Avatar, Card, Chip, ListGroup, Screen, ScreenHero, SectionTitle, staticCard, tapCard, tapRow } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
-import { orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
 
 export const Route = createFileRoute("/_tabs/profile/")({
@@ -29,7 +28,6 @@ function Profile() {
   const { state, update, profile, initials, fullName, matches, guests, badges, hours, daysCompleted } =
     app;
   const navigate = useNavigate();
-  const org = orgById(app.primaryEvent.orgId);
   const earned = badges.filter((b) => b.earned).length;
 
   const restart = () => {
@@ -39,17 +37,13 @@ function Profile() {
 
   return (
     <Screen>
-      <TopBar title="Profile" />
+      <ScreenHero
+        title={fullName}
+        subtitle={state.onboarding.location || undefined}
+        right={<Avatar src={profile.photo} name={fullName} initials={initials} size={56} />}
+      />
 
-      <div className="flex items-center gap-4">
-        <Avatar src={profile.photo} name={fullName} initials={initials} size={72} />
-        <div className="min-w-0">
-          <h2 className="text-[20px] font-extrabold">{fullName}</h2>
-          <Meta items={[state.onboarding.laidOff || "New here", state.onboarding.location]} />
-        </div>
-      </div>
-
-      <div className="mt-4 grid grid-cols-3 gap-3">
+      <div className="mt-2 grid grid-cols-3 gap-3">
         <Stat value={`${hours}`} label="Hours" />
         <Stat value={`${daysCompleted}`} label="Shifts" />
         <Stat value={`${state.reflections.length}`} label="Reflections" />
@@ -67,7 +61,7 @@ function Profile() {
           to="/profile/history"
           icon={<History className="h-5 w-5 text-primary" />}
           title="Volunteer history"
-          detail={`${daysCompleted} · ${hours}h`}
+          detail={`${daysCompleted} shifts, ${hours}h`}
         />
         <Row
           to="/profile/reflections"

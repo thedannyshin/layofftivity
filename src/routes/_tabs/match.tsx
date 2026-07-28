@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Check, MessageCircle, Quote } from "lucide-react";
+import { Check, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Clamp, Meta, Screen, SectionTitle, TopBar, staticCard, tapCard } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Clamp, Meta, Screen, ScreenHero, SectionTitle, staticCard, tapCard } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { orgById, sharedWith } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
@@ -49,7 +49,7 @@ function Match() {
 
   return (
     <Screen>
-      <TopBar title="You've been matched" subtitle="Meet your volunteer group" />
+      <ScreenHero title="Your matches" subtitle="Say hello before your first shift" />
 
       <SectionTitle>Your matches</SectionTitle>
       <div className="space-y-4">
@@ -106,7 +106,7 @@ function Match() {
         <p className="text-[13px] font-bold text-primary">{org.name}</p>
         <p className="mt-1 text-[17px] font-extrabold">{primaryEvent.title}</p>
         <p className="mt-1 text-[13px] text-muted-foreground">
-          {primaryEvent.date} · {primaryEvent.time}
+          {primaryEvent.dateShort}, {primaryEvent.time}
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           <Chip tone="green">{org.cause}</Chip>
@@ -114,9 +114,11 @@ function Match() {
         </div>
       </Link>
 
-      <div className={`${staticCard} mt-8 flex gap-3`}>
-        <Quote className="h-4 w-4 shrink-0 text-primary" />
+      <div className={`${staticCard} mt-8`}>
         <p className="text-[14px] leading-relaxed text-muted-foreground">
+          <span className="lo-display text-[20px] leading-none text-primary" aria-hidden>
+            “
+          </span>
           Matched on causes, interests, and availability — nothing else.
         </p>
       </div>

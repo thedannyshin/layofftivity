@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BookOpen, Car, Medal, Repeat, Sunrise, UserPlus } from "lucide-react";
-import { Ring, Screen, SectionTitle, TopBar, staticCard, staticCardAccent } from "@/components/app/Shell";
+import { Ring, Screen, ScreenHero, SectionTitle, staticCard, staticCardAccent } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -38,7 +38,7 @@ function Badges() {
 
   return (
     <Screen>
-      <TopBar title="Badges" back />
+      <ScreenHero title="Badges" back />
       <div className="-mt-2 mb-2">
         <Ring value={earned.length} total={badges.length} size={48} label="earned" />
       </div>

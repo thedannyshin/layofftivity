@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import * as React from "react";
 import { Send } from "lucide-react";
-import { Avatar, Screen, TopBar, tapPill } from "@/components/app/Shell";
+import { Avatar, Screen, ScreenHero, tapPill } from "@/components/app/Shell";
 import { byId, sharedWith } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -55,11 +55,11 @@ function Chat() {
   return (
     <div className="flex min-h-screen flex-col bg-background pb-32">
       <Screen>
-        <TopBar
+        <ScreenHero
           title={person.name}
           subtitle={person.formerRole}
           back
-          right={<Avatar src={person.photo} name={person.name} size={36} />}
+          right={<Avatar src={person.photo} name={person.name} size={40} />}
         />
 
         <div className="rounded-2xl bg-primary-soft p-4 text-[13px] leading-relaxed">

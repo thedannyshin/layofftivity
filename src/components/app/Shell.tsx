@@ -1,5 +1,5 @@
 import { Link, useRouter } from "@tanstack/react-router";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ChevronRight } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -83,36 +83,61 @@ export function BackButton({ onClick, className }: { onClick: () => void; classN
         className,
       )}
     >
-      <ChevronLeft className="h-5 w-5" />
+      <ArrowLeft className="h-5 w-5" aria-hidden />
     </button>
   );
 }
 
-export function TopBar({
+export function ScreenHero({
   title,
+  eyebrow,
   subtitle,
   back,
   right,
+  sticky,
 }: {
   title: string;
+  eyebrow?: string;
   subtitle?: string;
   back?: boolean;
   right?: ReactNode;
+  /** Sticky header with back button. Defaults to true when `back` is set. */
+  sticky?: boolean;
 }) {
   const router = useRouter();
+  const isSticky = sticky ?? !!back;
   return (
-    <header className="sticky top-0 z-20 -mx-5 mb-4 bg-background/95 px-5 pt-3 pb-3 backdrop-blur">
-      <div className="flex items-center gap-2">
-        {back && <BackButton onClick={() => router.history.back()} />}
+    <header
+      className={cn(
+        "-mx-5 mb-4 px-5",
+        isSticky
+          ? "sticky top-0 z-20 bg-background/95 pt-3 pb-3 backdrop-blur"
+          : "pt-6 pb-2",
+      )}
+    >
+      <div className="flex items-start gap-2">
+        {back && (
+          <BackButton onClick={() => router.history.back()} className="mt-0.5 shrink-0" />
+        )}
         <div className="min-w-0 flex-1">
-          <h1 className="lo-display truncate text-[20px] leading-tight">{title}</h1>
-          {subtitle && <p className="truncate text-[13px] text-muted-foreground">{subtitle}</p>}
+          {eyebrow && (
+            <p className="text-[13px] font-semibold text-muted-foreground">{eyebrow}</p>
+          )}
+          <h1 className={cn("lo-display text-[26px] leading-tight", eyebrow && "mt-1")}>
+            {title}
+          </h1>
+          {subtitle && (
+            <p className="mt-1 text-[14px] text-muted-foreground">{subtitle}</p>
+          )}
         </div>
         {right}
       </div>
     </header>
   );
 }
+
+/** @deprecated Use ScreenHero — kept as an alias during migration. */
+export const TopBar = ScreenHero;
 
 export function SectionTitle({
   children,
@@ -190,7 +215,7 @@ export function Meta({
   if (!parts.length) return null;
   return (
     <p className={cn("truncate text-[13px] text-muted-foreground", className)}>
-      {parts.join(" · ")}
+      {parts.join(", ")}
     </p>
   );
 }

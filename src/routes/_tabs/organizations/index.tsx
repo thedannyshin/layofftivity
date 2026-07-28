@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { ChevronRight, Search, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Chip, Deck, Screen, SectionTitle, TopBar, deckCard, staticCard, tapPill, tapPillActive } from "@/components/app/Shell";
+import { Chip, Deck, Screen, ScreenHero, SectionTitle, deckCard, staticCard, tapPill, tapPillActive } from "@/components/app/Shell";
 import { CoverPhoto } from "@/components/app/OrgMark";
 import { causeOptions, events, organizations, orgById } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -43,7 +43,7 @@ function Organizations() {
 
   return (
     <Screen>
-      <TopBar title="Explore" subtitle="Organizations in the East Bay" />
+      <ScreenHero title="Explore" subtitle="East Bay" />
 
       <label className="flex items-center gap-2 rounded-xl bg-card px-3">
         <Search className="h-4 w-4 text-muted-foreground" />
@@ -82,9 +82,8 @@ function Organizations() {
             <CoverPhoto cover={o.cover} alt={o.name} />
             <div className="p-4">
               <p className="text-[16px] leading-tight font-bold">{o.name}</p>
-              <p className="mt-1 text-[13px] text-muted-foreground">
-                {o.cause} · {o.neighborhood}
-              </p>
+              <p className="mt-1 text-[13px] text-muted-foreground">{o.cause}</p>
+              <p className="text-[13px] text-muted-foreground">{o.neighborhood}</p>
               <p className="mt-2 line-clamp-2 text-[13px] leading-relaxed text-muted-foreground">
                 {o.mission}
               </p>
@@ -133,7 +132,7 @@ function Organizations() {
               <div className="p-4">
                 <p className="truncate text-[15px] font-bold">{e.title}</p>
                 <p className="mt-0.5 truncate text-[13px] text-muted-foreground">
-                  {e.dateShort} · {e.time}
+                  {e.dateShort}, {e.time}
                 </p>
                 <p className="truncate text-[13px] text-muted-foreground">{org.neighborhood}</p>
               </div>

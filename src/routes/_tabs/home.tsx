@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, MapPin } from "lucide-react";
-import { Avatar, ListGroup, Ring, Screen, SectionTitle, tapCard, tapRow } from "@/components/app/Shell";
+import { Avatar, ListGroup, Ring, Screen, ScreenHero, SectionTitle, tapCard, tapRow } from "@/components/app/Shell";
 import { orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/_tabs/home")({
 
 function Home() {
   const app = useApp();
-  const { state, profile, initials, matches, guests, primaryEvent, week, thread, isJoined } = app;
+  const { state, profile, initials, matches, guests, primaryEvent, thread, isJoined } = app;
   const org = orgById(primaryEvent.orgId);
   const joined = isJoined(primaryEvent.id);
 
@@ -56,21 +56,16 @@ function Home() {
 
   return (
     <Screen>
-      <header className="pt-6 pb-1">
-        <div className="flex items-center justify-between gap-3">
-          <div className="min-w-0">
-            <p className="text-[14px] font-semibold text-muted-foreground">
-              Hi{profile.firstName ? `, ${profile.firstName}` : ""}
-            </p>
-            <h1 className="mt-1 text-[26px] leading-tight font-extrabold">
-              Week {week} with your {org.cause.toLowerCase()} group
-            </h1>
-          </div>
+      <ScreenHero
+        eyebrow={`Hi${profile.firstName ? `, ${profile.firstName}` : ""}`}
+        title="Your week"
+        subtitle={`${org.cause} group`}
+        right={
           <Link to="/profile" aria-label="Open your profile">
             <Avatar src={profile.photo} name={app.fullName} initials={initials} size={44} />
           </Link>
-        </div>
-      </header>
+        }
+      />
 
       <SectionTitle>{joined ? "Your next volunteer day" : "Your first volunteer day"}</SectionTitle>
       <Link
@@ -91,7 +86,7 @@ function Home() {
           <p className="flex items-center gap-2">
             <CalendarDays className="h-4 w-4 shrink-0" />
             <span className="truncate">
-              {primaryEvent.dateShort} · {primaryEvent.time}
+              {primaryEvent.dateShort}, {primaryEvent.time}
             </span>
           </p>
           <p className="flex items-center gap-2">
@@ -168,7 +163,7 @@ function Home() {
             <h3 className="truncate text-[16px] font-bold">{org.cause} group</h3>
             <p className="mt-0.5 text-[13px] text-muted-foreground">
               {state.matchGreeted.length
-                ? `${matches.length + 1 + guests.length} people · ${app.daysCompleted} day${app.daysCompleted === 1 ? "" : "s"} together`
+                ? `${matches.length + 1 + guests.length} people, ${app.daysCompleted} day${app.daysCompleted === 1 ? "" : "s"} together`
                 : `Say hello to ${matches.map((m) => m.name.split(" ")[0]).join(" and ")}`}
             </p>
           </div>

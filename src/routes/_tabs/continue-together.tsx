@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { CalendarCheck, ChevronRight, Coffee, Footprints, Utensils } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Screen, TopBar, selectRow, staticCardAccent } from "@/components/app/Shell";
+import { Avatar, Screen, ScreenHero, selectRow, staticCardAccent } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { continueOptions, events } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
@@ -59,7 +59,7 @@ function ContinueTogether() {
 
   return (
     <Screen>
-      <TopBar title="That's a wrap" subtitle={`Volunteer day ${daysCompleted} logged`} back />
+      <ScreenHero title="That's a wrap" subtitle={`Day ${daysCompleted} logged`} back />
 
       <div className={`${staticCardAccent} p-5 text-center`}>
         <div className="flex justify-center -space-x-2">

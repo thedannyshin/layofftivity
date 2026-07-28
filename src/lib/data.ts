@@ -339,7 +339,7 @@ export const eventById = (id: string) => events.find((e) => e.id === id) ?? even
 export const eventsForOrg = (orgId: string) => events.filter((e) => e.orgId === orgId);
 
 export const cohort = {
-  name: "Saturday Crew · Harvest Table",
+  name: "Saturday Crew, Harvest Table",
   memberIds: ["maya", "daniel", "priya", "james", "sofia", "tomas"],
   meetupSpot: "Blue awning by the loading bay, 1420 Peralta St",
   meetupTime: "8:45 AM, fifteen minutes before the shift",

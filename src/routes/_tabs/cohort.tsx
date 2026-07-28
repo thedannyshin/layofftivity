@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Car, Check, ChevronRight, MessageCircle, UserPlus } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Chip, ListGroup, Meta, Screen, SectionTitle, TopBar, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
-import { byId, introductions, orgById, sharedWith, transportation } from "@/lib/data";
+import { Avatar, Chip, ListGroup, Meta, Screen, ScreenHero, SectionTitle, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
+import { byId, introductions, sharedWith, transportation } from "@/lib/data";
 import { useApp } from "@/lib/store";
 
 export const Route = createFileRoute("/_tabs/cohort")({
@@ -25,7 +25,6 @@ export const Route = createFileRoute("/_tabs/cohort")({
 
 function Group() {
   const { state, update, matches, guests, primaryEvent, prefs, thread, isJoined } = useApp();
-  const org = orgById(primaryEvent.orgId);
   const messages = thread("group");
   const lastMessage = messages[messages.length - 1];
   const joined = isJoined(primaryEvent.id);
@@ -41,9 +40,9 @@ function Group() {
 
   return (
     <Screen>
-      <TopBar
-        title={`${org.cause} group`}
-        subtitle={`${matches.length + 1 + guests.length} people · ${state.onboarding.location || "Your area"}`}
+      <ScreenHero
+        title="Your group"
+        subtitle={`${matches.length + 1 + guests.length} people`}
       />
 
       <Link
@@ -57,7 +56,7 @@ function Group() {
           </p>
           <p className="mt-0.5 truncate text-[16px] font-bold">{primaryEvent.title}</p>
           <p className="mt-0.5 truncate text-[13px] text-muted-foreground">
-            {primaryEvent.date} · {primaryEvent.time}
+            {primaryEvent.dateShort}, {primaryEvent.time}
           </p>
         </div>
         <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />

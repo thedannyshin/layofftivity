@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import * as React from "react";
 import { Send } from "lucide-react";
-import { Avatar, Screen, TopBar } from "@/components/app/Shell";
-import { byId, icebreakers, orgById } from "@/lib/data";
+import { Avatar, Screen, ScreenHero } from "@/components/app/Shell";
+import { byId, icebreakers } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -25,8 +25,7 @@ export const Route = createFileRoute("/_tabs/cohort-chat")({
 });
 
 function GroupChat() {
-  const { update, thread, matches, guests, primaryEvent, profile, initials, fullName } = useApp();
-  const org = orgById(primaryEvent.orgId);
+  const { update, thread, matches, guests, profile, initials, fullName } = useApp();
   const messages = thread("group");
   const [value, setValue] = React.useState("");
   const endRef = React.useRef<HTMLDivElement>(null);
@@ -45,11 +44,7 @@ function GroupChat() {
   return (
     <div className="flex min-h-screen flex-col bg-background pb-32">
       <Screen>
-        <TopBar
-          title={`${org.cause} group`}
-          subtitle={`${matches.length + 1 + guests.length} people`}
-          back
-        />
+        <ScreenHero title="Group chat" subtitle={`${matches.length + 1 + guests.length} people`} back />
 
         <div className="flex justify-center gap-2">
           {matches.map((m) => (

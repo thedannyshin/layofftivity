@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { Briefcase, Check, Copy, Heart, Mail, MessageSquare, Users, X } from "lucide-react";
 import { toast } from "sonner";
-import { Card, Chip, Screen, SectionTitle, TopBar, selectRow } from "@/components/app/Shell";
+import { Card, Chip, Screen, ScreenHero, SectionTitle, selectRow } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { orgById } from "@/lib/data";
 import { useApp, type Invite as InviteType, type InviteStatus } from "@/lib/store";
@@ -124,9 +124,9 @@ function InviteScreen() {
 
   return (
     <Screen>
-      <TopBar
+      <ScreenHero
         title="Invite a friend"
-        subtitle={`${primaryEvent.title} · ${primaryEvent.dateShort}`}
+        subtitle={primaryEvent.title}
         back
       />
 
@@ -144,7 +144,7 @@ function InviteScreen() {
                   <div className="min-w-0">
                     <p className="truncate text-[16px] font-bold">{i.name}</p>
                     <p className="truncate text-[13px] text-muted-foreground">
-                      {i.relation} · {i.channel === "link" ? "shared link" : i.contact}
+                      {i.relation}, {i.channel === "link" ? "shared link" : i.contact}
                     </p>
                   </div>
                   <StatusChip status={i.status} />
