@@ -183,6 +183,130 @@ export function Chip({
   );
 }
 
+/**
+ * Dot-separated metadata line. Replaces stacked sentences with one scannable row.
+ */
+export function Meta({
+  items,
+  className,
+}: {
+  items: (string | false | null | undefined)[];
+  className?: string;
+}) {
+  const parts = items.filter(Boolean) as string[];
+  if (!parts.length) return null;
+  return (
+    <p className={cn("truncate text-[13px] text-muted-foreground", className)}>
+      {parts.join(" · ")}
+    </p>
+  );
+}
+
+/** Long copy collapsed to a couple of lines with a real Read more control. */
+export function Clamp({
+  children,
+  lines = 2,
+  className,
+}: {
+  children: string;
+  lines?: 2 | 3;
+  className?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const long = children.length > 130;
+  return (
+    <div>
+      <p
+        className={cn(
+          "text-[15px] leading-relaxed",
+          !open && (lines === 2 ? "line-clamp-2" : "line-clamp-3"),
+          className,
+        )}
+      >
+        {children}
+      </p>
+      {long && (
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="mt-1.5 cursor-pointer rounded-full bg-secondary px-3 py-1.5 text-[12px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft"
+        >
+          {open ? "Less" : "Read more"}
+        </button>
+      )}
+    </div>
+  );
+}
+
+/** Compact icon + value facts in a 2-up grid — replaces stacked label/value lists. */
+export function FactGrid({ facts }: { facts: { icon: ReactNode; value: string; hint?: string }[] }) {
+  return (
+    <div className="grid grid-cols-2 gap-x-3 gap-y-4">
+      {facts.map((f) => (
+        <div key={f.value + (f.hint ?? "")} className="flex items-start gap-2.5">
+          <span className="mt-0.5 shrink-0 text-primary">{f.icon}</span>
+          <div className="min-w-0">
+            <p className="text-[15px] leading-snug font-bold">{f.value}</p>
+            {f.hint && <p className="text-[12px] text-muted-foreground">{f.hint}</p>}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Horizontal snap deck — one item at a time instead of a stack of paragraphs. */
+export function Deck({ children }: { children: ReactNode }) {
+  return (
+    <div className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-1">
+      {children}
+    </div>
+  );
+}
+
+export const deckItem = "w-[78%] shrink-0 snap-start rounded-2xl bg-card p-4";
+
+/** Circular progress ring with the number inside — a count, not a sentence. */
+export function Ring({
+  value,
+  total,
+  size = 56,
+  label,
+}: {
+  value: number;
+  total: number;
+  size?: number;
+  label?: string;
+}) {
+  const pct = total > 0 ? Math.min(1, value / total) : 0;
+  const r = (size - 8) / 2;
+  const c = 2 * Math.PI * r;
+  return (
+    <div className="flex shrink-0 items-center gap-2.5">
+      <span className="relative" style={{ width: size, height: size }}>
+        <svg width={size} height={size} className="-rotate-90">
+          <circle cx={size / 2} cy={size / 2} r={r} fill="none" strokeWidth={6} className="stroke-secondary" />
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            fill="none"
+            strokeWidth={6}
+            strokeLinecap="round"
+            strokeDasharray={c}
+            strokeDashoffset={c * (1 - pct)}
+            className="stroke-primary transition-[stroke-dashoffset] duration-500"
+          />
+        </svg>
+        <span className="absolute inset-0 flex items-center justify-center text-[13px] font-extrabold">
+          {value}/{total}
+        </span>
+      </span>
+      {label && <span className="text-[13px] font-semibold text-muted-foreground">{label}</span>}
+    </div>
+  );
+}
+
 export function Avatar({
   src,
   name,
