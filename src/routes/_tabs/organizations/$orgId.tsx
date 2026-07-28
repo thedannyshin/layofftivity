@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, Clock, MapPin, Users } from "lucide-react";
 import { Card, Chip, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
+import { Button } from "@/components/ui/button";
 import { eventsForOrg, orgById, organizations } from "@/lib/data";
 
 export const Route = createFileRoute("/_tabs/organizations/$orgId")({
