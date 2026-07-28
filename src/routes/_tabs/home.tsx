@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, MapPin, Sparkles, Users } from "lucide-react";
-import { Avatar, Card, Chip, ListGroup, Meta, Ring, Screen, SectionTitle, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
-import { OrgMark } from "@/components/app/OrgMark";
+import { Avatar, Chip, Deck, ListGroup, Ring, Screen, SectionTitle, deckCard, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
+import { CoverPhoto } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { events, orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -221,7 +221,7 @@ function Home() {
       <SectionTitle action="See all" to="/organizations">
         Recommended for you
       </SectionTitle>
-      <ListGroup>
+      <Deck>
         {recommended.map((e) => {
           const eOrg = orgById(e.orgId);
           const isIn = isJoined(e.id);
@@ -230,10 +230,10 @@ function Home() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className={tapRow}
+              className={deckCard}
             >
-              <OrgMark cover={eOrg.cover} />
-              <div className="min-w-0 flex-1">
+              <CoverPhoto cover={eOrg.cover} alt={eOrg.name} />
+              <div className="p-4">
                 <p className="truncate text-[15px] font-bold">{e.title}</p>
                 <p className="mt-0.5 truncate text-[13px] text-muted-foreground">
                   {eOrg.name} · {e.dateShort}
@@ -245,16 +245,15 @@ function Home() {
                   ) : (
                     <Chip>
                       <Users className="h-3 w-3" />
-                      {e.spotsTotal - e.spotsFilled} spots left
+                      {e.spotsTotal - e.spotsFilled} spots
                     </Chip>
                   )}
                 </div>
               </div>
-              <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
             </Link>
           );
         })}
-      </ListGroup>
+      </Deck>
 
       <div className="mt-6">
         <Button asChild variant="quiet" size="lg" className="w-full">

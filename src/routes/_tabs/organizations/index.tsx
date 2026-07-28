@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { ChevronRight, Search, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Chip, ListGroup, Screen, SectionTitle, TopBar, staticCard, tapPill, tapPillActive, tapRow } from "@/components/app/Shell";
-import { OrgMark } from "@/components/app/OrgMark";
+import { Chip, Deck, Screen, SectionTitle, TopBar, deckCard, staticCard, tapPill, tapPillActive } from "@/components/app/Shell";
+import { CoverPhoto } from "@/components/app/OrgMark";
 import { causeOptions, events, organizations, orgById } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -71,16 +71,16 @@ function Organizations() {
         {filtered.length} {filtered.length === 1 ? "organization" : "organizations"}
       </SectionTitle>
 
-      <ListGroup>
+      <Deck>
         {filtered.map((o) => (
           <Link
             key={o.id}
             to="/organizations/$orgId"
             params={{ orgId: o.id }}
-            className={`${tapRow} items-start`}
+            className={deckCard}
           >
-            <OrgMark cover={o.cover} size={52} />
-            <div className="min-w-0 flex-1">
+            <CoverPhoto cover={o.cover} alt={o.name} />
+            <div className="p-4">
               <p className="text-[16px] leading-tight font-bold">{o.name}</p>
               <p className="mt-1 text-[13px] text-muted-foreground">
                 {o.cause} · {o.neighborhood}
@@ -96,10 +96,9 @@ function Organizations() {
                 <Chip>{o.tags[0]}</Chip>
               </div>
             </div>
-            <ChevronRight className="mt-1 h-5 w-5 shrink-0 text-muted-foreground" />
           </Link>
         ))}
-      </ListGroup>
+      </Deck>
       {filtered.length === 0 && (
         <div className={`${staticCard} p-6 text-center`}>
             <p className="text-[15px] font-semibold">Nothing matches that yet</p>
@@ -120,7 +119,7 @@ function Organizations() {
         )}
 
       <SectionTitle>Happening soon</SectionTitle>
-      <ListGroup>
+      <Deck>
         {soon.map((e) => {
           const org = orgById(e.orgId);
           return (
@@ -128,27 +127,20 @@ function Organizations() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className={tapRow}
+              className={deckCard}
             >
-              <div className="w-14 shrink-0 rounded-xl bg-secondary py-2 text-center">
-                <p className="text-[11px] font-bold text-muted-foreground uppercase">
-                  {e.dateShort.split(" ")[1]}
-                </p>
-                <p className="text-[18px] leading-tight font-extrabold">
-                  {e.dateShort.split(" ")[2]}
-                </p>
-              </div>
-              <div className="min-w-0 flex-1">
+              <CoverPhoto cover={org.cover} alt={org.name} className="h-28" />
+              <div className="p-4">
                 <p className="truncate text-[15px] font-bold">{e.title}</p>
                 <p className="mt-0.5 truncate text-[13px] text-muted-foreground">
-                  {e.time} · {org.neighborhood}
+                  {e.dateShort} · {e.time}
                 </p>
+                <p className="truncate text-[13px] text-muted-foreground">{org.neighborhood}</p>
               </div>
-              <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
             </Link>
           );
         })}
-      </ListGroup>
+      </Deck>
     </Screen>
   );
 }
