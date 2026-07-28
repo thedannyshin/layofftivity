@@ -78,7 +78,10 @@ function Onboarding() {
   const uploadRef = React.useRef<HTMLInputElement>(null);
   const cameraRef = React.useRef<HTMLInputElement>(null);
 
+  const finishing = React.useRef(false);
+
   React.useEffect(() => {
+    if (finishing.current) return;
     if (hydrated && state.onboarding.complete) navigate({ to: "/home", replace: true });
   }, [hydrated, state.onboarding.complete, navigate]);
 
@@ -109,6 +112,7 @@ function Onboarding() {
   ][step];
 
   const finish = () => {
+    finishing.current = true;
     const prefs = { interests, causes, availability };
     update((s) => ({
       ...s,
