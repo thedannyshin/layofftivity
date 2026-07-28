@@ -87,12 +87,9 @@ function OrgDetail() {
           <p className="mt-1 text-[13px] text-muted-foreground">
             New dates post on Mondays. In the meantime, other organizations have space this week.
           </p>
-          <Link
-            to="/organizations"
-            className="mt-3 inline-block rounded-full bg-secondary px-4 py-2.5 text-[14px] font-bold text-primary transition-colors hover:bg-primary-soft active:bg-primary-soft"
-          >
-            Browse other organizations
-          </Link>
+          <Button asChild variant="quiet" className="mt-3">
+            <Link to="/organizations">Browse other organizations</Link>
+          </Button>
         </Card>
       )}
 

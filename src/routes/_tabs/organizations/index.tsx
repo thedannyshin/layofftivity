@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { ChevronRight, Search, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Chip, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { causeOptions, events, organizations, orgById } from "@/lib/data";
@@ -104,16 +105,16 @@ function Organizations() {
             <p className="mt-1 text-[13px] text-muted-foreground">
               Try a different cause, or clear the search to see all six organizations.
             </p>
-            <button
-              type="button"
+            <Button
+              variant="quiet"
+              className="mt-4"
               onClick={() => {
                 setQuery("");
                 setCause(null);
               }}
-              className="mt-4 rounded-full bg-secondary px-4 py-2.5 text-[14px] font-bold text-primary transition-colors hover:bg-primary-soft active:bg-primary-soft"
             >
               Clear filters
-            </button>
+            </Button>
           </div>
         )}
       </div>
