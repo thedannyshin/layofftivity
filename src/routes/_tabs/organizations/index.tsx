@@ -110,7 +110,7 @@ function Organizations() {
                 setQuery("");
                 setCause(null);
               }}
-              className="mt-4 text-[14px] font-bold text-primary hover:underline"
+              className="mt-4 rounded-full bg-secondary px-4 py-2.5 text-[14px] font-bold text-primary transition-colors hover:bg-primary-soft active:bg-primary-soft"
             >
               Clear filters
             </button>

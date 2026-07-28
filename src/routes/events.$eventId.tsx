@@ -139,7 +139,7 @@ function EventDetail() {
             <button
               type="button"
               onClick={leave}
-              className="w-full py-2 text-[14px] font-semibold text-muted-foreground hover:underline"
+              className="w-full rounded-full bg-secondary py-3 text-[14px] font-semibold text-muted-foreground transition-colors hover:bg-muted active:bg-muted"
             >
               Can't make it — release my spot
             </button>
