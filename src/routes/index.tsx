@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
-import { ArrowRight, Camera, Check, ImagePlus, MapPin, Trash2 } from "lucide-react";
+import { ArrowRight, Camera, Check, ChevronLeft, ImagePlus, MapPin, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, Screen } from "@/components/app/Shell";
 import { LogoMark } from "@/components/app/LogoMark";
