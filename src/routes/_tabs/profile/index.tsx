@@ -55,21 +55,6 @@ function Profile() {
         <Stat value={`${state.reflections.length}`} label="Reflections" />
       </div>
 
-      <SectionTitle>Your group</SectionTitle>
-      <Link
-        to="/cohort"
-        className={`${tapCard} flex items-center gap-3`}
-      >
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-[15px] font-bold">{org.cause} group</p>
-          <p className="text-[13px] text-muted-foreground">
-            {matches.length + 1 + guests.length} people · {daysCompleted} day
-            {daysCompleted === 1 ? "" : "s"} together
-          </p>
-        </div>
-        <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
-      </Link>
-
       <SectionTitle>Everything else</SectionTitle>
       <ListGroup>
         <Row
@@ -120,14 +105,6 @@ function Profile() {
           Redo my preferences
         </Button>
       </Card>
-
-      <div className="mt-3">
-        <Button asChild variant="quiet" size="lg" className="w-full">
-          <Link to="/invite">
-            {state.invites.length ? "Manage your invitation" : "Invite a friend"}
-          </Link>
-        </Button>
-      </div>
     </Screen>
   );
 }

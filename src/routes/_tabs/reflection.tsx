@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
 import { Camera, Check, X } from "lucide-react";
 import { toast } from "sonner";
@@ -119,20 +119,15 @@ function ReflectionScreen() {
           )}
         </div>
 
-        <SectionTitle>Your recent reflections</SectionTitle>
-        <div className="space-y-3">
-          {state.reflections.slice(0, 2).map((r) => (
-            <Card key={r.id}>
-              <div className="flex items-center justify-between">
-                <p className="text-[14px] font-bold">{r.date}</p>
-                <span className="rounded-lg border border-muted-foreground/40 px-2.5 py-1 text-[12px] font-semibold text-muted-foreground">
-                  {r.mood}
-                </span>
-              </div>
-              <p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">{r.note}</p>
-            </Card>
-          ))}
-        </div>
+        {state.reflections.length > 0 && (
+          <p className="mt-8 text-[13px] text-muted-foreground">
+            {state.reflections.length} earlier reflection
+            {state.reflections.length === 1 ? "" : "s"} saved ·{" "}
+            <Link to="/profile/reflections" className="font-bold text-primary underline">
+              Read them
+            </Link>
+          </p>
+        )}
       </Screen>
 
       <div className="fixed inset-x-0 bottom-16 z-20 bg-card">

@@ -1,9 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays, ChevronRight, MapPin, Sparkles, Users } from "lucide-react";
-import { Avatar, Chip, Deck, ListGroup, Ring, Screen, SectionTitle, deckCard, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
-import { CoverPhoto } from "@/components/app/OrgMark";
-import { Button } from "@/components/ui/button";
-import { events, orgById } from "@/lib/data";
+import { CalendarDays, ChevronRight, MapPin } from "lucide-react";
+import { Avatar, ListGroup, Ring, Screen, SectionTitle, tapCard, tapRow } from "@/components/app/Shell";
+import { orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -33,7 +31,6 @@ function Home() {
   const { state, profile, initials, matches, guests, primaryEvent, week, thread, isJoined } = app;
   const org = orgById(primaryEvent.orgId);
   const joined = isJoined(primaryEvent.id);
-  const recommended = events.filter((e) => e.id !== primaryEvent.id).slice(0, 4);
 
   const goals = [
     {
@@ -41,12 +38,6 @@ function Home() {
       label: "Join a volunteer activity",
       done: state.joinedEventIds.length > 0,
       to: "/organizations" as const,
-    },
-    {
-      id: "message",
-      label: "Say something in the group chat",
-      done: thread("group").some((m) => m.personId === "you"),
-      to: "/cohort-chat" as const,
     },
     {
       id: "shift",
@@ -176,8 +167,9 @@ function Home() {
           <div className="min-w-0">
             <h3 className="truncate text-[16px] font-bold">{org.cause} group</h3>
             <p className="mt-0.5 text-[13px] text-muted-foreground">
-              {matches.length + 1 + guests.length} people · {app.daysCompleted} day
-              {app.daysCompleted === 1 ? "" : "s"} together
+              {state.matchGreeted.length
+                ? `${matches.length + 1 + guests.length} people · ${app.daysCompleted} day${app.daysCompleted === 1 ? "" : "s"} together`
+                : `Say hello to ${matches.map((m) => m.name.split(" ")[0]).join(" and ")}`}
             </p>
           </div>
           <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
@@ -199,67 +191,6 @@ function Home() {
           ))}
         </div>
       </Link>
-
-      <Link
-        to="/match"
-        className={`${tapCardAccent} mt-3 flex items-center gap-3`}
-      >
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent">
-          <Sparkles className="h-5 w-5 text-accent-foreground" />
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="block text-[15px] font-bold">
-            {state.matchGreeted.length ? "Keep the conversation going" : "Say hello to your matches"}
-          </span>
-          <span className="block text-[13px] text-muted-foreground">
-            {matches.map((m) => m.name.split(" ")[0]).join(" and ")} matched with you.
-          </span>
-        </span>
-        <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
-      </Link>
-
-      <SectionTitle action="See all" to="/organizations">
-        Recommended for you
-      </SectionTitle>
-      <Deck>
-        {recommended.map((e) => {
-          const eOrg = orgById(e.orgId);
-          const isIn = isJoined(e.id);
-          return (
-            <Link
-              key={e.id}
-              to="/events/$eventId"
-              params={{ eventId: e.id }}
-              className={deckCard}
-            >
-              <CoverPhoto cover={eOrg.cover} alt={eOrg.name} />
-              <div className="p-4">
-                <p className="truncate text-[15px] font-bold">{e.title}</p>
-                <p className="mt-0.5 truncate text-[13px] text-muted-foreground">
-                  {eOrg.name} · {e.dateShort}
-                </p>
-                <div className="mt-2 flex gap-1.5">
-                  <Chip tone="green">{eOrg.cause}</Chip>
-                  {isIn ? (
-                    <Chip tone="yellow">You're going</Chip>
-                  ) : (
-                    <Chip>
-                      <Users className="h-3 w-3" />
-                      {e.spotsTotal - e.spotsFilled} spots
-                    </Chip>
-                  )}
-                </div>
-              </div>
-            </Link>
-          );
-        })}
-      </Deck>
-
-      <div className="mt-6">
-        <Button asChild variant="quiet" size="lg" className="w-full">
-          <Link to="/invite">Invite a friend to volunteer with you</Link>
-        </Button>
-      </div>
     </Screen>
   );
 }

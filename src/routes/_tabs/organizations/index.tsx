@@ -39,7 +39,7 @@ function Organizations() {
     return matchesCause && matchesQuery;
   });
 
-  const soon = events.slice(0, 3);
+  const soon = events.slice(0, 6);
 
   return (
     <Screen>
