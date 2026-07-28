@@ -82,7 +82,7 @@ function ContinueTogether() {
               className={cn(
                 "flex w-full items-center gap-3 rounded-2xl p-4 text-left transition-colors",
                 selected
-                  ? "bg-primary-soft"
+                  ? "bg-accent-soft"
                   : "bg-secondary hover:bg-primary-soft/70",
               )}
             >
