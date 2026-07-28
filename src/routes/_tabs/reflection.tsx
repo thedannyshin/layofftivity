@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Card, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { moods } from "@/lib/data";
-import { useStore } from "@/lib/store";
+import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_tabs/reflection")({
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/_tabs/reflection")({
 });
 
 function ReflectionScreen() {
-  const { state, update } = useStore();
+  const { state, update, primaryEvent } = useApp();
   const navigate = useNavigate();
   const [mood, setMood] = React.useState("");
   const [note, setNote] = React.useState("");
@@ -35,11 +35,11 @@ function ReflectionScreen() {
   const save = () => {
     update((s) => ({
       ...s,
-      goalDone: s.goalDone.includes("reflect") ? s.goalDone : [...s.goalDone, "reflect"],
       reflections: [
         {
           id: `r${Date.now()}`,
-          date: "August 8",
+          eventId: primaryEvent.id,
+          date: primaryEvent.date,
           mood,
           gratitude: gratitude || "—",
           note,
@@ -53,9 +53,9 @@ function ReflectionScreen() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-28">
+    <div className="min-h-screen bg-background pb-40">
       <Screen>
-        <TopBar title="How was today?" subtitle="Private. Nobody in your cohort sees this." back />
+        <TopBar title="How was today?" subtitle="Private. Nobody in your group sees this." back />
 
         <SectionTitle>Mood</SectionTitle>
         <div className="flex flex-wrap gap-2">
@@ -140,7 +140,7 @@ function ReflectionScreen() {
         </div>
       </Screen>
 
-      <div className="fixed inset-x-0 bottom-0 bg-card">
+      <div className="fixed inset-x-0 bottom-16 z-20 bg-card">
         <div className="mx-auto w-full max-w-[430px] px-5 py-4">
           <Button size="lg" className="w-full" disabled={!mood || !note.trim()} onClick={save}>
             <Check />
