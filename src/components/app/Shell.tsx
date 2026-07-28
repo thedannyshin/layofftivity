@@ -213,7 +213,7 @@ export function Clamp({
   className?: string;
 }) {
   const [open, setOpen] = useState(false);
-  const long = children.length > 130;
+  const long = children.length > 95;
   return (
     <div>
       <p
