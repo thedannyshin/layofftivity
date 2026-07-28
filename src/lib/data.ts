@@ -472,7 +472,7 @@ export const continueOptions = [
   {
     id: "next",
     title: "Book next Saturday",
-    detail: "Same line, same crew, August 15",
+    detail: "Same line, same people",
     duration: "2.5 hours",
     icon: "calendarcheck",
   },

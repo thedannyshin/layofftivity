@@ -3,8 +3,8 @@ import { CalendarCheck, ChevronRight, Coffee, Footprints, Utensils } from "lucid
 import { toast } from "sonner";
 import { Avatar, Screen, TopBar } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
-import { cohortMembers, continueOptions } from "@/lib/data";
-import { useStore } from "@/lib/store";
+import { continueOptions, events } from "@/lib/data";
+import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 const icons = {
@@ -31,42 +31,50 @@ export const Route = createFileRoute("/_tabs/continue-together")({
 });
 
 function ContinueTogether() {
-  const { state, update } = useStore();
+  const { state, update, matches, guests, daysCompleted, primaryEvent } = useApp();
   const navigate = useNavigate();
-  const members = cohortMembers();
+  const nextEvent =
+    events.find((e) => e.orgId === primaryEvent.orgId && e.id !== primaryEvent.id) ??
+    events.find((e) => e.id !== primaryEvent.id)!;
 
   const choose = (id: string, title: string) => {
     update((s) => ({ ...s, continueChoice: id }));
     if (id === "next") {
       update((s) => ({
         ...s,
-        joinedEventIds: [...new Set([...s.joinedEventIds, "harvest-sat"])],
+        joinedEventIds: [...new Set([...s.joinedEventIds, nextEvent.id])],
       }));
-      toast.success("Booked for August 15", { description: "Same line, same crew." });
+      toast.success(`Booked for ${nextEvent.dateShort}`, { description: nextEvent.title });
       navigate({ to: "/home" });
       return;
     }
-    toast.success(`${title} suggested to the crew`, {
-      description: "Priya and Tomás were notified in the group chat.",
+    sendMessage(update, "group", {
+      personId: "you",
+      text: `${title} after the shift? ${continueOptions.find((o) => o.id === id)?.detail ?? ""}`,
+      time: "Just now",
     });
+    toast.success(`${title} suggested to the group`);
     navigate({ to: "/cohort-chat" });
   };
 
   return (
     <Screen>
-      <TopBar title="That's a wrap" subtitle="184 boxes packed. Your fourth Saturday." back />
+      <TopBar title="That's a wrap" subtitle={`Volunteer day ${daysCompleted} logged`} back />
 
       <div className="rounded-2xl bg-accent-soft p-5 text-center">
         <div className="flex justify-center -space-x-2">
-          {members.map((m) => (
+          {matches.map((m) => (
             <Avatar key={m.id} src={m.photo} name={m.name} size={38} />
+          ))}
+          {guests.map((g) => (
+            <Avatar key={g.id} name={g.name} size={38} />
           ))}
         </div>
         <p className="mt-3 text-[17px] leading-snug font-bold text-accent-foreground">
           Nobody has to leave yet
         </p>
         <p className="mt-1 text-[14px] text-muted-foreground">
-          The hour after a shift is where cohorts turn into friendships. Pick something small.
+          The hour after a shift is where a group turns into friendships. Pick something small.
         </p>
       </div>
 
@@ -109,7 +117,9 @@ function ContinueTogether() {
       </div>
 
       <p className="mt-4 text-center text-[13px] text-muted-foreground">
-        Four Saturdays in a row with the same six people. That's how this works.
+        {daysCompleted === 1
+          ? "One day down. Showing up again next week is the whole idea."
+          : `${daysCompleted} volunteer days with the same people. That's how this works.`}
       </p>
     </Screen>
   );

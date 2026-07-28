@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Card, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { moods } from "@/lib/data";
-import { sendMessage, useApp } from "@/lib/store";
+import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_tabs/reflection")({
