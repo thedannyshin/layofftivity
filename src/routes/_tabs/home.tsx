@@ -153,24 +153,6 @@ function Home() {
           </p>
         )}
 
-      <SectionTitle action="Open messages" to="/messages">
-        Your messages
-      </SectionTitle>
-      <ListGroup>
-        <Link to="/messages" className={tapRow}>
-          <Avatar name="Group" size={52} />
-          <div className="min-w-0 flex-1 text-left">
-            <p className="truncate text-[15px] font-extrabold">Messages</p>
-            <p className="mt-0.5 line-clamp-1 text-[13px] text-muted-foreground">
-              {state.matchGreeted.length
-                ? `${matches.length + 1 + guests.length} people, ${app.daysCompleted} day${app.daysCompleted === 1 ? "" : "s"} together`
-                : `Say hello to ${matches.map((m) => m.name.split(" ")[0]).join(" and ")}`}
-            </p>
-          </div>
-          <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
-        </Link>
-      </ListGroup>
-
       <SectionTitle>Badges</SectionTitle>
       <Link to="/profile/badges" className={`${tapCard} block`}>
         <div className="flex items-center justify-between gap-3">
