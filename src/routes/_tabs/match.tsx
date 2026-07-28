@@ -1,25 +1,19 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Check, MessageCircle } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Clamp, Meta, Screen, ScreenHero, SectionTitle, staticCard, tapCard } from "@/components/app/Shell";
-import { Button } from "@/components/ui/button";
-import { orgById, sharedWith } from "@/lib/data";
+import { Avatar, ListGroup, Screen, ScreenHero, tapRow } from "@/components/app/Shell";
 import { sendMessage, useApp } from "@/lib/store";
 
 export const Route = createFileRoute("/_tabs/match")({
   head: () => ({
     meta: [
-      { title: "You've been matched — Layofftivity" },
+      { title: "Messages — Layofftivity" },
       {
         name: "description",
-        content:
-          "Meet the small volunteer group matched to your causes, interests, and availability, and join your first activity together.",
+        content: "Chat 1:1 with matched people or in your crew chat, before your next volunteer day.",
       },
-      { property: "og:title", content: "Meet your volunteer group" },
-      {
-        property: "og:description",
-        content: "Arriving to a familiar face is easier than arriving to a room.",
-      },
+      { property: "og:title", content: "Messages — Layofftivity" },
+      { property: "og:description", content: "Chat 1:1 and in your matched group." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -28,10 +22,10 @@ export const Route = createFileRoute("/_tabs/match")({
 });
 
 function Match() {
-  const { state, update, matches, prefs, primaryEvent, guests, isJoined } = useApp();
+  const { state, update, matches, thread } = useApp();
   const navigate = useNavigate();
-  const org = orgById(primaryEvent.orgId);
-  const joined = isJoined(primaryEvent.id);
+  const groupMessages = thread("group");
+  const groupLast = groupMessages[groupMessages.length - 1];
 
   const greet = (personId: string, name: string) => {
     update((s) => ({
@@ -49,79 +43,63 @@ function Match() {
 
   return (
     <Screen>
-      <ScreenHero title="Your matches" subtitle="Say hello before your first shift" />
+      <ScreenHero
+        title="Messages"
+        subtitle="Chat 1:1 or in your group"
+        right={
+          <Link
+            to="/invite"
+            className="rounded-lg bg-secondary px-3 py-2 text-[13px] font-semibold transition-colors hover:bg-primary-soft active:bg-primary-soft"
+          >
+            Add person
+          </Link>
+        }
+      />
 
-      <SectionTitle>Your matches</SectionTitle>
-      <div className="space-y-4">
+      <ListGroup>
+        <Link to="/cohort-chat" className={tapRow}>
+          <Avatar name="Group" size={52} />
+          <div className="min-w-0 flex-1 text-left">
+            <p className="truncate text-[15px] font-extrabold">Crew chat</p>
+            <p className="mt-0.5 line-clamp-1 text-[13px] text-muted-foreground">
+              {groupLast ? groupLast.text : "Start with an icebreaker below."}
+            </p>
+          </div>
+          <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
+        </Link>
+
         {matches.map((m) => {
-          const shared = sharedWith(m, prefs);
           const greeted = state.matchGreeted.includes(m.id);
+          const messages = thread(m.id);
+          const last = messages[messages.length - 1];
+          const preview = last
+            ? last.text
+            : greeted
+              ? "Say hello to continue."
+              : "Say hello to start.";
           return (
-            <Card key={m.id}>
-              <div className="flex items-center gap-3">
-                <Avatar src={m.photo} name={m.name} size={64} />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-[17px] font-extrabold">{m.name}</p>
-                  <Meta items={[m.formerRole, m.city]} />
-                  <div className="mt-2 flex flex-wrap gap-1.5">
-                    {(shared.length ? shared : m.causes).slice(0, 3).map((s) => (
-                      <Chip key={s} tone="green">
-                        <Check className="h-3 w-3" />
-                        {s}
-                      </Chip>
-                    ))}
-                  </div>
-                </div>
+            <button
+              key={m.id}
+              type="button"
+              onClick={() => {
+                if (greeted) {
+                  navigate({ to: "/chat/$personId", params: { personId: m.id } });
+                  return;
+                }
+                greet(m.id, m.name);
+              }}
+              className={`${tapRow} cursor-default`}
+            >
+              <Avatar src={m.photo} name={m.name} size={52} />
+              <div className="min-w-0 flex-1 text-left">
+                <p className="truncate text-[15px] font-extrabold">{m.name}</p>
+                <p className="mt-0.5 line-clamp-1 text-[13px] text-muted-foreground">{preview}</p>
               </div>
-              <div className="mt-3">
-                <Clamp lines={2}>{m.bio}</Clamp>
-              </div>
-
-              <div className="mt-4 flex gap-2">
-                {greeted ? (
-                  <Button asChild className="flex-1">
-                    <Link to="/chat/$personId" params={{ personId: m.id }}>
-                      <MessageCircle />
-                      Continue chat
-                    </Link>
-                  </Button>
-                ) : (
-                  <Button className="flex-1" onClick={() => greet(m.id, m.name)}>
-                    <MessageCircle />
-                    Say hello
-                  </Button>
-                )}
-              </div>
-            </Card>
+              <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
+            </button>
           );
         })}
-      </div>
-
-      <SectionTitle>Your first activity together</SectionTitle>
-      <Link
-        to="/events/$eventId"
-        params={{ eventId: primaryEvent.id }}
-        className={`${tapCard} block`}
-      >
-        <p className="text-[13px] font-bold text-primary">{org.name}</p>
-        <p className="mt-1 text-[17px] font-extrabold">{primaryEvent.title}</p>
-        <p className="mt-1 text-[13px] text-muted-foreground">
-          {primaryEvent.dateShort}, {primaryEvent.time}
-        </p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          <Chip tone="green">{org.cause}</Chip>
-          {joined ? <Chip>You're going</Chip> : <Chip>Tap to see details</Chip>}
-        </div>
-      </Link>
-
-      <div className={`${staticCard} mt-8`}>
-        <p className="text-[14px] leading-relaxed text-muted-foreground">
-          <span className="lo-display text-[20px] leading-none text-primary" aria-hidden>
-            “
-          </span>
-          Matched on causes, interests, and availability — nothing else.
-        </p>
-      </div>
+      </ListGroup>
     </Screen>
   );
 }

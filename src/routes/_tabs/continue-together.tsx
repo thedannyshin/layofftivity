@@ -107,7 +107,7 @@ function ContinueTogether() {
 
       <div className="mt-6 space-y-3">
         <Button asChild variant="quiet" size="lg" className="w-full">
-          <Link to="/profile">Head home — see my volunteer history</Link>
+          <Link to="/home">Head home — see my volunteer history</Link>
         </Button>
       </div>
 

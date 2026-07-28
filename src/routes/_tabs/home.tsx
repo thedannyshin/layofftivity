@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays, ChevronRight, MapPin } from "lucide-react";
-import { Avatar, ListGroup, Ring, Screen, ScreenHero, SectionTitle, tapCard, tapRow } from "@/components/app/Shell";
+import { Award, CalendarDays, ChevronRight, MapPin } from "lucide-react";
+import { Avatar, Card, Chip, ListGroup, Ring, Screen, ScreenHero, SectionTitle, staticCard, tapCard, tapRow } from "@/components/app/Shell";
 import { orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -28,9 +28,20 @@ export const Route = createFileRoute("/_tabs/home")({
 
 function Home() {
   const app = useApp();
-  const { state, profile, initials, matches, guests, primaryEvent, thread, isJoined } = app;
+  const {
+    state,
+    badges,
+    profile,
+    matches,
+    guests,
+    hours,
+    daysCompleted,
+    primaryEvent,
+    isJoined,
+  } = app;
   const org = orgById(primaryEvent.orgId);
   const joined = isJoined(primaryEvent.id);
+  const earnedBadges = badges.filter((b) => b.earned);
 
   const goals = [
     {
@@ -56,18 +67,9 @@ function Home() {
 
   return (
     <Screen>
-      <ScreenHero
-        eyebrow={`Hi${profile.firstName ? `, ${profile.firstName}` : ""}`}
-        title="Your week"
-        subtitle={`${org.cause} group`}
-        right={
-          <Link to="/profile" aria-label="Open your profile">
-            <Avatar src={profile.photo} name={app.fullName} initials={initials} size={44} />
-          </Link>
-        }
-      />
+      <ScreenHero title={`Hello${profile.firstName ? `, ${profile.firstName}` : ""}`} />
 
-      <SectionTitle>{joined ? "Your next volunteer day" : "Your first volunteer day"}</SectionTitle>
+      <SectionTitle>Upcoming volunteer day</SectionTitle>
       <Link
         to={joined ? "/volunteer-day" : "/events/$eventId"}
         params={joined ? undefined : { eventId: primaryEvent.id }}
@@ -151,16 +153,16 @@ function Home() {
           </p>
         )}
 
-      <SectionTitle action="Open group" to="/cohort">
-        Your group
+      <SectionTitle action="Open chat" to="/match">
+        Your chats
       </SectionTitle>
       <Link
-        to="/cohort"
+        to="/match"
         className={`${tapCard} block`}
       >
         <div className="flex items-center justify-between">
           <div className="min-w-0">
-            <h3 className="truncate text-[16px] font-bold">{org.cause} group</h3>
+            <h3 className="truncate text-[16px] font-bold">Messages</h3>
             <p className="mt-0.5 text-[13px] text-muted-foreground">
               {state.matchGreeted.length
                 ? `${matches.length + 1 + guests.length} people, ${app.daysCompleted} day${app.daysCompleted === 1 ? "" : "s"} together`
@@ -186,6 +188,62 @@ function Home() {
           ))}
         </div>
       </Link>
+
+      <SectionTitle>You</SectionTitle>
+      <div className="grid grid-cols-3 gap-3">
+        <Stat value={`${hours}`} label="Hours" />
+        <Stat value={`${daysCompleted}`} label="Shifts" />
+        <Stat value={`${state.reflections.length}`} label="Reflections" />
+      </div>
+
+      <SectionTitle>Badges</SectionTitle>
+      <Link to="/profile/badges" className={`${tapCard} block`}>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
+              <Award className="h-5 w-5 text-primary" />
+            </span>
+            <div className="min-w-0">
+              <p className="truncate text-[15px] font-bold">
+                {earnedBadges.length} of {badges.length} earned
+              </p>
+              <p className="truncate text-[13px] text-muted-foreground">
+                {earnedBadges.length
+                  ? earnedBadges
+                      .slice(0, 2)
+                      .map((badge) => badge.name)
+                      .join(", ")
+                  : "Your volunteer milestones live here."}
+              </p>
+            </div>
+          </div>
+          <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
+        </div>
+      </Link>
+
+      <SectionTitle>Preferences</SectionTitle>
+      <Card>
+        <div className="flex flex-wrap gap-2">
+          {state.onboarding.causes.map((cause) => (
+            <Chip key={cause}>{cause}</Chip>
+          ))}
+          {state.onboarding.availability.map((availability) => (
+            <Chip key={availability}>{availability}</Chip>
+          ))}
+          {state.onboarding.interests.map((interest) => (
+            <Chip key={interest}>{interest}</Chip>
+          ))}
+        </div>
+      </Card>
     </Screen>
+  );
+}
+
+function Stat({ value, label }: { value: string; label: string }) {
+  return (
+    <div className={`${staticCard} p-3 text-center`}>
+      <p className="text-[22px] leading-none font-extrabold">{value}</p>
+      <p className="mt-1 text-[12px] font-semibold text-muted-foreground">{label}</p>
+    </div>
   );
 }

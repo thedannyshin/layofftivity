@@ -12,7 +12,7 @@ const buttonVariants = cva(
         default:
           "bg-primary text-primary-foreground hover:bg-primary/90 active:scale-[0.98]",
         accent: "bg-accent text-accent-foreground hover:bg-accent/90 active:scale-[0.98]",
-        soft: "bg-primary-soft text-foreground hover:bg-[var(--lo-hatch-green)]",
+        soft: "bg-secondary text-foreground hover:bg-primary-soft",
         quiet: "bg-secondary text-foreground hover:bg-primary-soft",
         destructive: "bg-destructive text-destructive-foreground",
         outline: "bg-secondary text-foreground hover:bg-primary-soft",

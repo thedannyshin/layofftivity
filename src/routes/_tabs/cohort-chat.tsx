@@ -1,21 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
-import { Send } from "lucide-react";
+import { CalendarDays, ChevronRight, MapPin, Send } from "lucide-react";
 import { Avatar, Screen, ScreenHero } from "@/components/app/Shell";
-import { byId, icebreakers } from "@/lib/data";
+import { byId, icebreakers, orgById } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_tabs/cohort-chat")({
   head: () => ({
     meta: [
-      { title: "Group chat — Layofftivity" },
+      { title: "Crew chat — Layofftivity" },
       {
         name: "description",
         content:
-          "Your volunteer group chat: rides, timing, icebreakers, and the small talk that makes Saturday easier.",
+          "Your volunteer crew chat: rides, timing, icebreakers, and the small talk that makes Saturday easier.",
       },
-      { property: "og:title", content: "Your volunteer group chat" },
+      { property: "og:title", content: "Your volunteer crew chat" },
       { property: "og:description", content: "Rides, timing, and the small talk in between." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -25,8 +25,11 @@ export const Route = createFileRoute("/_tabs/cohort-chat")({
 });
 
 function GroupChat() {
-  const { update, thread, matches, guests, profile, initials, fullName } = useApp();
+  const { update, thread, matches, guests, profile, initials, fullName, primaryEvent, isJoined } =
+    useApp();
   const messages = thread("group");
+  const org = orgById(primaryEvent.orgId);
+  const joined = isJoined(primaryEvent.id);
   const [value, setValue] = React.useState("");
   const endRef = React.useRef<HTMLDivElement>(null);
 
@@ -44,25 +47,91 @@ function GroupChat() {
   return (
     <div className="flex min-h-screen flex-col bg-background pb-32">
       <Screen>
-        <ScreenHero title="Group chat" subtitle={`${matches.length + 1 + guests.length} people`} back />
+        <ScreenHero
+          title="Crew chat"
+          subtitle={`${matches.length + 1 + guests.length} people`}
+          back
+          right={
+            <Link
+              to="/invite"
+              className="rounded-lg bg-secondary px-3 py-2 text-[13px] font-semibold transition-colors hover:bg-primary-soft active:bg-primary-soft"
+            >
+              Add person
+            </Link>
+          }
+        />
 
-        <div className="flex justify-center gap-2">
-          {matches.map((m) => (
-            <Avatar key={m.id} src={m.photo} name={m.name} size={36} />
-          ))}
-          {guests.map((g) => (
-            <Avatar key={g.id} name={g.name} size={36} />
-          ))}
-        </div>
+        <Link
+          to={joined ? "/volunteer-day" : "/events/$eventId"}
+          params={joined ? undefined : { eventId: primaryEvent.id }}
+          className="mt-3 block rounded-2xl bg-primary p-5 transition-colors hover:bg-primary/95 active:bg-primary/90"
+        >
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-lg border border-primary-foreground/50 px-2.5 py-1 text-[12px] font-bold text-primary-foreground">
+              {joined ? "You're going" : "See the details"}
+            </span>
+            <span className="text-[13px] font-semibold text-primary-foreground/80">{org.name}</span>
+          </div>
+
+          <h3 className="mt-3 text-[20px] leading-tight font-extrabold text-primary-foreground">
+            {primaryEvent.title}
+          </h3>
+          <div className="mt-3 space-y-1 text-[14px] text-primary-foreground/90">
+            <p className="flex items-center gap-2">
+              <CalendarDays className="h-4 w-4 shrink-0" />
+              <span className="truncate">
+                {primaryEvent.dateShort}, {primaryEvent.time}
+              </span>
+            </p>
+            <p className="flex items-center gap-2">
+              <MapPin className="h-4 w-4 shrink-0" />
+              <span className="truncate">{primaryEvent.location}</span>
+            </p>
+          </div>
+
+          <div className="mt-4 flex items-center justify-between pt-4">
+            <div className="flex -space-x-2">
+              {matches.slice(0, 4).map((m) => (
+                <Avatar key={m.id} src={m.photo} name={m.name} size={30} />
+              ))}
+              {guests.slice(0, 2).map((g) => (
+                <Avatar key={g.id} name={g.name} size={30} />
+              ))}
+            </div>
+            <span className="flex items-center gap-1 text-[14px] font-bold text-primary-foreground">
+              {joined ? "Open the day" : "See the details"} <ChevronRight className="h-4 w-4" />
+            </span>
+          </div>
+        </Link>
 
         <div className="mt-4 space-y-3">
+          {messages.length === 0 && (
+            <div className="rounded-2xl bg-card p-4">
+              <p className="text-[14px] text-muted-foreground">
+                Nobody has spoken yet. Start with one of these.
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {icebreakers.slice(0, 4).map((q) => (
+                  <button
+                    key={q}
+                    type="button"
+                    onClick={() => setValue(q)}
+                    className="rounded-lg bg-secondary px-3 py-2 text-left text-[13px] font-semibold transition-colors hover:bg-primary-soft active:bg-primary-soft"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {messages.map((m, i) => {
             const mine = m.personId === "you";
             const person = mine ? null : byId(m.personId);
             return (
               <div key={i} className={cn("flex gap-2", mine && "justify-end")}>
                 {person && <Avatar src={person.photo} name={person.name} size={30} />}
-                <div className={cn("max-w-[76%]", mine && "text-right")}>
+                <div className="max-w-[76%] text-left">
                   {person && (
                     <p className="mb-0.5 text-[12px] font-bold text-muted-foreground">
                       {person.name.split(" ")[0]}
@@ -84,29 +153,12 @@ function GroupChat() {
               </div>
             );
           })}
-          {messages.length === 0 && (
-            <p className="py-6 text-center text-[14px] text-muted-foreground">
-              Nobody has spoken yet. Start with an icebreaker below.
-            </p>
-          )}
           <div ref={endRef} />
         </div>
 
       </Screen>
 
       <div className="fixed inset-x-0 bottom-16 z-20 bg-card">
-        <div className="no-scrollbar mx-auto flex w-full max-w-[430px] gap-2 overflow-x-auto px-5 pt-3">
-          {icebreakers.slice(0, 4).map((q) => (
-            <button
-              key={q}
-              type="button"
-              onClick={() => setValue(q)}
-              className="shrink-0 rounded-lg bg-secondary px-3 py-2 text-[13px] font-semibold transition-colors hover:bg-primary-soft active:bg-primary-soft"
-            >
-              {q}
-            </button>
-          ))}
-        </div>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -117,8 +169,8 @@ function GroupChat() {
           <input
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="Message the group"
-            aria-label="Message the group"
+            placeholder="Message the crew"
+            aria-label="Message the crew"
             className="h-12 flex-1 rounded-xl bg-secondary px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
           />
           <button

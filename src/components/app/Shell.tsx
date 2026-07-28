@@ -91,7 +91,6 @@ export function BackButton({ onClick, className }: { onClick: () => void; classN
 export function ScreenHero({
   title,
   eyebrow,
-  subtitle,
   back,
   right,
   sticky,
@@ -115,9 +114,9 @@ export function ScreenHero({
           : "pt-6 pb-2",
       )}
     >
-      <div className="flex items-start gap-2">
+      <div className="flex items-center gap-2">
         {back && (
-          <BackButton onClick={() => router.history.back()} className="mt-0.5 shrink-0" />
+          <BackButton onClick={() => router.history.back()} className="shrink-0 self-start" />
         )}
         <div className="min-w-0 flex-1">
           {eyebrow && (
@@ -126,9 +125,6 @@ export function ScreenHero({
           <h1 className={cn("lo-display text-[26px] leading-tight", eyebrow && "mt-1")}>
             {title}
           </h1>
-          {subtitle && (
-            <p className="mt-1 text-[14px] text-muted-foreground">{subtitle}</p>
-          )}
         </div>
         {right}
       </div>

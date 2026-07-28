@@ -1,8 +1,7 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { Award, BookHeart, ChevronRight, History, RotateCcw, UserRound } from "lucide-react";
+import { Award, BookHeart, ChevronRight, History, UserRound } from "lucide-react";
 import { Avatar, Card, Chip, ListGroup, Screen, ScreenHero, SectionTitle, staticCard, tapCard, tapRow } from "@/components/app/Shell";
-import { Button } from "@/components/ui/button";
 import { useApp } from "@/lib/store";
 
 export const Route = createFileRoute("/_tabs/profile/")({
@@ -25,15 +24,9 @@ export const Route = createFileRoute("/_tabs/profile/")({
 
 function Profile() {
   const app = useApp();
-  const { state, update, profile, initials, fullName, matches, guests, badges, hours, daysCompleted } =
+  const { state, profile, initials, fullName, matches, guests, badges, hours, daysCompleted } =
     app;
-  const navigate = useNavigate();
   const earned = badges.filter((b) => b.earned).length;
-
-  const restart = () => {
-    update((s) => ({ ...s, onboarding: { ...s.onboarding, complete: false } }));
-    navigate({ to: "/" });
-  };
 
   return (
     <Screen>
@@ -94,10 +87,6 @@ function Profile() {
             <Chip key={i}>{i}</Chip>
           ))}
         </div>
-        <Button variant="quiet" size="lg" className="mt-4 w-full" onClick={restart}>
-          <RotateCcw />
-          Redo my preferences
-        </Button>
       </Card>
     </Screen>
   );

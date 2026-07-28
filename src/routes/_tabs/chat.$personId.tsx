@@ -73,7 +73,7 @@ function Chat() {
             return (
               <div key={i} className={cn("flex gap-2", mine && "justify-end")}>
                 {!mine && <Avatar src={person.photo} name={person.name} size={30} />}
-                <div className={cn("max-w-[76%]", mine && "text-right")}>
+                <div className="max-w-[76%] text-left">
                   <div
                     className={cn(
                       "rounded-2xl px-4 py-2.5 text-[15px] leading-relaxed",

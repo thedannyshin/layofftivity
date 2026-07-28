@@ -120,7 +120,7 @@ function Onboarding() {
       onboarding: { complete: true, reasons, laidOff, interests, causes, availability, location },
       matchIds: matchPeople(prefs).map((p) => p.id),
     }));
-    navigate({ to: "/match" });
+    navigate({ to: "/home" });
   };
 
   if (step === -1) {

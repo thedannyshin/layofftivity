@@ -1,13 +1,12 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, Building2, Users, Sparkles, User } from "lucide-react";
+import { Home, Building2, MessageCircle, BookHeart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
   { to: "/home", label: "Home", icon: Home },
   { to: "/organizations", label: "Explore", icon: Building2 },
-  { to: "/cohort", label: "Group", icon: Users },
-  { to: "/match", label: "Matches", icon: Sparkles },
-  { to: "/profile", label: "Profile", icon: User },
+  { to: "/match", label: "Chat", icon: MessageCircle },
+  { to: "/profile/reflections", label: "Reflect", icon: BookHeart },
 ];
 
 export function BottomNav() {
@@ -17,7 +16,10 @@ export function BottomNav() {
     <nav className="fixed inset-x-0 bottom-0 z-30 bg-card">
       <ul className="mx-auto flex w-full max-w-[430px] items-stretch">
         {items.map(({ to, label, icon: Icon }, i) => {
-          const active = path === to || path.startsWith(to + "/");
+          const active =
+            path === to ||
+            path.startsWith(to + "/") ||
+            (to === "/match" && (path.startsWith("/chat") || path.startsWith("/cohort-chat")));
           return (
             <li key={to} className="flex-1">
               <Link
