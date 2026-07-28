@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { ChevronRight, Search, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Chip, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
+import { Chip, Screen, SectionTitle, TopBar, staticCard, tapCard, tapPill, tapPillActive } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { causeOptions, events, organizations, orgById } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -100,7 +100,7 @@ function Organizations() {
           </Link>
         ))}
         {filtered.length === 0 && (
-          <div className="rounded-2xl bg-card p-6 text-center">
+          <div className={`${staticCard} p-6 text-center`}>
             <p className="text-[15px] font-semibold">Nothing matches that yet</p>
             <p className="mt-1 text-[13px] text-muted-foreground">
               Try a different cause, or clear the search to see all six organizations.
@@ -163,17 +163,7 @@ function FilterChip({
   onClick: () => void;
 }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      className={cn(
-        "shrink-0 rounded-full px-3.5 py-2 text-[13px] font-semibold transition-colors",
-        active
-          ? "bg-primary text-primary-foreground"
-          : "bg-secondary text-foreground hover:bg-primary-soft/70",
-      )}
-    >
+    <button type="button" onClick={onClick} aria-pressed={active} className={cn(active ? tapPillActive : tapPill)}>
       {label}
     </button>
   );
