@@ -1,8 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { CalendarDays, Check, Clock, MapPin, Users, ChevronRight } from "lucide-react";
+import { CalendarDays, Check, Clock, MapPin, Users } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Clamp, FactGrid, Meta, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
-import { CoverPhoto, OrgMark } from "@/components/app/OrgMark";
+import { Avatar, Card, Chip, Clamp, FactGrid, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { CoverPhoto } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { eventById, orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -28,14 +28,12 @@ function EventDetail() {
   const { eventId } = Route.useParams();
   const event = eventById(eventId);
   const org = orgById(event.orgId);
-  const { state, update, matches, guests, isJoined, primaryEvent } = useApp();
+  const { update, matches, guests, isJoined } = useApp();
   const navigate = useNavigate();
   const joined = isJoined(event.id);
   const attending = joined ? [...matches] : [];
   const attendingGuests = joined ? guests.filter((g) => g.eventId === event.id) : [];
   const filled = event.spotsFilled + (joined ? 1 + attendingGuests.length : 0);
-  const isPrimary = primaryEvent.id === event.id;
-
   const join = () => {
     update((s) => ({ ...s, joinedEventIds: [...new Set([...s.joinedEventIds, event.id])] }));
     toast.success("You're in", { description: `${event.dateShort} · ${event.time}` });
@@ -57,31 +55,6 @@ function EventDetail() {
         <TopBar title={event.title} subtitle={org.name} back />
 
         <CoverPhoto cover={org.cover} alt={org.name} className="h-44 rounded-2xl" />
-
-        <Link
-          to="/organizations/$orgId"
-          params={{ orgId: org.id }}
-          className={`${tapCard} mt-3 flex items-center gap-3`}
-        >
-          <OrgMark cover={org.cover} />
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-[15px] font-bold">{org.name}</p>
-            <Meta items={[org.cause, org.neighborhood]} />
-          </div>
-          <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
-        </Link>
-
-        {isPrimary && (
-          <div className="mt-3 rounded-2xl bg-accent-soft p-4">
-            <p className="text-[14px] font-bold text-accent-foreground">
-              {joined ? "Your group's shift" : "Matched to your causes and availability"}
-            </p>
-            <Meta
-              className="mt-1"
-              items={[`${matches.map((m) => m.name.split(" ")[0]).join(" and ")} going`]}
-            />
-          </div>
-        )}
 
         <SectionTitle>What you'll do</SectionTitle>
         <Clamp lines={2}>{event.description}</Clamp>
