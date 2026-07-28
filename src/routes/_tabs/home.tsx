@@ -234,7 +234,7 @@ function Home() {
       <SectionTitle action="See all" to="/organizations">
         Recommended for you
       </SectionTitle>
-      <div className="space-y-3">
+      <ListGroup>
         {recommended.map((e) => {
           const eOrg = orgById(e.orgId);
           const isIn = isJoined(e.id);
@@ -243,7 +243,7 @@ function Home() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className={`${tapCard} flex items-center gap-3`}
+              className={tapRow}
             >
               <OrgMark cover={eOrg.cover} />
               <div className="min-w-0 flex-1">
@@ -267,7 +267,7 @@ function Home() {
             </Link>
           );
         })}
-      </div>
+      </ListGroup>
 
       <div className="mt-6">
         <Button asChild variant="quiet" size="lg" className="w-full">
