@@ -111,8 +111,8 @@ export function SectionTitle({
   to?: string;
 }) {
   return (
-    <div className="mt-7 mb-3 flex items-baseline justify-between">
-      <h2 className="lo-display text-[19px]">{children}</h2>
+    <div className="mt-8 mb-3 flex items-baseline justify-between">
+      <h2 className="lo-display text-[18px]">{children}</h2>
       {action && to && (
         <Link
           to={to}
@@ -139,8 +139,7 @@ export function Card({
   return (
     <As
       className={cn(
-        cardBase,
-        variant === "accent" ? "bg-primary-soft" : "bg-card",
+        variant === "accent" ? `${cardBase} bg-primary-soft` : "rounded-2xl px-0.5 py-1",
         className,
       )}
     >
