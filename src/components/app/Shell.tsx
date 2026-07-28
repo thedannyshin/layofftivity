@@ -6,24 +6,25 @@ import { cn } from "@/lib/utils";
 /**
  * SURFACE VOCABULARY — one source of truth for "is this clickable?".
  *
- * static*  → plain surface, never a link/button, no cursor or hover.
+ * A filled, rounded box means "you can tap this". Nothing else gets a box.
+ * static*  → open content: no fill, no outline, separated by whitespace only.
  * tap*     → must be a real <Link>/<button> with exactly one primary action.
  */
 const cardBase = "rounded-2xl p-4";
 const tapBase =
   "cursor-pointer text-left transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft disabled:pointer-events-none disabled:opacity-60";
 
-/** Static (non-tappable) card surface. */
-export const staticCard = `${cardBase} bg-card`;
+/** Static (non-tappable) content block — open, no container fill. */
+export const staticCard = "rounded-2xl px-0.5 py-1";
 
-/** Static accent (gold) card surface. */
-export const staticCardAccent = `${cardBase} bg-accent-soft`;
+/** Static content that genuinely needs highlighting — used sparingly. */
+export const staticCardAccent = `${cardBase} bg-accent-soft/70`;
 
 /** Tappable card. */
-export const tapCard = `${staticCard} ${tapBase} hover:bg-secondary/70 active:bg-secondary`;
+export const tapCard = `${cardBase} bg-card ${tapBase} hover:bg-secondary/70 active:bg-secondary`;
 
 /** Tappable accent (gold) card. */
-export const tapCardAccent = `${staticCardAccent} ${tapBase} hover:bg-accent-soft/80 active:bg-accent-soft/70`;
+export const tapCardAccent = `${cardBase} bg-accent-soft ${tapBase} hover:bg-accent-soft/80 active:bg-accent-soft/70`;
 
 /** Tappable pill (chips, quick replies, filters) — same language as Button. */
 export const tapPill =
