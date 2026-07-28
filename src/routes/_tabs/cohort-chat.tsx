@@ -130,7 +130,7 @@ function GroupChat() {
             type="submit"
             aria-label="Send message"
             disabled={!value.trim()}
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground disabled:opacity-40"
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground disabled:opacity-100 disabled:bg-muted disabled:text-[var(--lo-green-faint)]"
           >
             <Send className="h-5 w-5" />
           </button>

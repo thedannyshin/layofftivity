@@ -17,7 +17,7 @@ export function ResetButton() {
         navigate({ to: "/" });
         toast.success("Reset — starting from the beginning");
       }}
-      className="fixed top-2 right-2 z-50 flex h-7 w-7 items-center justify-center rounded-full bg-card/80 text-muted-foreground opacity-50 backdrop-blur transition hover:opacity-100 hover:text-foreground active:scale-95"
+      className="fixed top-2 right-2 z-50 flex h-7 w-7 items-center justify-center rounded-full bg-card text-foreground opacity-80 backdrop-blur transition hover:opacity-100 active:scale-95"
     >
       <RotateCcw className="h-3.5 w-3.5" />
     </button>
