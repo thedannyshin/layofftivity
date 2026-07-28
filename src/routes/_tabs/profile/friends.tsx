@@ -1,85 +1,94 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageCircle } from "lucide-react";
-import { Avatar, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
-import { cohort, people } from "@/lib/data";
+import { sharedWith } from "@/lib/data";
+import { useApp } from "@/lib/store";
 
 export const Route = createFileRoute("/_tabs/profile/friends")({
   head: () => ({
     meta: [
-      { title: "Friends — Layofftivity" },
+      { title: "People — Layofftivity" },
       {
         name: "description",
-        content: "The people you've volunteered beside, and how many days you've shared with each.",
+        content: "The people in your volunteer group, your guests, and how many days you've shared.",
       },
-      { property: "og:title", content: "People you've volunteered beside" },
-      { property: "og:description", content: "Belonging, counted in shared mornings." },
+      { property: "og:title", content: "People you volunteer beside" },
+      { property: "og:description", content: "Your matches, your guests, your shared days." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Friends,
 });
 
-const daysTogether: Record<string, number> = {
-  maya: 4,
-  daniel: 4,
-  priya: 3,
-  james: 3,
-  sofia: 4,
-  tomas: 2,
-  nina: 1,
-};
-
 function Friends() {
-  const friends = people.filter((p) => p.id in daysTogether);
+  const { matches, guests, prefs, daysCompleted, thread } = useApp();
 
   return (
     <Screen>
-      <TopBar title="Friends" subtitle={`${friends.length} people you've shown up with`} back />
+      <TopBar
+        title="People"
+        subtitle={`${matches.length + guests.length} in your group`}
+        back
+      />
 
-      <SectionTitle>Your cohort</SectionTitle>
+      <SectionTitle>Your matches</SectionTitle>
       <div className="space-y-3">
-        {friends
-          .filter((f) => cohort.memberIds.includes(f.id))
-          .map((f) => (
-            <FriendRow key={f.id} id={f.id} days={daysTogether[f.id]} />
-          ))}
+        {matches.map((m) => {
+          const messages = thread(m.id).length;
+          return (
+            <Link
+              key={m.id}
+              to="/chat/$personId"
+              params={{ personId: m.id }}
+              className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+            >
+              <Avatar src={m.photo} name={m.name} size={48} />
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[15px] font-bold">{m.name}</p>
+                <p className="truncate text-[13px] text-muted-foreground">
+                  {daysCompleted} day{daysCompleted === 1 ? "" : "s"} together ·{" "}
+                  {messages ? `${messages} messages` : "no messages yet"}
+                </p>
+                <p className="mt-1.5 truncate text-[12px] text-muted-foreground">
+                  {(sharedWith(m, prefs).length ? sharedWith(m, prefs) : m.interests)
+                    .slice(0, 3)
+                    .join(" · ")}
+                </p>
+              </div>
+              <MessageCircle className="h-5 w-5 shrink-0 text-muted-foreground" />
+            </Link>
+          );
+        })}
       </div>
 
-      <SectionTitle>From other shifts</SectionTitle>
-      <div className="space-y-3">
-        {friends
-          .filter((f) => !cohort.memberIds.includes(f.id))
-          .map((f) => (
-            <FriendRow key={f.id} id={f.id} days={daysTogether[f.id]} />
+      <SectionTitle>Guests</SectionTitle>
+      {guests.length ? (
+        <div className="space-y-3">
+          {guests.map((g) => (
+            <div key={g.id} className="flex items-center gap-3 rounded-2xl bg-card p-4">
+              <Avatar name={g.name} size={48} />
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[15px] font-bold">{g.name}</p>
+                <p className="truncate text-[13px] text-muted-foreground">
+                  Invited by you · {g.relation}
+                </p>
+              </div>
+              <Chip tone="yellow">Guest</Chip>
+            </div>
           ))}
-      </div>
-
-      <Button asChild variant="quiet" size="lg" className="mt-6 w-full">
-        <Link to="/match">Meet someone new this week</Link>
-      </Button>
-    </Screen>
-  );
-}
-
-function FriendRow({ id, days }: { id: string; days: number }) {
-  const p = people.find((x) => x.id === id)!;
-  return (
-    <Link
-      to="/chat/$personId"
-      params={{ personId: id }}
-      className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
-    >
-      <Avatar src={p.photo} name={p.name} size={48} />
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-[15px] font-bold">{p.name}</p>
-        <p className="truncate text-[13px] text-muted-foreground">{p.city}</p>
-        <div className="mt-1.5">
-          <Chip tone="green">
-            {days} {days === 1 ? "day" : "days"} together
-          </Chip>
         </div>
-      </div>
-      <MessageCircle className="h-5 w-5 shrink-0 text-muted-foreground" />
-    </Link>
+      ) : (
+        <Card>
+          <p className="text-[15px] leading-relaxed text-muted-foreground">
+            No guests yet. You can bring one friend to any activity — they RSVP with a link.
+          </p>
+          <Button asChild className="mt-4 w-full">
+            <Link to="/invite">Invite a friend</Link>
+          </Button>
+        </Card>
+      )}
+    </Screen>
   );
 }

@@ -1,16 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import {
-  Award,
-  BookHeart,
-  ChevronRight,
-  History,
-  RotateCcw,
-  UserRound,
-} from "lucide-react";
+import type { ReactNode } from "react";
+import { Award, BookHeart, ChevronRight, History, RotateCcw, UserRound } from "lucide-react";
 import { Avatar, Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
-import { badges, cohort, volunteerHistory, you } from "@/lib/data";
-import { useStore } from "@/lib/store";
+import { orgById } from "@/lib/data";
+import { useApp } from "@/lib/store";
 
 export const Route = createFileRoute("/_tabs/profile/")({
   head: () => ({
@@ -19,19 +13,23 @@ export const Route = createFileRoute("/_tabs/profile/")({
       {
         name: "description",
         content:
-          "Your friends, volunteer history, reflections, and badges from showing up with the same cohort.",
+          "Your group, volunteer history, reflections, and badges from showing up with the same people.",
       },
       { property: "og:title", content: "Your Layofftivity profile" },
       { property: "og:description", content: "Hours volunteered, reflections written, people met." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Profile,
 });
 
 function Profile() {
-  const { state, update } = useStore();
+  const app = useApp();
+  const { state, update, profile, initials, fullName, matches, guests, badges, hours, daysCompleted } =
+    app;
   const navigate = useNavigate();
-  const hours = volunteerHistory.reduce((sum, h) => sum + h.hours, 0);
+  const org = orgById(app.primaryEvent.orgId);
   const earned = badges.filter((b) => b.earned).length;
 
   const restart = () => {
@@ -44,61 +42,81 @@ function Profile() {
       <TopBar title="Profile" />
 
       <div className="flex items-center gap-4">
-        <Avatar src={you.photo} name={you.name} size={72} />
+        <Avatar src={profile.photo} name={fullName} initials={initials} size={72} />
         <div className="min-w-0">
-          <h2 className="text-[20px] font-extrabold">{you.name}</h2>
-          <p className="text-[13px] text-muted-foreground">{you.formerRole}</p>
-          <p className="text-[13px] text-muted-foreground">{you.city}</p>
+          <h2 className="text-[20px] font-extrabold">{fullName}</h2>
+          <p className="text-[13px] text-muted-foreground">
+            {state.onboarding.laidOff || "New here"}
+          </p>
+          <p className="text-[13px] text-muted-foreground">{state.onboarding.location}</p>
         </div>
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-3">
         <Stat value={`${hours}`} label="Hours" />
-        <Stat value={`${volunteerHistory.length}`} label="Shifts" />
+        <Stat value={`${daysCompleted}`} label="Shifts" />
         <Stat value={`${state.reflections.length}`} label="Reflections" />
       </div>
 
-      <SectionTitle>Your cohort</SectionTitle>
+      <SectionTitle>Your group</SectionTitle>
       <Link
         to="/cohort"
         className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
       >
         <div className="min-w-0 flex-1">
-          <p className="truncate text-[15px] font-bold">{cohort.name}</p>
-          <p className="text-[13px] text-muted-foreground">{cohort.formed}</p>
+          <p className="truncate text-[15px] font-bold">{org.cause} group</p>
+          <p className="text-[13px] text-muted-foreground">
+            {matches.length + 1 + guests.length} people · {daysCompleted} day
+            {daysCompleted === 1 ? "" : "s"} together
+          </p>
         </div>
         <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
       </Link>
 
       <SectionTitle>Everything else</SectionTitle>
       <div className="space-y-3">
-        <Row to="/profile/friends" icon={<UserRound className="h-5 w-5 text-primary" />} title="Friends" detail="7 people you've volunteered beside" />
-        <Row to="/profile/history" icon={<History className="h-5 w-5 text-primary" />} title="Volunteer history" detail={`${volunteerHistory.length} shifts · ${hours} hours`} />
-        <Row to="/profile/reflections" icon={<BookHeart className="h-5 w-5 text-primary" />} title="Reflection history" detail={`${state.reflections.length} private entries`} />
-        <Row to="/profile/badges" icon={<Award className="h-5 w-5 text-primary" />} title="Badges" detail={`${earned} of ${badges.length} earned`} />
+        <Row
+          to="/profile/friends"
+          icon={<UserRound className="h-5 w-5 text-primary" />}
+          title="People"
+          detail={`${matches.length + guests.length} in your group`}
+        />
+        <Row
+          to="/profile/history"
+          icon={<History className="h-5 w-5 text-primary" />}
+          title="Volunteer history"
+          detail={`${daysCompleted} shift${daysCompleted === 1 ? "" : "s"} · ${hours} hours`}
+        />
+        <Row
+          to="/profile/reflections"
+          icon={<BookHeart className="h-5 w-5 text-primary" />}
+          title="Reflection history"
+          detail={`${state.reflections.length} private ${state.reflections.length === 1 ? "entry" : "entries"}`}
+        />
+        <Row
+          to="/profile/badges"
+          icon={<Award className="h-5 w-5 text-primary" />}
+          title="Badges"
+          detail={`${earned} of ${badges.length} earned`}
+        />
       </div>
 
       <SectionTitle>What you told us</SectionTitle>
       <Card>
         <div className="flex flex-wrap gap-2">
-          {(state.onboarding.causes.length ? state.onboarding.causes : ["Food security"]).map((c) => (
+          {state.onboarding.causes.map((c) => (
             <Chip key={c} tone="green">
               {c}
             </Chip>
           ))}
-          {(state.onboarding.availability.length
-            ? state.onboarding.availability
-            : ["Saturday mornings"]
-          ).map((a) => (
+          {state.onboarding.availability.map((a) => (
             <Chip key={a} tone="yellow">
               {a}
             </Chip>
           ))}
-          {(state.onboarding.interests.length ? state.onboarding.interests : you.interests).map(
-            (i) => (
-              <Chip key={i}>{i}</Chip>
-            ),
-          )}
+          {state.onboarding.interests.map((i) => (
+            <Chip key={i}>{i}</Chip>
+          ))}
         </div>
         <Button variant="quiet" size="lg" className="mt-4 w-full" onClick={restart}>
           <RotateCcw />
@@ -108,7 +126,9 @@ function Profile() {
 
       <div className="mt-3">
         <Button asChild variant="quiet" size="lg" className="w-full">
-          <Link to="/invite">Invite someone</Link>
+          <Link to="/invite">
+            {state.invites.length ? "Manage your invitation" : "Invite a friend"}
+          </Link>
         </Button>
       </div>
     </Screen>
@@ -131,7 +151,7 @@ function Row({
   detail,
 }: {
   to: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   detail: string;
 }) {

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { BookOpen, Car, Medal, Repeat, Sunrise, UserPlus } from "lucide-react";
 import { Screen, SectionTitle, TopBar } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
-import { badges } from "@/lib/data";
+import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 const icons = {
@@ -24,12 +24,15 @@ export const Route = createFileRoute("/_tabs/profile/badges")({
       },
       { property: "og:title", content: "Your Layofftivity badges" },
       { property: "og:description", content: "Milestones for showing up, not for showing off." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Badges,
 });
 
 function Badges() {
+  const { badges } = useApp();
   const earned = badges.filter((b) => b.earned);
   const locked = badges.filter((b) => !b.earned);
 
@@ -38,6 +41,11 @@ function Badges() {
       <TopBar title="Badges" subtitle={`${earned.length} of ${badges.length} earned`} back />
 
       <SectionTitle>Earned</SectionTitle>
+      {earned.length === 0 && (
+        <p className="rounded-2xl bg-card p-4 text-[15px] leading-relaxed text-muted-foreground">
+          Nothing earned yet. Badges unlock as you show up — starting with your first shift.
+        </p>
+      )}
       <div className="grid grid-cols-2 gap-3">
         {earned.map((b) => {
           const Icon = icons[b.icon as keyof typeof icons];

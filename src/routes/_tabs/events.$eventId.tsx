@@ -5,10 +5,10 @@ import { toast } from "sonner";
 import { Avatar, Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
-import { cohortMembers, eventById, orgById } from "@/lib/data";
-import { useStore } from "@/lib/store";
+import { eventById, orgById } from "@/lib/data";
+import { useApp } from "@/lib/store";
 
-export const Route = createFileRoute("/events/$eventId")({
+export const Route = createFileRoute("/_tabs/events/$eventId")({
   head: ({ params }) => {
     const event = eventById(params.eventId);
     return {
@@ -17,6 +17,8 @@ export const Route = createFileRoute("/events/$eventId")({
         { name: "description", content: event.description.slice(0, 155) },
         { property: "og:title", content: event.title },
         { property: "og:description", content: event.description.slice(0, 155) },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
       ],
     };
   },
@@ -27,11 +29,13 @@ function EventDetail() {
   const { eventId } = Route.useParams();
   const event = eventById(eventId);
   const org = orgById(event.orgId);
-  const { state, update } = useStore();
+  const { state, update, matches, guests, isJoined, primaryEvent } = useApp();
   const navigate = useNavigate();
-  const joined = state.joinedEventIds.includes(event.id);
-  const filled = event.spotsFilled + (joined ? 1 : 0);
-  const attendees = cohortMembers().slice(0, Math.min(filled, 6));
+  const joined = isJoined(event.id);
+  const attending = joined ? [...matches] : [];
+  const attendingGuests = joined ? guests.filter((g) => g.eventId === event.id) : [];
+  const filled = event.spotsFilled + (joined ? 1 + attendingGuests.length : 0);
+  const isPrimary = primaryEvent.id === event.id;
 
   const join = () => {
     update((s) => ({ ...s, joinedEventIds: [...new Set([...s.joinedEventIds, event.id])] }));
@@ -40,12 +44,16 @@ function EventDetail() {
   };
 
   const leave = () => {
-    update((s) => ({ ...s, joinedEventIds: s.joinedEventIds.filter((id) => id !== event.id) }));
-    toast("Spot released", { description: "You can rejoin any time before Friday." });
+    update((s) => ({
+      ...s,
+      joinedEventIds: s.joinedEventIds.filter((id) => id !== event.id),
+      checkedInEventIds: s.checkedInEventIds.filter((id) => id !== event.id),
+    }));
+    toast("Spot released", { description: "You can rejoin any time before the day." });
   };
 
   return (
-    <div className="min-h-screen bg-background pb-28">
+    <div className="min-h-screen bg-background pb-40">
       <Screen>
         <TopBar title={event.title} subtitle={org.name} back />
 
@@ -61,16 +69,18 @@ function EventDetail() {
               {org.cause} · {org.neighborhood}
             </p>
           </div>
-          <span className="text-[13px] font-bold text-primary">View</span>
+          <span className="rounded-full bg-secondary px-3 py-1.5 text-[13px] font-bold text-primary">
+            View
+          </span>
         </Link>
 
-        {event.cohortEvent && (
+        {isPrimary && (
           <div className="mt-3 rounded-2xl bg-accent-soft p-4">
             <p className="text-[14px] font-bold text-accent-foreground">
-              This is your cohort's standing shift
+              {joined ? "Your group's shift" : "Matched to your causes and availability"}
             </p>
             <p className="mt-1 text-[13px] text-muted-foreground">
-              The same six people, the same packing line, every other Saturday.
+              {matches.map((m) => m.name.split(" ")[0]).join(" and ")} are planning to be there.
             </p>
           </div>
         )}
@@ -80,7 +90,11 @@ function EventDetail() {
 
         <SectionTitle>Details</SectionTitle>
         <Card className="space-y-3">
-          <Detail icon={<CalendarDays className="h-5 w-5 text-primary" />} label="Date" value={event.date} />
+          <Detail
+            icon={<CalendarDays className="h-5 w-5 text-primary" />}
+            label="Date"
+            value={event.date}
+          />
           <Detail icon={<Clock className="h-5 w-5 text-primary" />} label="Time" value={event.time} />
           <Detail
             icon={<MapPin className="h-5 w-5 text-primary" />}
@@ -96,16 +110,30 @@ function EventDetail() {
 
         <SectionTitle>Who's going</SectionTitle>
         <Card>
-          <div className="flex flex-wrap gap-3">
-            {attendees.map((m) => (
-              <div key={m.id} className="w-14 text-center">
-                <Avatar src={m.photo} name={m.name} size={48} className="mx-auto" />
-                <p className="mt-1 truncate text-[11px] font-semibold text-muted-foreground">
-                  {m.name.split(" ")[0]}
-                </p>
-              </div>
-            ))}
-          </div>
+          {joined ? (
+            <div className="flex flex-wrap gap-3">
+              {attending.map((m) => (
+                <div key={m.id} className="w-14 text-center">
+                  <Avatar src={m.photo} name={m.name} size={48} className="mx-auto" />
+                  <p className="mt-1 truncate text-[11px] font-semibold text-muted-foreground">
+                    {m.name.split(" ")[0]}
+                  </p>
+                </div>
+              ))}
+              {attendingGuests.map((g) => (
+                <div key={g.id} className="w-14 text-center">
+                  <Avatar name={g.name} size={48} className="mx-auto" />
+                  <p className="mt-1 truncate text-[11px] font-semibold text-muted-foreground">
+                    Guest
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-[15px] text-muted-foreground">
+              {event.spotsFilled} volunteers signed up so far. Join to see who's on your line.
+            </p>
+          )}
           <p className="mt-3 text-[13px] text-muted-foreground">
             {event.spotsTotal - filled > 0
               ? `${event.spotsTotal - filled} spots still open. Small teams on purpose.`
@@ -130,11 +158,16 @@ function EventDetail() {
             <Chip tone="green">
               <Check className="h-3 w-3" /> You're going
             </Chip>
-            <Button asChild variant="quiet" size="lg" className="w-full">
-              <Link to="/cohort">Open your cohort</Link>
+            <Button asChild size="lg" className="w-full">
+              <Link to="/volunteer-day">Open the volunteer day</Link>
+            </Button>
+            <Button asChild variant="soft" size="lg" className="w-full">
+              <Link to="/cohort">Open your group</Link>
             </Button>
             <Button asChild variant="quiet" size="lg" className="w-full">
-              <Link to="/invite">Invite someone to join you</Link>
+              <Link to="/invite">
+                {state.invites.length ? "Manage your invitation" : "Invite a friend to join you"}
+              </Link>
             </Button>
             <button
               type="button"
@@ -148,10 +181,10 @@ function EventDetail() {
       </Screen>
 
       {!joined && (
-        <div className="fixed inset-x-0 bottom-0 bg-card">
+        <div className="fixed inset-x-0 bottom-16 z-20 bg-card">
           <div className="mx-auto w-full max-w-[430px] px-5 py-4">
             <Button size="lg" className="w-full" onClick={join}>
-              Join this event
+              Join this activity
             </Button>
             <p className="mt-2 text-center text-[12px] text-muted-foreground">
               You can release your spot up until the day before.
@@ -163,15 +196,7 @@ function EventDetail() {
   );
 }
 
-function Detail({
-  icon,
-  label,
-  value,
-}: {
-  icon: ReactNode;
-  label: string;
-  value: string;
-}) {
+function Detail({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return (
     <div className="flex items-start gap-3">
       <span className="mt-0.5">{icon}</span>
