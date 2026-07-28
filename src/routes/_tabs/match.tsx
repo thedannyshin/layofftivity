@@ -110,7 +110,7 @@ function Match() {
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           <Chip tone="green">{org.cause}</Chip>
-          {joined ? <Chip tone="yellow">You're going</Chip> : <Chip>Tap to see details</Chip>}
+          {joined ? <Chip>You're going</Chip> : <Chip>Tap to see details</Chip>}
         </div>
       </Link>
 

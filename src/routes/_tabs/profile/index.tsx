@@ -92,7 +92,7 @@ function Profile() {
             </Chip>
           ))}
           {state.onboarding.availability.map((a) => (
-            <Chip key={a} tone="yellow">
+            <Chip key={a}>
               {a}
             </Chip>
           ))}

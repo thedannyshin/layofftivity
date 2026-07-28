@@ -67,7 +67,7 @@ export const statusLabel: Record<InviteStatus, string> = {
 
 export function StatusChip({ status }: { status: InviteStatus }) {
   return (
-    <Chip tone={status === "accepted" ? "green" : status === "declined" ? "neutral" : "yellow"}>
+    <Chip tone={status === "accepted" ? "green" : status === "declined" ? "neutral" : "neutral"}>
       {statusLabel[status]}
     </Chip>
   );

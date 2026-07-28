@@ -101,7 +101,7 @@ function Group() {
               <p className="truncate text-[15px] font-bold">{g.name}</p>
               <Meta items={["Invited by you", g.relation]} />
             </div>
-            <Chip tone="yellow">Guest</Chip>
+            <Chip>Guest</Chip>
           </div>
         ))}
       </ListGroup>
@@ -180,7 +180,7 @@ function Group() {
               ) : full ? (
                 <Chip>Full</Chip>
               ) : (
-                <Chip tone="yellow">
+                <Chip>
                   <Car className="h-3 w-3" /> Claim
                 </Chip>
               )}

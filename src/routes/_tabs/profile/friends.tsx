@@ -75,7 +75,7 @@ function Friends() {
                   Invited by you · {g.relation}
                 </p>
               </div>
-              <Chip tone="yellow">Guest</Chip>
+              <Chip>Guest</Chip>
             </div>
           ))}
         </ListGroup>

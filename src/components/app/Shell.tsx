@@ -23,7 +23,7 @@ export const staticCardAccent = `${cardBase} bg-accent-soft/70`;
 /** Tappable card. */
 export const tapCard = `${cardBase} bg-card ${tapBase} hover:bg-secondary/70 active:bg-secondary`;
 
-/** Tappable accent (gold) card. */
+/** Tappable accent card. */
 export const tapCardAccent = `${cardBase} bg-accent-soft ${tapBase} hover:bg-accent-soft/80 active:bg-accent-soft/70`;
 
 /**
@@ -167,7 +167,7 @@ export function Chip({
 }: {
   children: ReactNode;
   /** Kept for call-site compatibility; all static chips render one neutral style. */
-  tone?: "neutral" | "green" | "yellow";
+  tone?: "neutral" | "green";
 }) {
   return (
     <span className="inline-flex items-center gap-1 rounded-lg border border-muted-foreground/40 px-3 py-1 text-[13px] font-semibold text-muted-foreground">

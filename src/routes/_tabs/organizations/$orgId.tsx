@@ -77,7 +77,7 @@ function OrgDetail() {
                 </p>
               </div>
               <div className="mt-3 flex items-center gap-1.5">
-                <Chip tone={e.spotsTotal - e.spotsFilled <= 2 ? "yellow" : "green"}>
+                <Chip tone={e.spotsTotal - e.spotsFilled <= 2 ? "neutral" : "green"}>
                   <Users className="h-3 w-3" />
                   {e.spotsFilled}/{e.spotsTotal} joined
                 </Chip>
