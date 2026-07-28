@@ -92,7 +92,7 @@
   --lo-sprout-tint: var(--lo-paper);
   --lo-gold-tint: var(--lo-gold-soft);
   --lo-green-muted: color-mix(in oklab, var(--lo-ink) 72%, var(--lo-white));
-  --lo-green-faint: color-mix(in oklab, var(--lo-ink) 60%, var(--lo-white));
+  --lo-green-faint: color-mix(in oklab, var(--lo-ink) 82%, var(--lo-white));
   --lo-green-line: var(--lo-surface-strong);
   --lo-green-disabled: var(--lo-surface-strong);
   --lo-green-glow: var(--lo-green-soft);
