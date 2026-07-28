@@ -89,7 +89,7 @@ function OrgDetail() {
           </p>
           <Link
             to="/organizations"
-            className="mt-3 inline-block text-[14px] font-bold text-primary hover:underline"
+            className="mt-3 inline-block rounded-full bg-secondary px-4 py-2.5 text-[14px] font-bold text-primary transition-colors hover:bg-primary-soft active:bg-primary-soft"
           >
             Browse other organizations
           </Link>

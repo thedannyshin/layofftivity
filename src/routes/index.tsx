@@ -290,7 +290,7 @@ function SelectRow({
       className={cn(
         "flex w-full items-center gap-3 rounded-2xl p-4 text-left transition-colors",
         selected
-          ? "bg-primary-soft"
+          ? "bg-accent-soft"
           : "bg-secondary hover:bg-primary-soft/70",
       )}
     >
@@ -303,7 +303,7 @@ function SelectRow({
         className={cn(
           "flex h-6 w-6 shrink-0 items-center justify-center transition-colors",
           multi ? "rounded-md" : "rounded-full",
-          selected ? "bg-primary" : "bg-secondary",
+          selected ? "bg-primary" : "bg-card",
         )}
       >
         {selected && <Check className="h-3.5 w-3.5 text-primary-foreground" />}

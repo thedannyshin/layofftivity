@@ -67,7 +67,10 @@ export function SectionTitle({
     <div className="mt-7 mb-3 flex items-baseline justify-between">
       <h2 className="lo-display text-[19px]">{children}</h2>
       {action && to && (
-        <Link to={to} className="text-[13px] font-bold text-primary hover:underline">
+        <Link
+          to={to}
+          className="rounded-full bg-secondary px-3 py-1.5 text-[13px] font-bold text-primary transition-colors hover:bg-primary-soft active:bg-primary-soft"
+        >
           {action}
         </Link>
       )}
