@@ -74,7 +74,6 @@ function VolunteerDay() {
       <Screen>
         <ScreenHero
           title={event.title}
-          eyebrow={org.name}
           subtitle={`${event.dateShort}, ${event.time}`}
           back
         />

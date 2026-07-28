@@ -214,6 +214,14 @@
   letter-spacing: 0;
 }
 
+@utility lo-wordmark {
+  font-family: "Sora", Nunito, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+
 @utility lo-eyebrow {
   font-size: 12px;
   line-height: 1.33;

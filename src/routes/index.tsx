@@ -3,7 +3,6 @@ import * as React from "react";
 import { ArrowRight, Camera, Check, ImagePlus, MapPin, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, BackButton, Screen, selectRow, staticCard, tapPill, tapPillActive } from "@/components/app/Shell";
-import { LogoMark } from "@/components/app/LogoMark";
 import {
   availabilityOptions,
   causeOptions,
@@ -38,7 +37,6 @@ export const Route = createFileRoute("/")({
 });
 
 const steps = ["You", "Photo", "Why", "Timing", "Interests", "Causes", "Availability", "Location"];
-
 async function fileToSquareDataUrl(file: File, size = 256) {
   const bitmap = await createImageBitmap(file);
   const side = Math.min(bitmap.width, bitmap.height);
@@ -128,10 +126,7 @@ function Onboarding() {
       <div className="flex min-h-screen flex-col bg-background">
         <Screen className="flex flex-1 flex-col justify-between pt-16">
           <div>
-            <div className="flex items-center gap-3">
-              <LogoMark size={56} />
-              <span className="lo-display text-[32px] leading-none">Layofftivity</span>
-            </div>
+            <div className="lo-wordmark text-[40px] text-primary">Layofftivity</div>
             <h1 className="lo-display mt-8 text-[34px] leading-[1.15]">
               Belonging comes from showing up with the same people.
             </h1>
@@ -175,20 +170,6 @@ function Onboarding() {
         <div className="pt-2">
           <BackButton onClick={() => setStep((s) => s - 1)} />
         </div>
-        <div className="flex items-center gap-2 pt-2">
-          {steps.map((s, i) => (
-            <div
-              key={s}
-              className={cn(
-                "h-1.5 flex-1 rounded-full transition-colors",
-                i <= step ? "bg-primary" : "bg-secondary",
-              )}
-            />
-          ))}
-        </div>
-        <p className="mt-4 text-[13px] font-semibold text-muted-foreground">
-          Step {step + 1} of {steps.length}
-        </p>
 
         <div className="flex-1 pb-32">
           {step === 0 && (

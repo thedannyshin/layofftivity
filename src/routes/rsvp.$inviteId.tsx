@@ -3,7 +3,6 @@ import * as React from "react";
 import { CalendarDays, Check, Clock, MapPin, X } from "lucide-react";
 import { toast } from "sonner";
 import { Card, Screen } from "@/components/app/Shell";
-import { LogoMark } from "@/components/app/LogoMark";
 import { Button } from "@/components/ui/button";
 import { eventById, orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -74,10 +73,7 @@ function Rsvp() {
   return (
     <div className="min-h-screen bg-background">
       <Screen className="pt-10">
-        <div className="flex items-center gap-3">
-          <LogoMark size={44} />
-          <span className="lo-display text-[24px] leading-none">Layofftivity</span>
-        </div>
+        <div className="lo-wordmark text-[32px] text-primary">Layofftivity</div>
 
         <h1 className="lo-display mt-8 text-[30px] leading-tight">
           {invite.name.split(" ")[0] || "Hi"}, {host} invited you to volunteer.

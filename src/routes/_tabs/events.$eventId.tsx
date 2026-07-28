@@ -52,7 +52,7 @@ function EventDetail() {
   return (
     <div className="min-h-screen bg-background pb-40">
       <Screen>
-        <ScreenHero title={event.title} eyebrow={org.name} subtitle={event.dateShort} back />
+        <ScreenHero title={event.title} subtitle={event.dateShort} back />
 
         <CoverPhoto cover={org.cover} alt={org.name} className="h-44 rounded-2xl" />
 
