@@ -34,21 +34,22 @@ export function TopBar({
   return (
     <header className="sticky top-0 z-20 -mx-5 mb-4 bg-background/95 px-5 pt-3 pb-3 backdrop-blur">
       <div className="flex items-center gap-2">
-        {back && (
-          <button
-            type="button"
-            aria-label="Go back"
-            onClick={() => router.history.back()}
-            className="-ml-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-foreground transition-colors hover:bg-secondary active:bg-secondary"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-        )}
         <div className="min-w-0 flex-1">
           <h1 className="lo-display truncate text-[20px] leading-tight">{title}</h1>
           {subtitle && <p className="truncate text-[13px] text-muted-foreground">{subtitle}</p>}
         </div>
         {right}
+        {back && (
+          <button
+            type="button"
+            aria-label="Go back"
+            onClick={() => router.history.back()}
+            className="flex h-11 shrink-0 items-center gap-1 rounded-full bg-secondary px-3.5 text-[13px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Back
+          </button>
+        )}
       </div>
     </header>
   );
@@ -128,12 +129,38 @@ export function Avatar({
   name,
   size = 44,
   className,
+  initials,
 }: {
-  src: string;
+  src?: string | null;
   name: string;
   size?: number;
   className?: string;
+  initials?: string;
 }) {
+  if (!src) {
+    const fallback =
+      initials ??
+      name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((w) => w[0])
+        .join("")
+        .toUpperCase();
+    return (
+      <span
+        aria-label={name}
+        role="img"
+        style={{ width: size, height: size, fontSize: Math.round(size * 0.38) }}
+        className={cn(
+          "flex shrink-0 items-center justify-center rounded-full bg-primary font-extrabold text-primary-foreground",
+          className,
+        )}
+      >
+        {fallback || "?"}
+      </span>
+    );
+  }
   return (
     <img
       src={src}
