@@ -1,5 +1,5 @@
 import { Link, useRouter } from "@tanstack/react-router";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -129,9 +129,10 @@ export function SectionTitle({
       {action && to && (
         <Link
           to={to}
-          className="inline-flex h-10 shrink-0 cursor-pointer items-center rounded-xl bg-secondary px-5 text-[13px] font-bold text-foreground transition-colors hover:bg-primary-soft active:bg-primary-soft"
+          className="inline-flex shrink-0 cursor-pointer items-center gap-0.5 py-1 text-[13px] font-bold text-foreground underline-offset-4 transition-opacity hover:underline active:opacity-70"
         >
           {action}
+          <ChevronRight className="h-4 w-4" />
         </Link>
       )}
     </div>
@@ -171,10 +172,10 @@ export function Chip({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-lg px-3 py-1 text-[13px] font-semibold",
-        tone === "neutral" && "bg-secondary text-foreground",
-        tone === "green" && "bg-primary-soft text-foreground",
-        tone === "yellow" && "bg-accent-soft text-accent-foreground",
+        "inline-flex items-center gap-1 rounded-lg border px-3 py-1 text-[13px] font-semibold",
+        tone === "neutral" && "border-border text-foreground",
+        tone === "green" && "border-primary/40 text-foreground",
+        tone === "yellow" && "border-accent text-accent-foreground",
       )}
     >
       {children}
