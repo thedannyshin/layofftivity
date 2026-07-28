@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { CalendarDays, ChevronRight, MapPin, Send } from "lucide-react";
-import { Avatar, Screen, ScreenHero } from "@/components/app/Shell";
+import { Avatar, Screen, ScreenHero, tapPill } from "@/components/app/Shell";
 import { byId, icebreakers, orgById } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -54,7 +54,7 @@ function GroupChat() {
           right={
             <Link
               to="/invite"
-              className="rounded-lg bg-secondary px-3 py-2 text-[13px] font-semibold transition-colors hover:bg-primary-soft active:bg-primary-soft"
+              className={tapPill}
             >
               Add person
             </Link>

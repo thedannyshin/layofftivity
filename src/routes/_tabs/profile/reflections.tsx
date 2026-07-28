@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Camera } from "lucide-react";
-import { Card, Screen, ScreenHero, SectionTitle } from "@/components/app/Shell";
+import { Card, Screen, ScreenHero, SectionTitle, tapPill } from "@/components/app/Shell";
 import { useApp } from "@/lib/store";
 
 export const Route = createFileRoute("/_tabs/profile/reflections")({
@@ -31,7 +31,7 @@ function Reflections() {
         right={
           <Link
             to="/reflection"
-            className="rounded-lg bg-secondary px-3 py-2 text-[13px] font-semibold transition-colors hover:bg-primary-soft active:bg-primary-soft"
+            className={tapPill}
           >
             Write
           </Link>

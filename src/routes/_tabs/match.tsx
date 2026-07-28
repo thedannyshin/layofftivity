@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, ListGroup, Screen, ScreenHero, tapRow } from "@/components/app/Shell";
+import { Avatar, ListGroup, Screen, ScreenHero, tapPill, tapRow } from "@/components/app/Shell";
 import { sendMessage, useApp } from "@/lib/store";
 
 export const Route = createFileRoute("/_tabs/match")({
@@ -49,7 +49,7 @@ function Match() {
         right={
           <Link
             to="/invite"
-            className="rounded-lg bg-secondary px-3 py-2 text-[13px] font-semibold transition-colors hover:bg-primary-soft active:bg-primary-soft"
+            className={tapPill}
           >
             Add person
           </Link>

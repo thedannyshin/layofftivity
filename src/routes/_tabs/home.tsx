@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Award, CalendarDays, ChevronRight, MapPin } from "lucide-react";
-import { Avatar, Card, Chip, ListGroup, Ring, Screen, ScreenHero, SectionTitle, staticCard, tapCard, tapRow } from "@/components/app/Shell";
+import { Avatar, Card, Chip, ListGroup, Ring, Screen, ScreenHero, SectionTitle, tapCard, tapRow } from "@/components/app/Shell";
 import { orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -34,8 +34,6 @@ function Home() {
     profile,
     matches,
     guests,
-    hours,
-    daysCompleted,
     primaryEvent,
     isJoined,
   } = app;
@@ -76,9 +74,11 @@ function Home() {
         className="block rounded-2xl bg-primary p-5 transition-colors hover:bg-primary/95 active:bg-primary/90"
       >
         <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-lg border border-primary-foreground/50 px-2.5 py-1 text-[12px] font-bold text-primary-foreground">
-            {joined ? "You're going" : "Matched to you"}
-          </span>
+          {joined && (
+            <span className="rounded-lg border border-primary-foreground/50 px-2.5 py-1 text-[12px] font-bold text-primary-foreground">
+              You're going
+            </span>
+          )}
           <span className="text-[13px] font-semibold text-primary-foreground/80">{org.name}</span>
         </div>
         <h3 className="mt-3 text-[20px] leading-tight font-bold text-primary-foreground">
@@ -189,13 +189,6 @@ function Home() {
         </div>
       </Link>
 
-      <SectionTitle>You</SectionTitle>
-      <div className="grid grid-cols-3 gap-3">
-        <Stat value={`${hours}`} label="Hours" />
-        <Stat value={`${daysCompleted}`} label="Shifts" />
-        <Stat value={`${state.reflections.length}`} label="Reflections" />
-      </div>
-
       <SectionTitle>Badges</SectionTitle>
       <Link to="/profile/badges" className={`${tapCard} block`}>
         <div className="flex items-center justify-between gap-3">
@@ -236,14 +229,5 @@ function Home() {
         </div>
       </Card>
     </Screen>
-  );
-}
-
-function Stat({ value, label }: { value: string; label: string }) {
-  return (
-    <div className={`${staticCard} p-3 text-center`}>
-      <p className="text-[22px] leading-none font-extrabold">{value}</p>
-      <p className="mt-1 text-[12px] font-semibold text-muted-foreground">{label}</p>
-    </div>
   );
 }
