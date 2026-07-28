@@ -5,17 +5,9 @@ export type Person = {
   formerRole: string;
   city: string;
   interests: string[];
+  causes: string[];
+  availability: string[];
   bio: string;
-};
-
-export const you: Person = {
-  id: "you",
-  name: "Alex Rivera",
-  photo: "/people/p9.jpg",
-  formerRole: "Senior Product Designer, laid off in March",
-  city: "Oakland, CA",
-  interests: ["Food security", "Gardening", "Trail running", "Cooking"],
-  bio: "Rebuilding routine one Saturday at a time.",
 };
 
 export const people: Person[] = [
