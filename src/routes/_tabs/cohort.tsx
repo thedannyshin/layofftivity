@@ -1,9 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Car, Check, ChevronRight, MapPin, MessageCircle, Quote, UserPlus } from "lucide-react";
+import { Car, Check, ChevronRight, MessageCircle, UserPlus } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Clamp, Deck, ListGroup, Meta, Screen, SectionTitle, TopBar, deckItem, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
-import { Button } from "@/components/ui/button";
-import { byId, cohort, icebreakers, introductions, orgById, sharedWith, transportation } from "@/lib/data";
+import { Avatar, Chip, ListGroup, Meta, Screen, SectionTitle, TopBar, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
+import { byId, introductions, orgById, sharedWith, transportation } from "@/lib/data";
 import { useApp } from "@/lib/store";
 
 export const Route = createFileRoute("/_tabs/cohort")({

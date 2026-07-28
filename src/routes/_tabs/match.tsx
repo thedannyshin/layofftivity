@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Check, MessageCircle, Quote, UserPlus } from "lucide-react";
+import { Check, MessageCircle, Quote } from "lucide-react";
 import { toast } from "sonner";
 import { Avatar, Card, Chip, Clamp, Meta, Screen, SectionTitle, TopBar, staticCard, tapCard } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
