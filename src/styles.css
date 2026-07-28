@@ -80,7 +80,7 @@
   --lo-gold-soft: color-mix(in oklab, var(--lo-yellow) 26%, var(--lo-white));
   --lo-surface: color-mix(in oklab, var(--lo-ink) 6%, var(--lo-white));
   --lo-surface-strong: color-mix(in oklab, var(--lo-ink) 12%, var(--lo-white));
-  --lo-paper: var(--lo-white); /* app background */
+  --lo-paper: color-mix(in oklab, var(--lo-ink) 5%, var(--lo-white)); /* app bg */
 
   /* Legacy aliases — kept so existing utilities resolve to the reduced set */
   --lo-dark-green: var(--lo-ink);
@@ -106,7 +106,7 @@
   --lo-elevation-press: 2px 2px 0 var(--lo-dark-green);
 
   --radius: 0.875rem;
-  --background: var(--lo-white);
+  --background: var(--lo-paper);
   --foreground: var(--lo-dark-green);
   --card: oklch(1 0 0);
   --card-foreground: var(--lo-dark-green);
@@ -115,9 +115,9 @@
   --primary: var(--lo-action-green);
   --primary-foreground: oklch(1 0 0);
   --primary-soft: var(--lo-green-soft);
-  --secondary: var(--lo-surface);
+  --secondary: var(--lo-surface-strong);
   --secondary-foreground: var(--lo-dark-green);
-  --muted: var(--lo-surface);
+  --muted: var(--lo-surface-strong);
   --muted-foreground: color-mix(in oklab, var(--lo-ink) 78%, var(--lo-white));
   --accent: var(--lo-sunshine-gold);
   --accent-foreground: var(--lo-dark-green);
