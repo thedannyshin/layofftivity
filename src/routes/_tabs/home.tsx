@@ -46,10 +46,10 @@ function Home() {
       to: "/volunteer-day" as const,
     },
     {
-      id: "message",
-      label: "Say something in the group chat",
-      done: thread("group").some((m) => m.personId === "you"),
-      to: "/cohort-chat" as const,
+      id: "reflect",
+      label: "Write one reflection",
+      done: state.reflections.length > 0,
+      to: "/reflection" as const,
     },
   ];
   const doneCount = goals.filter((g) => g.done).length;
