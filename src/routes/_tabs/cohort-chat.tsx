@@ -97,21 +97,21 @@ function GroupChat() {
           <div ref={endRef} />
         </div>
 
-        <div className="mt-5 space-y-2">
-          {icebreakers.slice(0, 3).map((q) => (
+      </Screen>
+
+      <div className="fixed inset-x-0 bottom-16 z-20 bg-card">
+        <div className="no-scrollbar mx-auto flex w-full max-w-[430px] gap-2 overflow-x-auto px-5 pt-3">
+          {icebreakers.slice(0, 4).map((q) => (
             <button
               key={q}
               type="button"
               onClick={() => setValue(q)}
-              className="w-full rounded-2xl bg-secondary px-4 py-3 text-left text-[14px] font-semibold transition-colors hover:bg-primary-soft active:bg-primary-soft"
+              className="shrink-0 rounded-lg bg-secondary px-3 py-2 text-[13px] font-semibold transition-colors hover:bg-primary-soft active:bg-primary-soft"
             >
               {q}
             </button>
           ))}
         </div>
-      </Screen>
-
-      <div className="fixed inset-x-0 bottom-16 z-20 bg-card">
         <form
           onSubmit={(e) => {
             e.preventDefault();
