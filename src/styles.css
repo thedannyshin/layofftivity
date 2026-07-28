@@ -65,33 +65,38 @@
 
 :root {
   /*
-   * Reduced palette: one green family + one gold accent + paper/ink neutrals.
-   * Every legacy --lo-* token now aliases one of these five values.
+   * Four colors only: white, ink, green, yellow.
+   * Green is reserved for the single primary action on a screen.
+   * Neutral surfaces are ink mixed into white (no extra hue).
    */
-  /* Lightness ladder with clear steps so surfaces never read as the same shade:
-     1.00 card / 0.975 paper / 0.93 muted / 0.87 soft fill / 0.54 action / 0.33 ink */
-  --lo-ink: oklch(0.33 0.07 152); /* deep green text */
-  --lo-green: oklch(0.54 0.16 150); /* action green, AA on white text */
-  --lo-green-soft: oklch(0.87 0.095 152); /* green wash */
-  --lo-gold: oklch(0.855 0.18 92); /* accent */
-  --lo-gold-soft: oklch(0.925 0.095 95); /* accent wash */
-  --lo-paper: oklch(0.975 0.018 130); /* app background */
+  --lo-white: oklch(1 0 0);
+  --lo-ink: oklch(0.26 0.02 150); /* text — 13:1 on white */
+  --lo-green: oklch(0.5 0.15 150); /* primary action, AA with white text */
+  --lo-yellow: oklch(0.87 0.17 92); /* accent, always with ink text */
+
+  /* Derived steps — mixes of the four, no new hues */
+  --lo-green-soft: color-mix(in oklab, var(--lo-green) 14%, var(--lo-white));
+  --lo-gold: var(--lo-yellow);
+  --lo-gold-soft: color-mix(in oklab, var(--lo-yellow) 26%, var(--lo-white));
+  --lo-surface: color-mix(in oklab, var(--lo-ink) 6%, var(--lo-white));
+  --lo-surface-strong: color-mix(in oklab, var(--lo-ink) 12%, var(--lo-white));
+  --lo-paper: var(--lo-white); /* app background */
 
   /* Legacy aliases — kept so existing utilities resolve to the reduced set */
   --lo-dark-green: var(--lo-ink);
   --lo-grass-green: var(--lo-green);
   --lo-action-green: var(--lo-green);
-  --lo-fresh-sprout: var(--lo-green-soft);
+  --lo-fresh-sprout: var(--lo-surface-strong);
   --lo-sunshine-gold: var(--lo-gold);
   --lo-lemonade: var(--lo-gold);
   --lo-sprout-tint: var(--lo-paper);
   --lo-gold-tint: var(--lo-gold-soft);
-  --lo-green-muted: oklch(0.5 0.05 150);
-  --lo-green-faint: oklch(0.5 0.05 150);
-  --lo-green-line: var(--lo-green-soft);
-  --lo-green-disabled: var(--lo-green-soft);
+  --lo-green-muted: color-mix(in oklab, var(--lo-ink) 72%, var(--lo-white));
+  --lo-green-faint: color-mix(in oklab, var(--lo-ink) 60%, var(--lo-white));
+  --lo-green-line: var(--lo-surface-strong);
+  --lo-green-disabled: var(--lo-surface-strong);
   --lo-green-glow: var(--lo-green-soft);
-  --lo-hatch-green: var(--lo-green-soft);
+  --lo-hatch-green: var(--lo-surface-strong);
   --lo-hatch-gold: var(--lo-gold-soft);
 
   /* Elevation is drawn, never blurred */
@@ -101,7 +106,7 @@
   --lo-elevation-press: 2px 2px 0 var(--lo-dark-green);
 
   --radius: 0.875rem;
-  --background: var(--lo-sprout-tint);
+  --background: var(--lo-white);
   --foreground: var(--lo-dark-green);
   --card: oklch(1 0 0);
   --card-foreground: var(--lo-dark-green);
@@ -110,10 +115,10 @@
   --primary: var(--lo-action-green);
   --primary-foreground: oklch(1 0 0);
   --primary-soft: var(--lo-green-soft);
-  --secondary: oklch(0.93 0.055 145);
+  --secondary: var(--lo-surface);
   --secondary-foreground: var(--lo-dark-green);
-  --muted: oklch(0.93 0.03 140);
-  --muted-foreground: oklch(0.5 0.05 150);
+  --muted: var(--lo-surface);
+  --muted-foreground: color-mix(in oklab, var(--lo-ink) 78%, var(--lo-white));
   --accent: var(--lo-sunshine-gold);
   --accent-foreground: var(--lo-dark-green);
   --accent-soft: var(--lo-gold-tint);
