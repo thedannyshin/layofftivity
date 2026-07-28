@@ -26,6 +26,20 @@ export const tapCard = `${cardBase} bg-card ${tapBase} hover:bg-secondary/70 act
 /** Tappable accent (gold) card. */
 export const tapCardAccent = `${cardBase} bg-accent-soft ${tapBase} hover:bg-accent-soft/80 active:bg-accent-soft/70`;
 
+/**
+ * Grouped list: many tappable rows share ONE container instead of one box each.
+ * Use <ListGroup> around rows that use `tapRow`.
+ */
+export const tapRow = `flex w-full items-center gap-3 px-4 py-3.5 ${tapBase} hover:bg-secondary/60 active:bg-secondary`;
+
+export function ListGroup({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <div className={cn("overflow-hidden rounded-2xl bg-card", className)}>
+      <div className="divide-y divide-background">{children}</div>
+    </div>
+  );
+}
+
 /** Tappable pill (chips, quick replies, filters) — same language as Button. */
 export const tapPill =
   "inline-flex shrink-0 items-center gap-1.5 rounded-full bg-secondary px-3.5 py-2 text-[13px] font-semibold text-foreground cursor-pointer transition-colors duration-[120ms] hover:bg-primary-soft active:bg-primary-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft";
