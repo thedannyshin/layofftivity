@@ -1,8 +1,9 @@
 import * as React from "react";
-import { seedCohortChat, seedReflections } from "./data";
+import { badges, byId, eventById, matchEvent, matchPeople, type Prefs } from "./data";
 
 export type Reflection = {
   id: string;
+  eventId: string;
   date: string;
   mood: string;
   gratitude: string;
@@ -12,9 +13,26 @@ export type Reflection = {
 
 export type Message = { personId: string; text: string; time: string };
 
-type Onboarding = {
+export type InviteStatus = "sent" | "opened" | "accepted" | "declined";
+
+export type Invite = {
+  id: string;
+  name: string;
+  relation: string;
+  channel: "text" | "email" | "link";
+  contact: string;
+  eventId: string;
+  hostId: string;
+  status: InviteStatus;
+};
+
+export type CompletedDay = { id: string; eventId: string; date: string; hours: number };
+
+export type Profile = { firstName: string; lastName: string; photo: string | null };
+
+export type Onboarding = {
   complete: boolean;
-  reason: string;
+  reasons: string[];
   laidOff: string;
   interests: string[];
   causes: string[];
@@ -22,46 +40,42 @@ type Onboarding = {
   location: string;
 };
 
-type State = {
+export type State = {
+  profile: Profile;
   onboarding: Onboarding;
+  matchIds: string[];
+  matchGreeted: string[];
   joinedEventIds: string[];
-  checkedIn: boolean;
-  rideClaimed: string | null;
-  matchConnected: boolean;
-  invitesSent: string[];
+  checkedInEventIds: string[];
+  completed: CompletedDay[];
   reflections: Reflection[];
-  cohortMessages: Message[];
-  dmMessages: Message[];
+  invites: Invite[];
+  rideClaimed: string | null;
+  threads: Record<string, Message[]>;
   continueChoice: string | null;
-  goalDone: string[];
 };
 
 const initialState: State = {
+  profile: { firstName: "", lastName: "", photo: null },
   onboarding: {
     complete: false,
-    reason: "",
+    reasons: [],
     laidOff: "",
     interests: [],
     causes: [],
     availability: [],
     location: "",
   },
-  joinedEventIds: ["harvest-sat"],
-  checkedIn: false,
+  matchIds: [],
+  matchGreeted: [],
+  joinedEventIds: [],
+  checkedInEventIds: [],
+  completed: [],
+  reflections: [],
+  invites: [],
   rideClaimed: null,
-  matchConnected: false,
-  invitesSent: [],
-  reflections: seedReflections,
-  cohortMessages: seedCohortChat,
-  dmMessages: [
-    {
-      personId: "maya",
-      text: "Hi Alex! Saw we both put food security first. Are you going Saturday?",
-      time: "Yesterday 6:14 PM",
-    },
-  ],
+  threads: {},
   continueChoice: null,
-  goalDone: ["shift"],
 };
 
 type Ctx = {
@@ -72,7 +86,7 @@ type Ctx = {
 };
 
 const StoreContext = React.createContext<Ctx | null>(null);
-const KEY = "layofftivity-state-v1";
+const KEY = "layofftivity-state-v2";
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = React.useState<State>(initialState);
@@ -120,4 +134,77 @@ export function useStore() {
   const ctx = React.useContext(StoreContext);
   if (!ctx) throw new Error("useStore must be used inside StoreProvider");
   return ctx;
+}
+
+/* ---------- derived, shared by every screen ---------- */
+
+export function initialsOf(profile: Profile) {
+  const a = profile.firstName.trim()[0] ?? "";
+  const b = profile.lastName.trim()[0] ?? "";
+  return (a + b).toUpperCase() || "?";
+}
+
+export function useApp() {
+  const { state, hydrated, update, reset } = useStore();
+
+  return React.useMemo(() => {
+    const prefs: Prefs = {
+      interests: state.onboarding.interests,
+      causes: state.onboarding.causes,
+      availability: state.onboarding.availability,
+    };
+    const fullName = `${state.profile.firstName} ${state.profile.lastName}`.trim();
+    const matches = (state.matchIds.length ? state.matchIds : matchPeople(prefs).map((p) => p.id)).map(
+      byId,
+    );
+    const primaryEvent = state.joinedEventIds.length
+      ? eventById(state.joinedEventIds[0])
+      : matchEvent(prefs);
+    const guests = state.invites.filter((i) => i.status === "accepted");
+    const hours = state.completed.reduce((n, c) => n + c.hours, 0);
+    const sentMessages = Object.values(state.threads)
+      .flat()
+      .filter((m) => m.personId === "you").length;
+
+    const earned: Record<string, boolean> = {
+      first: state.completed.length >= 1,
+      three: state.completed.length >= 3,
+      connector: sentMessages > 0,
+      journal: state.reflections.length >= 5,
+      inviter: guests.length > 0,
+      ten: state.completed.length >= 10,
+    };
+
+    return {
+      state,
+      hydrated,
+      update,
+      reset,
+      prefs,
+      profile: state.profile,
+      fullName: fullName || "Your profile",
+      initials: initialsOf(state.profile),
+      matches,
+      guests,
+      primaryEvent,
+      week: state.completed.length + 1,
+      hours,
+      daysCompleted: state.completed.length,
+      badges: badges.map((b) => ({ ...b, earned: !!earned[b.id] })),
+      isJoined: (id: string) => state.joinedEventIds.includes(id),
+      isCheckedIn: (id: string) => state.checkedInEventIds.includes(id),
+      thread: (key: string) => state.threads[key] ?? [],
+    };
+  }, [state, hydrated, update, reset]);
+}
+
+export function sendMessage(
+  update: Ctx["update"],
+  threadKey: string,
+  message: Message,
+) {
+  update((s) => ({
+    ...s,
+    threads: { ...s.threads, [threadKey]: [...(s.threads[threadKey] ?? []), message] },
+  }));
 }
