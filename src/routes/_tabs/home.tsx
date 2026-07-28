@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, Clock, MapPin, Sparkles, Users } from "lucide-react";
-import { Avatar, Card, Chip, Screen, SectionTitle } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Screen, SectionTitle, tapCard, tapCardAccent } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { events, orgById } from "@/lib/data";
@@ -183,7 +183,7 @@ function Home() {
       </SectionTitle>
       <Link
         to="/cohort"
-        className="block rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+        className={`${tapCard} block`}
       >
         <div className="flex items-center justify-between">
           <div className="min-w-0">
@@ -215,7 +215,7 @@ function Home() {
 
       <Link
         to="/match"
-        className="mt-3 flex items-center gap-3 rounded-2xl bg-accent-soft p-4 transition-colors active:bg-accent-soft/70"
+        className={`${tapCardAccent} mt-3 flex items-center gap-3`}
       >
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent">
           <Sparkles className="h-5 w-5 text-accent-foreground" />
@@ -243,7 +243,7 @@ function Home() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+              className={`${tapCard} flex items-center gap-3`}
             >
               <OrgMark cover={eOrg.cover} />
               <div className="min-w-0 flex-1">

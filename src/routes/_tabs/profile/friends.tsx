@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageCircle } from "lucide-react";
-import { Avatar, Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, staticCard, tapCard } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { sharedWith } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -42,7 +42,7 @@ function Friends() {
               key={m.id}
               to="/chat/$personId"
               params={{ personId: m.id }}
-              className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+              className={`${tapCard} flex items-center gap-3`}
             >
               <Avatar src={m.photo} name={m.name} size={48} />
               <div className="min-w-0 flex-1">
@@ -67,7 +67,7 @@ function Friends() {
       {guests.length ? (
         <div className="space-y-3">
           {guests.map((g) => (
-            <div key={g.id} className="flex items-center gap-3 rounded-2xl bg-card p-4">
+            <div key={g.id} className={`${staticCard} flex items-center gap-3`}>
               <Avatar name={g.name} size={48} />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-bold">{g.name}</p>

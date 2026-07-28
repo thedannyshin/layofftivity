@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { ChevronRight, Search, Users } from "lucide-react";
-import { Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Chip, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { causeOptions, events, organizations, orgById } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -76,7 +76,7 @@ function Organizations() {
             key={o.id}
             to="/organizations/$orgId"
             params={{ orgId: o.id }}
-            className="flex items-start gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+            className={`${tapCard} flex items-start gap-3`}
           >
             <OrgMark cover={o.cover} size={52} />
             <div className="min-w-0 flex-1">
@@ -127,7 +127,7 @@ function Organizations() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+              className={`${tapCard} flex items-center gap-3`}
             >
               <div className="w-14 shrink-0 rounded-xl bg-secondary py-2 text-center">
                 <p className="text-[11px] font-bold text-muted-foreground uppercase">
