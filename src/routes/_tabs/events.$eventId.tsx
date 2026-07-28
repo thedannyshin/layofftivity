@@ -143,20 +143,9 @@ function EventDetail() {
         </div>
 
         {joined && (
-          <div className="mt-6 space-y-3">
-            <Chip tone="green">
-              <Check className="h-3 w-3" /> You're going
-            </Chip>
+          <div className="mt-8 space-y-3">
             <Button asChild size="lg" className="w-full">
               <Link to="/volunteer-day">Open the volunteer day</Link>
-            </Button>
-            <Button asChild variant="soft" size="lg" className="w-full">
-              <Link to="/cohort">Open your group</Link>
-            </Button>
-            <Button asChild variant="quiet" size="lg" className="w-full">
-              <Link to="/invite">
-                {state.invites.length ? "Manage your invitation" : "Invite a friend to join you"}
-              </Link>
             </Button>
             <Button variant="quiet" size="lg" className="w-full" onClick={leave}>
               Can't make it — release my spot
