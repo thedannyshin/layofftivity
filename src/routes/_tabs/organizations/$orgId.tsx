@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, Clock, MapPin, Users } from "lucide-react";
-import { Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Card, Chip, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
+import { Button } from "@/components/ui/button";
 import { eventsForOrg, orgById, organizations } from "@/lib/data";
 
 export const Route = createFileRoute("/_tabs/organizations/$orgId")({
@@ -55,7 +56,7 @@ function OrgDetail() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className="block rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+              className={`${tapCard} block`}
             >
               <div className="flex items-start justify-between gap-3">
                 <p className="text-[16px] leading-tight font-bold">{e.title}</p>
@@ -87,12 +88,9 @@ function OrgDetail() {
           <p className="mt-1 text-[13px] text-muted-foreground">
             New dates post on Mondays. In the meantime, other organizations have space this week.
           </p>
-          <Link
-            to="/organizations"
-            className="mt-3 inline-block rounded-full bg-secondary px-4 py-2.5 text-[14px] font-bold text-primary transition-colors hover:bg-primary-soft active:bg-primary-soft"
-          >
-            Browse other organizations
-          </Link>
+          <Button asChild variant="quiet" className="mt-3">
+            <Link to="/organizations">Browse other organizations</Link>
+          </Button>
         </Card>
       )}
 
@@ -106,7 +104,7 @@ function OrgDetail() {
               key={o.id}
               to="/organizations/$orgId"
               params={{ orgId: o.id }}
-              className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+              className={`${tapCard} flex items-center gap-3`}
             >
               <OrgMark cover={o.cover} />
               <div className="min-w-0 flex-1">

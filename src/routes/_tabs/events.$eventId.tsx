@@ -1,8 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { CalendarDays, Check, Clock, MapPin, Users } from "lucide-react";
+import { CalendarDays, Check, Clock, MapPin, Users, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { eventById, orgById } from "@/lib/data";
@@ -60,7 +60,7 @@ function EventDetail() {
         <Link
           to="/organizations/$orgId"
           params={{ orgId: org.id }}
-          className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+          className={`${tapCard} flex items-center gap-3`}
         >
           <OrgMark cover={org.cover} />
           <div className="min-w-0 flex-1">
@@ -69,9 +69,7 @@ function EventDetail() {
               {org.cause} · {org.neighborhood}
             </p>
           </div>
-          <span className="rounded-full bg-secondary px-3 py-1.5 text-[13px] font-bold text-primary">
-            View
-          </span>
+          <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
         </Link>
 
         {isPrimary && (
@@ -169,13 +167,9 @@ function EventDetail() {
                 {state.invites.length ? "Manage your invitation" : "Invite a friend to join you"}
               </Link>
             </Button>
-            <button
-              type="button"
-              onClick={leave}
-              className="w-full rounded-full bg-secondary py-3 text-[14px] font-semibold text-muted-foreground transition-colors hover:bg-muted active:bg-muted"
-            >
+            <Button variant="quiet" size="lg" className="w-full" onClick={leave}>
               Can't make it — release my spot
-            </button>
+            </Button>
           </div>
         )}
       </Screen>

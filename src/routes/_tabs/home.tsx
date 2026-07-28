@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, Clock, MapPin, Sparkles, Users } from "lucide-react";
-import { Avatar, Card, Chip, Screen, SectionTitle } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Screen, SectionTitle, tapCard, tapCardAccent } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { events, orgById } from "@/lib/data";
@@ -138,12 +138,12 @@ function Home() {
             />
           ))}
         </div>
-        <ul className="mt-4 space-y-1">
+        <ul className="mt-4 space-y-2">
           {goals.map((g) => (
             <li key={g.id}>
               <Link
                 to={g.to}
-                className="flex w-full items-center gap-3 rounded-xl py-2.5 text-left transition-colors hover:bg-secondary active:bg-secondary"
+                className="flex w-full cursor-pointer items-center gap-3 rounded-xl bg-secondary/60 px-3 py-2.5 text-left transition-colors hover:bg-secondary active:bg-primary-soft"
               >
                 <span
                   className={cn(
@@ -165,7 +165,7 @@ function Home() {
                 >
                   {g.label}
                 </span>
-                {!g.done && <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />}
+                <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
               </Link>
             </li>
           ))}
@@ -183,7 +183,7 @@ function Home() {
       </SectionTitle>
       <Link
         to="/cohort"
-        className="block rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+        className={`${tapCard} block`}
       >
         <div className="flex items-center justify-between">
           <div className="min-w-0">
@@ -215,7 +215,7 @@ function Home() {
 
       <Link
         to="/match"
-        className="mt-3 flex items-center gap-3 rounded-2xl bg-accent-soft p-4 transition-colors active:bg-accent-soft/70"
+        className={`${tapCardAccent} mt-3 flex items-center gap-3`}
       >
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent">
           <Sparkles className="h-5 w-5 text-accent-foreground" />
@@ -243,7 +243,7 @@ function Home() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+              className={`${tapCard} flex items-center gap-3`}
             >
               <OrgMark cover={eOrg.cover} />
               <div className="min-w-0 flex-1">

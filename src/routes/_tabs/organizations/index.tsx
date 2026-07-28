@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { ChevronRight, Search, Users } from "lucide-react";
-import { Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Button } from "@/components/ui/button";
+import { Chip, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { causeOptions, events, organizations, orgById } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -76,7 +77,7 @@ function Organizations() {
             key={o.id}
             to="/organizations/$orgId"
             params={{ orgId: o.id }}
-            className="flex items-start gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+            className={`${tapCard} flex items-start gap-3`}
           >
             <OrgMark cover={o.cover} size={52} />
             <div className="min-w-0 flex-1">
@@ -104,16 +105,16 @@ function Organizations() {
             <p className="mt-1 text-[13px] text-muted-foreground">
               Try a different cause, or clear the search to see all six organizations.
             </p>
-            <button
-              type="button"
+            <Button
+              variant="quiet"
+              className="mt-4"
               onClick={() => {
                 setQuery("");
                 setCause(null);
               }}
-              className="mt-4 rounded-full bg-secondary px-4 py-2.5 text-[14px] font-bold text-primary transition-colors hover:bg-primary-soft active:bg-primary-soft"
             >
               Clear filters
-            </button>
+            </Button>
           </div>
         )}
       </div>
@@ -127,7 +128,7 @@ function Organizations() {
               key={e.id}
               to="/events/$eventId"
               params={{ eventId: e.id }}
-              className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+              className={`${tapCard} flex items-center gap-3`}
             >
               <div className="w-14 shrink-0 rounded-xl bg-secondary py-2 text-center">
                 <p className="text-[11px] font-bold text-muted-foreground uppercase">

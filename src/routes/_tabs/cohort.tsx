@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Car, Check, ChevronRight, MapPin, MessageCircle, Quote, UserPlus } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, staticCard, tapCard, tapCardAccent } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { byId, cohort, icebreakers, introductions, orgById, sharedWith, transportation } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -50,7 +50,7 @@ function Group() {
       <Link
         to="/events/$eventId"
         params={{ eventId: primaryEvent.id }}
-        className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+        className={`${tapCard} flex items-center gap-3`}
       >
         <div className="min-w-0 flex-1">
           <p className="text-[13px] font-semibold text-primary">
@@ -71,7 +71,7 @@ function Group() {
             key={m.id}
             to="/chat/$personId"
             params={{ personId: m.id }}
-            className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+            className={`${tapCard} flex items-center gap-3`}
           >
             <Avatar src={m.photo} name={m.name} size={48} />
             <div className="min-w-0 flex-1">
@@ -88,7 +88,7 @@ function Group() {
         ))}
 
         {guests.map((g) => (
-          <div key={g.id} className="flex items-center gap-3 rounded-2xl bg-card p-4">
+          <div key={g.id} className={`${staticCard} flex items-center gap-3`}>
             <Avatar name={g.name} size={48} />
             <div className="min-w-0 flex-1">
               <p className="truncate text-[15px] font-bold">{g.name}</p>
@@ -104,7 +104,7 @@ function Group() {
       {guests.length === 0 && (
         <Link
           to="/invite"
-          className="mt-3 flex items-center gap-3 rounded-2xl bg-accent-soft p-4 transition-colors active:bg-accent-soft/70"
+          className={`${tapCardAccent} mt-3 flex items-center gap-3`}
         >
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent">
             <UserPlus className="h-5 w-5 text-accent-foreground" />
@@ -126,7 +126,7 @@ function Group() {
       </SectionTitle>
       <Link
         to="/cohort-chat"
-        className="block rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+        className={`${tapCard} block`}
       >
         {lastMessage ? (
           <>
@@ -178,7 +178,7 @@ function Group() {
       <SectionTitle>Icebreakers</SectionTitle>
       <div className="space-y-3">
         {icebreakers.slice(0, 3).map((q) => (
-          <div key={q} className="flex gap-3 rounded-2xl bg-card p-4">
+          <div key={q} className={`${staticCard} flex gap-3`}>
             <Quote className="h-4 w-4 shrink-0 text-primary" />
             <p className="text-[15px] leading-relaxed">{q}</p>
           </div>
@@ -198,7 +198,7 @@ function Group() {
               type="button"
               onClick={() => !full && claimRide(t.driverId)}
               disabled={full}
-              className="flex w-full items-center gap-3 rounded-2xl bg-card p-4 text-left transition-colors active:bg-secondary disabled:opacity-60"
+              className={`${tapCard} flex w-full items-center gap-3`}
             >
               <Avatar src={driver.photo} name={driver.name} size={44} />
               <div className="min-w-0 flex-1">

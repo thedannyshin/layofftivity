@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Check, MessageCircle, Quote, UserPlus } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { orgById, sharedWith } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
@@ -112,7 +112,7 @@ function Match() {
       <Link
         to="/events/$eventId"
         params={{ eventId: primaryEvent.id }}
-        className="block rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+        className={`${tapCard} block`}
       >
         <p className="text-[13px] font-bold text-primary">{org.name}</p>
         <p className="mt-1 text-[17px] font-extrabold">{primaryEvent.title}</p>

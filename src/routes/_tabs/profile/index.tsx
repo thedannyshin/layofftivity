@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { Award, BookHeart, ChevronRight, History, RotateCcw, UserRound } from "lucide-react";
-import { Avatar, Card, Chip, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -61,7 +61,7 @@ function Profile() {
       <SectionTitle>Your group</SectionTitle>
       <Link
         to="/cohort"
-        className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+        className={`${tapCard} flex items-center gap-3`}
       >
         <div className="min-w-0 flex-1">
           <p className="truncate text-[15px] font-bold">{org.cause} group</p>
@@ -158,7 +158,7 @@ function Row({
   return (
     <Link
       to={to}
-      className="flex items-center gap-3 rounded-2xl bg-card p-4 transition-colors active:bg-secondary"
+      className={`${tapCard} flex items-center gap-3`}
     >
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
         {icon}
