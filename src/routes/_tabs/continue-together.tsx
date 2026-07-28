@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { CalendarCheck, ChevronRight, Coffee, Footprints, Utensils } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Screen, TopBar, staticCardAccent } from "@/components/app/Shell";
+import { Avatar, Screen, TopBar, selectRow, staticCardAccent } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { continueOptions, events } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
@@ -87,12 +87,7 @@ function ContinueTogether() {
               key={o.id}
               type="button"
               onClick={() => choose(o.id, o.title)}
-              className={cn(
-                "flex w-full items-center gap-3 rounded-2xl p-4 text-left transition-colors",
-                selected
-                  ? "bg-accent-soft"
-                  : "bg-secondary hover:bg-primary-soft/70",
-              )}
+              className={selectRow(selected)}
             >
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-card">
                 <Icon className="h-5 w-5 text-primary" />
