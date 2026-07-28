@@ -4,18 +4,42 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * One shared look for every tappable card in the app.
- * If a surface uses this class, it must be a real link/button with one primary action.
+ * SURFACE VOCABULARY — one source of truth for "is this clickable?".
+ *
+ * static*  → plain surface, never a link/button, no cursor or hover.
+ * tap*     → must be a real <Link>/<button> with exactly one primary action.
  */
-export const tapCard =
-  "cursor-pointer rounded-2xl bg-card p-4 text-left transition-colors hover:bg-secondary/70 active:bg-secondary disabled:pointer-events-none disabled:opacity-60";
-
-/** Same look, for the accent (gold) variant of a tappable card. */
-export const tapCardAccent =
-  "cursor-pointer rounded-2xl bg-accent-soft p-4 text-left transition-colors hover:bg-accent-soft/80 active:bg-accent-soft/70";
+const cardBase = "rounded-2xl p-4";
+const tapBase =
+  "cursor-pointer text-left transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft disabled:pointer-events-none disabled:opacity-60";
 
 /** Static (non-tappable) card surface. */
-export const staticCard = "rounded-2xl bg-card p-4";
+export const staticCard = `${cardBase} bg-card`;
+
+/** Static accent (gold) card surface. */
+export const staticCardAccent = `${cardBase} bg-accent-soft`;
+
+/** Tappable card. */
+export const tapCard = `${staticCard} ${tapBase} hover:bg-secondary/70 active:bg-secondary`;
+
+/** Tappable accent (gold) card. */
+export const tapCardAccent = `${staticCardAccent} ${tapBase} hover:bg-accent-soft/80 active:bg-accent-soft/70`;
+
+/** Tappable pill (chips, quick replies, filters) — same language as Button. */
+export const tapPill =
+  "inline-flex shrink-0 items-center gap-1.5 rounded-full bg-secondary px-3.5 py-2 text-[13px] font-semibold text-foreground cursor-pointer transition-colors duration-[120ms] hover:bg-primary-soft active:bg-primary-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft";
+
+/** Selected state of a tappable pill. */
+export const tapPillActive =
+  "inline-flex shrink-0 items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-[13px] font-semibold text-primary-foreground cursor-pointer transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft";
+
+/** One shared look for selectable option rows (onboarding, invite, continue together). */
+export function selectRow(selected: boolean) {
+  return cn(
+    "flex w-full items-center gap-3 rounded-2xl p-4 text-left cursor-pointer transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft",
+    selected ? "bg-accent-soft" : "bg-secondary hover:bg-primary-soft/70 active:bg-primary-soft",
+  );
+}
 
 export function Screen({
   children,
@@ -114,7 +138,7 @@ export function Card({
   return (
     <As
       className={cn(
-        "rounded-[20px] p-4",
+        cardBase,
         variant === "accent" ? "bg-primary-soft" : "bg-card",
         className,
       )}

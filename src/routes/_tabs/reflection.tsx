@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
 import { Camera, Check, X } from "lucide-react";
 import { toast } from "sonner";
-import { Card, Screen, SectionTitle, TopBar } from "@/components/app/Shell";
+import { Card, Screen, SectionTitle, TopBar, tapPill, tapPillActive } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { moods } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -65,12 +65,7 @@ function ReflectionScreen() {
               type="button"
               onClick={() => setMood(m)}
               aria-pressed={mood === m}
-              className={cn(
-                "rounded-full px-4 py-2.5 text-[14px] font-semibold transition-colors",
-                mood === m
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-secondary hover:bg-primary-soft/70",
-              )}
+              className={mood === m ? tapPillActive : tapPill}
             >
               {m}
             </button>

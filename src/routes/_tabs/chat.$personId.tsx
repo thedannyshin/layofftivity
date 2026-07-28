@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import * as React from "react";
 import { Send } from "lucide-react";
-import { Avatar, Screen, TopBar } from "@/components/app/Shell";
+import { Avatar, Screen, TopBar, tapPill } from "@/components/app/Shell";
 import { byId, sharedWith } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -104,7 +104,7 @@ function Chat() {
               key={s}
               type="button"
               onClick={() => setValue(s)}
-              className="rounded-full bg-secondary px-3.5 py-2 text-[13px] font-semibold transition-colors hover:bg-primary-soft active:bg-primary-soft"
+              className={tapPill}
             >
               {s}
             </button>

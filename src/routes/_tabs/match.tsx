@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Check, MessageCircle, Quote, UserPlus } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, staticCard, tapCard } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { orgById, sharedWith } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
@@ -148,7 +148,7 @@ function Match() {
         </p>
       )}
 
-      <div className="mt-6 flex gap-3 rounded-2xl bg-card p-4">
+      <div className={`${staticCard} mt-6 flex gap-3`}>
         <Quote className="h-4 w-4 shrink-0 text-primary" />
         <p className="text-[15px] leading-relaxed">
           Matches are based on causes, interests, and when you can show up — nothing else. We'd
