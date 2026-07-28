@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { CalendarCheck, ChevronRight, Coffee, Footprints, Utensils } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Screen, TopBar } from "@/components/app/Shell";
+import { Avatar, Screen, TopBar, staticCardAccent } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { continueOptions, events } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
