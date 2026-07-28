@@ -251,16 +251,17 @@ export function FactGrid({ facts }: { facts: { icon: ReactNode; value: string; h
 /** Horizontal snap deck — one item at a time instead of a stack of paragraphs. */
 export function Deck({ children }: { children: ReactNode }) {
   return (
-    <div className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-1">
+    <div className="no-scrollbar -mx-5 flex snap-x snap-mandatory scroll-px-5 scroll-smooth gap-3 overflow-x-auto overscroll-x-contain px-5 pb-1 [-webkit-overflow-scrolling:touch]">
       {children}
     </div>
   );
 }
 
-export const deckItem = "w-[78%] shrink-0 snap-start rounded-2xl bg-card p-4";
+export const deckItem =
+  "w-[78%] shrink-0 snap-start snap-always rounded-2xl bg-card p-4";
 
 /** Tappable card inside a horizontal deck/carousel (photo on top, text below). */
-export const deckCard = `w-[78%] shrink-0 snap-start overflow-hidden rounded-2xl bg-card ${tapBase} hover:bg-secondary/70 active:bg-secondary`;
+export const deckCard = `w-[78%] shrink-0 snap-start snap-always overflow-hidden rounded-2xl bg-card ${tapBase} hover:bg-secondary/70 active:bg-secondary`;
 
 /** Circular progress ring with the number inside — a count, not a sentence. */
 export function Ring({
