@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Car, Check, ChevronRight, MapPin, MessageCircle, Quote, UserPlus } from "lucide-react";
 import { toast } from "sonner";
-import { Avatar, Card, Chip, ListGroup, Screen, SectionTitle, TopBar, staticCard, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
+import { Avatar, Card, Chip, Clamp, Deck, ListGroup, Meta, Screen, SectionTitle, TopBar, deckItem, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { byId, cohort, icebreakers, introductions, orgById, sharedWith, transportation } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -76,12 +76,12 @@ function Group() {
             <Avatar src={m.photo} name={m.name} size={48} />
             <div className="min-w-0 flex-1">
               <p className="truncate text-[15px] font-bold">{m.name}</p>
-              <p className="truncate text-[13px] text-muted-foreground">{m.formerRole}</p>
-              <p className="mt-1.5 truncate text-[12px] text-muted-foreground">
-                {(sharedWith(m, prefs).length ? sharedWith(m, prefs) : m.interests)
-                  .slice(0, 3)
-                  .join(" · ")}
-              </p>
+            <Meta
+              items={[
+                m.formerRole,
+                (sharedWith(m, prefs).length ? sharedWith(m, prefs) : m.interests)[0],
+              ]}
+            />
             </div>
             <MessageCircle className="h-5 w-5 shrink-0 text-muted-foreground" />
           </Link>
@@ -92,9 +92,7 @@ function Group() {
             <Avatar name={g.name} size={48} />
             <div className="min-w-0 flex-1">
               <p className="truncate text-[15px] font-bold">{g.name}</p>
-              <p className="truncate text-[13px] text-muted-foreground">
-                Invited by you · {g.relation}
-              </p>
+              <Meta items={["Invited by you", g.relation]} />
             </div>
             <Chip tone="yellow">Guest</Chip>
           </div>
