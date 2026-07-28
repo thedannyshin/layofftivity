@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, Clock, MapPin, Users } from "lucide-react";
-import { Card, Chip, Screen, SectionTitle, TopBar, tapCard } from "@/components/app/Shell";
+import { Card, Chip, ListGroup, Screen, SectionTitle, TopBar, tapCard, tapRow } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { Button } from "@/components/ui/button";
 import { eventsForOrg, orgById, organizations } from "@/lib/data";
@@ -95,7 +95,7 @@ function OrgDetail() {
       )}
 
       <SectionTitle>Also working on {org.cause.toLowerCase()}</SectionTitle>
-      <div className="space-y-3">
+      <ListGroup>
         {organizations
           .filter((o) => o.id !== org.id)
           .slice(0, 2)
@@ -104,7 +104,7 @@ function OrgDetail() {
               key={o.id}
               to="/organizations/$orgId"
               params={{ orgId: o.id }}
-              className={`${tapCard} flex items-center gap-3`}
+              className={tapRow}
             >
               <OrgMark cover={o.cover} />
               <div className="min-w-0 flex-1">
@@ -116,7 +116,7 @@ function OrgDetail() {
               <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
             </Link>
           ))}
-      </div>
+      </ListGroup>
     </Screen>
   );
 }
