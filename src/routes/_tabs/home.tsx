@@ -1,9 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays, ChevronRight, MapPin, Sparkles, Users } from "lucide-react";
-import { Avatar, Chip, Deck, ListGroup, Ring, Screen, SectionTitle, deckCard, tapCard, tapCardAccent, tapRow } from "@/components/app/Shell";
-import { CoverPhoto } from "@/components/app/OrgMark";
-import { Button } from "@/components/ui/button";
-import { events, orgById } from "@/lib/data";
+import { CalendarDays, ChevronRight, MapPin } from "lucide-react";
+import { Avatar, ListGroup, Ring, Screen, SectionTitle, tapCard, tapRow } from "@/components/app/Shell";
+import { orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -33,7 +31,6 @@ function Home() {
   const { state, profile, initials, matches, guests, primaryEvent, week, thread, isJoined } = app;
   const org = orgById(primaryEvent.orgId);
   const joined = isJoined(primaryEvent.id);
-  const recommended = events.filter((e) => e.id !== primaryEvent.id).slice(0, 4);
 
   const goals = [
     {
@@ -43,22 +40,16 @@ function Home() {
       to: "/organizations" as const,
     },
     {
-      id: "message",
-      label: "Say something in the group chat",
-      done: thread("group").some((m) => m.personId === "you"),
-      to: "/cohort-chat" as const,
-    },
-    {
       id: "shift",
       label: "Show up for one shift",
       done: state.checkedInEventIds.length > 0,
       to: "/volunteer-day" as const,
     },
     {
-      id: "reflect",
-      label: "Write one reflection",
-      done: state.reflections.length > 0,
-      to: "/reflection" as const,
+      id: "message",
+      label: "Say something in the group chat",
+      done: thread("group").some((m) => m.personId === "you"),
+      to: "/cohort-chat" as const,
     },
   ];
   const doneCount = goals.filter((g) => g.done).length;
