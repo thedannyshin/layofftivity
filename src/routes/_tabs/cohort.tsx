@@ -203,12 +203,9 @@ function Group() {
               <Avatar src={driver.photo} name={driver.name} size={44} />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-bold">{driver.name.split(" ")[0]} is driving</p>
-                <p className="truncate text-[13px] text-muted-foreground">
-                  {t.note} · leaves {t.departs}
-                </p>
-                <p className="text-[12px] text-muted-foreground">
-                  {t.seatsTotal - taken} of {t.seatsTotal} seats open
-                </p>
+                <Meta
+                  items={[t.departs, `${t.seatsTotal - taken}/${t.seatsTotal} seats`, t.note]}
+                />
               </div>
               {claimed ? (
                 <Chip tone="green">
