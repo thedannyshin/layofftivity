@@ -45,7 +45,7 @@ function Reflections() {
               <Card key={r.id}>
                 <div className="flex items-center justify-between">
                   <p className="text-[14px] font-bold">{r.date}</p>
-                  <span className="rounded-lg border border-accent px-2.5 py-1 text-[12px] font-semibold text-accent-foreground">
+                  <span className="rounded-lg border border-muted-foreground/40 px-2.5 py-1 text-[12px] font-semibold text-muted-foreground">
                     {r.mood}
                   </span>
                 </div>

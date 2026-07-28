@@ -164,20 +164,13 @@ export function Card({
 
 export function Chip({
   children,
-  tone = "neutral",
 }: {
   children: ReactNode;
+  /** Kept for call-site compatibility; all static chips render one neutral style. */
   tone?: "neutral" | "green" | "yellow";
 }) {
   return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-1 rounded-lg border px-3 py-1 text-[13px] font-semibold",
-        tone === "neutral" && "border-border text-foreground",
-        tone === "green" && "border-primary/40 text-foreground",
-        tone === "yellow" && "border-accent text-accent-foreground",
-      )}
-    >
+    <span className="inline-flex items-center gap-1 rounded-lg border border-muted-foreground/40 px-3 py-1 text-[13px] font-semibold text-muted-foreground">
       {children}
     </span>
   );
