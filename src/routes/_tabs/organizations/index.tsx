@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { ChevronRight, Search, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Chip, Screen, SectionTitle, TopBar, staticCard, tapCard, tapPill, tapPillActive } from "@/components/app/Shell";
+import { Chip, ListGroup, Screen, SectionTitle, TopBar, staticCard, tapPill, tapPillActive, tapRow } from "@/components/app/Shell";
 import { OrgMark } from "@/components/app/OrgMark";
 import { causeOptions, events, organizations, orgById } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -71,13 +71,13 @@ function Organizations() {
         {filtered.length} {filtered.length === 1 ? "organization" : "organizations"}
       </SectionTitle>
 
-      <div className="space-y-3">
+      <ListGroup>
         {filtered.map((o) => (
           <Link
             key={o.id}
             to="/organizations/$orgId"
             params={{ orgId: o.id }}
-            className={`${tapCard} flex items-start gap-3`}
+            className={`${tapRow} items-start`}
           >
             <OrgMark cover={o.cover} size={52} />
             <div className="min-w-0 flex-1">
@@ -99,8 +99,9 @@ function Organizations() {
             <ChevronRight className="mt-1 h-5 w-5 shrink-0 text-muted-foreground" />
           </Link>
         ))}
-        {filtered.length === 0 && (
-          <div className={`${staticCard} p-6 text-center`}>
+      </ListGroup>
+      {filtered.length === 0 && (
+        <div className={`${staticCard} p-6 text-center`}>
             <p className="text-[15px] font-semibold">Nothing matches that yet</p>
             <p className="mt-1 text-[13px] text-muted-foreground">
               Try a different cause, or clear the search to see all six organizations.
