@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { Award, BookHeart, ChevronRight, History, RotateCcw, UserRound } from "lucide-react";
-import { Avatar, Card, Chip, Screen, SectionTitle, TopBar, staticCard, tapCard } from "@/components/app/Shell";
+import { Avatar, Card, Chip, ListGroup, Screen, SectionTitle, TopBar, staticCard, tapCard, tapRow } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
 import { orgById } from "@/lib/data";
 import { useApp } from "@/lib/store";
@@ -74,7 +74,7 @@ function Profile() {
       </Link>
 
       <SectionTitle>Everything else</SectionTitle>
-      <div className="space-y-3">
+      <ListGroup>
         <Row
           to="/profile/friends"
           icon={<UserRound className="h-5 w-5 text-primary" />}
@@ -99,7 +99,7 @@ function Profile() {
           title="Badges"
           detail={`${earned} of ${badges.length} earned`}
         />
-      </div>
+      </ListGroup>
 
       <SectionTitle>What you told us</SectionTitle>
       <Card>
@@ -156,10 +156,7 @@ function Row({
   detail: string;
 }) {
   return (
-    <Link
-      to={to}
-      className={`${tapCard} flex items-center gap-3`}
-    >
+    <Link to={to} className={tapRow}>
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
         {icon}
       </span>
