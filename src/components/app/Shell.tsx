@@ -34,11 +34,6 @@ export function TopBar({
   return (
     <header className="sticky top-0 z-20 -mx-5 mb-4 bg-background/95 px-5 pt-3 pb-3 backdrop-blur">
       <div className="flex items-center gap-2">
-        <div className="min-w-0 flex-1">
-          <h1 className="lo-display truncate text-[20px] leading-tight">{title}</h1>
-          {subtitle && <p className="truncate text-[13px] text-muted-foreground">{subtitle}</p>}
-        </div>
-        {right}
         {back && (
           <button
             type="button"
@@ -50,6 +45,11 @@ export function TopBar({
             Back
           </button>
         )}
+        <div className="min-w-0 flex-1">
+          <h1 className="lo-display truncate text-[20px] leading-tight">{title}</h1>
+          {subtitle && <p className="truncate text-[13px] text-muted-foreground">{subtitle}</p>}
+        </div>
+        {right}
       </div>
     </header>
   );
