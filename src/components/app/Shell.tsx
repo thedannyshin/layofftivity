@@ -33,6 +33,14 @@ export const tapPill =
 export const tapPillActive =
   "inline-flex shrink-0 items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-[13px] font-semibold text-primary-foreground cursor-pointer transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft";
 
+/** One shared look for selectable option rows (onboarding, invite, continue together). */
+export function selectRow(selected: boolean) {
+  return cn(
+    "flex w-full items-center gap-3 rounded-2xl p-4 text-left cursor-pointer transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft",
+    selected ? "bg-accent-soft" : "bg-secondary hover:bg-primary-soft/70 active:bg-primary-soft",
+  );
+}
+
 export function Screen({
   children,
   className,
