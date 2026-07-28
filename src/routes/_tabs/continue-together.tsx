@@ -61,7 +61,7 @@ function ContinueTogether() {
     <Screen>
       <TopBar title="That's a wrap" subtitle={`Volunteer day ${daysCompleted} logged`} back />
 
-      <div className="rounded-2xl bg-accent-soft p-5 text-center">
+      <div className={`${staticCardAccent} p-5 text-center`}>
         <div className="flex justify-center -space-x-2">
           {matches.map((m) => (
             <Avatar key={m.id} src={m.photo} name={m.name} size={38} />
