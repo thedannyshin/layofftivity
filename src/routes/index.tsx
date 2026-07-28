@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
 import { ArrowRight, Camera, Check, ImagePlus, MapPin, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Avatar, BackButton, Screen } from "@/components/app/Shell";
+import { Avatar, BackButton, Screen, staticCard } from "@/components/app/Shell";
 import { LogoMark } from "@/components/app/LogoMark";
 import {
   availabilityOptions,
@@ -225,7 +225,7 @@ function Onboarding() {
               title="Add a profile photo"
               hint="A face makes the first Saturday easier. You can skip and use your initials."
             >
-              <div className="flex flex-col items-center gap-4 rounded-2xl bg-card p-6">
+              <div className={`${staticCard} flex flex-col items-center gap-4 p-6`}>
                 <Avatar
                   src={photo}
                   name={`${firstName} ${lastName}`.trim() || "You"}
