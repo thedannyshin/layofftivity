@@ -78,7 +78,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1, viewport-fit=cover",
+      },
       { title: "Layofftivity — Rebuild belonging after a layoff" },
       {
         name: "description",
@@ -86,6 +89,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Layofftivity pairs laid-off tech professionals with a small volunteer cohort that shows up together, week after week.",
       },
       { name: "author", content: "Layofftivity" },
+      { name: "theme-color", content: "#1F7A45" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-title", content: "Layofftivity" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+      { name: "format-detection", content: "telephone=no" },
       { property: "og:title", content: "Layofftivity" },
       {
         property: "og:description",
@@ -105,7 +114,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -120,7 +132,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="overscroll-none">
         {children}
         <Scripts />
       </body>
@@ -130,6 +142,15 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
+    const register = () => {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    };
+    if (document.readyState === "complete") register();
+    else window.addEventListener("load", register, { once: true });
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

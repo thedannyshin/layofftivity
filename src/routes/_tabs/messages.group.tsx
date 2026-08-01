@@ -160,7 +160,7 @@ function GroupMessages() {
         </div>
       </Screen>
 
-      <div className="fixed inset-x-0 bottom-16 z-20 bg-card">
+      <div className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-20 bg-card">
         <form
           onSubmit={(e) => {
             e.preventDefault();

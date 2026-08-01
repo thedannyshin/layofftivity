@@ -180,7 +180,13 @@
     border-color: var(--color-border);
   }
 
+  html {
+    /* Keep content clear of the iOS notch when installed as a web app */
+    padding-top: env(safe-area-inset-top);
+  }
+
   body {
+    min-height: 100dvh;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family:
@@ -189,6 +195,8 @@
       system-ui,
       sans-serif;
     -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
   }
 
   h1,

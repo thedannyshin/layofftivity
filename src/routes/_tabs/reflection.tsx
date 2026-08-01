@@ -134,7 +134,7 @@ function ReflectionScreen() {
         )}
       </Screen>
 
-      <div className="fixed inset-x-0 bottom-16 z-20 bg-card">
+      <div className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-20 bg-card">
         <div className="mx-auto w-full max-w-[430px] px-5 py-4">
           <Button size="lg" className="w-full" disabled={!mood || !note.trim()} onClick={save}>
             <Check />

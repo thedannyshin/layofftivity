@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_tabs")({
 
 function TabsLayout() {
   return (
-    <div className="min-h-screen bg-background pb-16">
+    <div className="min-h-dvh bg-background pb-[calc(4rem+env(safe-area-inset-bottom))]">
       <Outlet />
       <BottomNav />
     </div>
