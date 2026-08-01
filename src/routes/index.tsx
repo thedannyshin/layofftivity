@@ -18,13 +18,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Welcome to Layofftivity — Find your volunteer group" },
+      { title: "Layofftivity" },
       {
         name: "description",
         content:
           "Answer a few short questions and get matched with a small volunteer group of former tech professionals near you.",
       },
-      { property: "og:title", content: "Welcome to Layofftivity" },
+      { property: "og:title", content: "Layofftivity" },
       {
         property: "og:description",
         content: "A few short questions, then meet the small group you'll show up with every week.",
