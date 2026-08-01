@@ -7,7 +7,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#F3F5F3",
-  "theme_color": "#1F7A45",
+  "theme_color": "#F3F5F3",
   "lang": "en",
   "categories": ["lifestyle", "social"],
   "icons": [

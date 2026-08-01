@@ -151,7 +151,8 @@ function EventDetail() {
       </Screen>
 
       {!joined && (
-        <div className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-20 bg-card">
+        <div className="ios-chrome ios-hairline-t fixed inset-x-0 z-20"
+        style={{ bottom: "max(calc(49px + env(safe-area-inset-bottom)), var(--ios-keyboard-inset, 0px))" }}>
           <div className="mx-auto w-full max-w-[430px] px-5 py-4">
             <Button size="lg" className="w-full" onClick={join}>
               Join this activity

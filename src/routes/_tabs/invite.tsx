@@ -249,7 +249,7 @@ function InviteScreen() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Their name"
-              className="h-12 w-full rounded-xl bg-card px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
+              className="h-12 w-full rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/30"
             />
             {channel !== "link" && (
               <input
@@ -257,7 +257,7 @@ function InviteScreen() {
                 onChange={(e) => setContact(e.target.value)}
                 inputMode={channel === "text" ? "tel" : "email"}
                 placeholder={channels.find((c) => c.id === channel)!.placeholder}
-                className="h-12 w-full rounded-xl bg-card px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
+                className="h-12 w-full rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/30"
               />
             )}
             <Card variant="accent">

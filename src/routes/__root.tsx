@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { StoreProvider } from "../lib/store";
 import { ResetButton } from "@/components/app/ResetButton";
+import { useIosKeyboardInset } from "@/hooks/useIosKeyboardInset";
 
 function NotFoundComponent() {
   return (
@@ -85,11 +86,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Layofftivity pairs laid-off tech professionals with a small volunteer cohort that shows up together, week after week.",
       },
       { name: "author", content: "Layofftivity" },
-      { name: "theme-color", content: "#1F7A45" },
+      { name: "theme-color", content: "#F3F5F3" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-title", content: "Layofftivity" },
-      { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
       { name: "format-detection", content: "telephone=no" },
       { property: "og:title", content: "Layofftivity" },
       {
@@ -138,6 +139,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useIosKeyboardInset();
 
   useEffect(() => {
     if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;

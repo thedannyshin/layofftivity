@@ -181,12 +181,13 @@
   }
 
   html {
-    /* Keep content clear of the iOS notch when installed as a web app */
-    padding-top: env(safe-area-inset-top);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
     min-height: 100dvh;
+    min-height: -webkit-fill-available;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family:
@@ -195,8 +196,39 @@
       system-ui,
       sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
+    touch-action: manipulation;
+  }
+
+  /* Avoid iOS Safari zooming focused form fields */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  button,
+  a,
+  [role="button"] {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  input,
+  textarea {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  /* Installed Home Screen app */
+  @media (display-mode: standalone) {
+    body {
+      /* Content draws under the status bar; chrome components add their own insets */
+      padding-top: 0;
+    }
   }
 
   h1,
@@ -206,6 +238,20 @@
     font-weight: 400;
     letter-spacing: 0;
   }
+}
+
+@utility ios-chrome {
+  background-color: color-mix(in oklab, var(--color-card) 82%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+@utility ios-hairline-t {
+  box-shadow: inset 0 0.5px 0 color-mix(in oklab, var(--color-foreground) 14%, transparent);
+}
+
+@utility ios-hairline-b {
+  box-shadow: inset 0 -0.5px 0 color-mix(in oklab, var(--color-foreground) 14%, transparent);
 }
 
 @utility no-scrollbar {

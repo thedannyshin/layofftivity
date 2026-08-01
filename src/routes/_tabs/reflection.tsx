@@ -82,7 +82,7 @@ function ReflectionScreen() {
           onChange={(e) => setNote(e.target.value)}
           rows={6}
           placeholder="What stayed with you from this morning?"
-          className="w-full resize-none rounded-2xl bg-card p-4 text-[15px] leading-relaxed outline-none focus:ring-2 focus:ring-primary/30"
+          className="w-full resize-none rounded-2xl bg-card p-4 text-[16px] leading-relaxed outline-none focus:ring-2 focus:ring-primary/30"
         />
 
         <SectionTitle>One thing you're grateful for</SectionTitle>
@@ -90,7 +90,7 @@ function ReflectionScreen() {
           value={gratitude}
           onChange={(e) => setGratitude(e.target.value)}
           placeholder="Someone, something small, anything"
-          className="h-12 w-full rounded-xl bg-card px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
+          className="h-12 w-full rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/30"
         />
 
         <SectionTitle>Photos</SectionTitle>
@@ -134,7 +134,8 @@ function ReflectionScreen() {
         )}
       </Screen>
 
-      <div className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-20 bg-card">
+      <div className="ios-chrome ios-hairline-t fixed inset-x-0 z-20"
+        style={{ bottom: "max(calc(49px + env(safe-area-inset-bottom)), var(--ios-keyboard-inset, 0px))" }}>
         <div className="mx-auto w-full max-w-[430px] px-5 py-4">
           <Button size="lg" className="w-full" disabled={!mood || !note.trim()} onClick={save}>
             <Check />

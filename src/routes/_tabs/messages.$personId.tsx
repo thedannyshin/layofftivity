@@ -105,7 +105,8 @@ function DirectMessages() {
         </div>
       </Screen>
 
-      <div className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-20 bg-card">
+      <div className="ios-chrome ios-hairline-t fixed inset-x-0 z-20"
+        style={{ bottom: "max(calc(49px + env(safe-area-inset-bottom)), var(--ios-keyboard-inset, 0px))" }}>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -118,7 +119,7 @@ function DirectMessages() {
             onChange={(e) => setValue(e.target.value)}
             placeholder={`Message ${person.name.split(" ")[0]}`}
             aria-label="Message"
-            className="h-12 flex-1 rounded-xl bg-card px-4 text-[15px] outline-none focus:ring-2 focus:ring-primary/30"
+            className="h-12 flex-1 rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/30"
           />
           <button
             type="submit"

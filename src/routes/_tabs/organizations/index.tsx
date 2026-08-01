@@ -50,7 +50,7 @@ function Organizations() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search organizations or causes"
-          className="h-12 w-full bg-transparent text-[15px] outline-none placeholder:text-muted-foreground"
+          className="h-12 w-full bg-transparent text-[16px] outline-none placeholder:text-muted-foreground"
         />
       </label>
 

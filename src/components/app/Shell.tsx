@@ -79,7 +79,7 @@ export function BackButton({ onClick, className }: { onClick: () => void; classN
       aria-label="Go back"
       onClick={onClick}
       className={cn(
-        "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-muted-foreground/35 bg-transparent text-foreground transition-colors hover:bg-card active:bg-card",
+        "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-muted-foreground/35 bg-transparent text-foreground transition-colors hover:bg-card active:bg-card active:opacity-70",
         className,
       )}
     >
@@ -110,13 +110,13 @@ export function ScreenHero({
       className={cn(
         "-mx-5 mb-4 px-5",
         isSticky
-          ? "sticky top-0 z-20 bg-background/95 pt-3 pb-3 backdrop-blur"
-          : "pt-6 pb-2",
+          ? "ios-chrome ios-hairline-b sticky top-0 z-20 pt-[max(0.75rem,env(safe-area-inset-top))] pb-3"
+          : "pt-[max(1.5rem,env(safe-area-inset-top))] pb-2",
       )}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex min-h-11 items-center gap-2">
         {back && (
-          <BackButton onClick={() => router.history.back()} className="shrink-0 self-start" />
+          <BackButton onClick={() => router.history.back()} className="shrink-0" />
         )}
         <div className="min-w-0 flex-1">
           {eyebrow && (
