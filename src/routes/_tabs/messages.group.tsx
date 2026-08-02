@@ -4,6 +4,7 @@ import { CalendarDays, ChevronRight, MapPin, Send } from "lucide-react";
 import { Avatar, Screen, ScreenHero, tapPill } from "@/components/app/Shell";
 import { TypingBubble } from "@/components/app/TypingBubble";
 import { useChatReply } from "@/hooks/useChatReply";
+import { useScrollToLatest } from "@/hooks/useScrollToLatest";
 import { byId, icebreakers, orgById } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -52,9 +53,11 @@ function GroupMessages() {
     eventWhen: `${primaryEvent.dateShort}, ${primaryEvent.time}`,
   });
 
-  React.useEffect(() => {
-    endRef.current?.scrollIntoView({ block: "end" });
-  }, [messages.length, typingPerson?.id]);
+  const unusedIcebreakers = icebreakers
+    .slice(0, 4)
+    .filter((q) => !messages.some((m) => m.text === q));
+
+  useScrollToLatest(endRef, [messages.length, typingPerson?.id, unusedIcebreakers.length]);
 
   const send = () => {
     const text = value.trim();
@@ -63,12 +66,8 @@ function GroupMessages() {
     setValue("");
   };
 
-  const unusedIcebreakers = icebreakers
-    .slice(0, 4)
-    .filter((q) => !messages.some((m) => m.text === q));
-
   return (
-    <div className="flex min-h-screen flex-col bg-background pb-32">
+    <div className="flex min-h-screen flex-col bg-background pb-40">
       <Screen>
         <ScreenHero
           title={groupLabel}
@@ -127,24 +126,6 @@ function GroupMessages() {
         </Link>
 
         <div className="mt-4 space-y-3">
-          {unusedIcebreakers.length > 0 && (
-            <div>
-              <p className="text-[14px] font-semibold text-muted-foreground">Icebreaker</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {unusedIcebreakers.map((q) => (
-                  <button
-                    key={q}
-                    type="button"
-                    onClick={() => setValue(q)}
-                    className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-muted-foreground/35 bg-transparent px-3.5 py-2 text-[13px] font-semibold text-foreground cursor-pointer transition-colors duration-[120ms] hover:bg-card active:bg-card focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft"
-                  >
-                    {icebreakerLabels[q] ?? q}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
           {messages.map((m, i) => {
             const mine = m.personId === "you";
             const person = mine ? null : byId(m.personId);
@@ -172,35 +153,55 @@ function GroupMessages() {
             );
           })}
           {typingPerson && <TypingBubble person={typingPerson} showName />}
-          <div ref={endRef} />
+          <div ref={endRef} className="h-px w-full" aria-hidden />
         </div>
       </Screen>
 
-      <div className="ios-chrome ios-hairline-t fixed inset-x-0 z-20"
-        style={{ bottom: "max(calc(49px + env(safe-area-inset-bottom)), var(--ios-keyboard-inset, 0px))" }}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            send();
-          }}
-          className="mx-auto flex w-full max-w-[430px] items-center gap-2 px-5 py-3"
-        >
-          <input
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder="Message the crew"
-            aria-label="Message the crew"
-            className="h-12 flex-1 rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/30"
-          />
-          <button
-            type="submit"
-            aria-label="Send message"
-            disabled={!value.trim()}
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground disabled:opacity-100 disabled:bg-muted disabled:text-[var(--lo-green-faint)]"
+      <div
+        className="ios-chrome ios-hairline-t fixed inset-x-0 z-20"
+        style={{
+          bottom: "max(calc(49px + env(safe-area-inset-bottom)), var(--ios-keyboard-inset, 0px))",
+        }}
+      >
+        <div className="mx-auto w-full max-w-[430px]">
+          {unusedIcebreakers.length > 0 && (
+            <div className="no-scrollbar flex gap-2 overflow-x-auto px-5 pt-3">
+              {unusedIcebreakers.map((q) => (
+                <button
+                  key={q}
+                  type="button"
+                  onClick={() => setValue(q)}
+                  className="inline-flex shrink-0 items-center rounded-full border border-muted-foreground/35 bg-card px-3.5 py-2 text-[13px] font-semibold text-foreground transition-colors active:bg-background"
+                >
+                  {icebreakerLabels[q] ?? q}
+                </button>
+              ))}
+            </div>
+          )}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              send();
+            }}
+            className="flex items-center gap-2 px-5 py-3"
           >
-            <Send className="h-5 w-5" />
-          </button>
-        </form>
+            <input
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder="Message the crew"
+              aria-label="Message the crew"
+              className="h-12 flex-1 rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/30"
+            />
+            <button
+              type="submit"
+              aria-label="Send message"
+              disabled={!value.trim()}
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground disabled:opacity-100 disabled:bg-muted disabled:text-[var(--lo-green-faint)]"
+            >
+              <Send className="h-5 w-5" />
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import * as React from "react";
 import { Send } from "lucide-react";
-import { Avatar, Screen, ScreenHero, tapPill } from "@/components/app/Shell";
+import { Avatar, Screen, ScreenHero } from "@/components/app/Shell";
 import { TypingBubble } from "@/components/app/TypingBubble";
 import { useChatReply } from "@/hooks/useChatReply";
+import { useScrollToLatest } from "@/hooks/useScrollToLatest";
 import { byId, sharedWith } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -44,9 +45,14 @@ function DirectMessages() {
     eventWhen: `${primaryEvent.dateShort}, ${primaryEvent.time}`,
   });
 
-  React.useEffect(() => {
-    endRef.current?.scrollIntoView({ block: "end" });
-  }, [messages.length, typingPerson?.id]);
+  const shared = sharedWith(person, prefs);
+  const suggestions = [
+    `What pulled you toward ${(person.causes[0] ?? "volunteering").toLowerCase()}?`,
+    "Are you driving or taking transit?",
+    "Want to meet fifteen minutes early?",
+  ].filter((s) => !messages.some((m) => m.text === s));
+
+  useScrollToLatest(endRef, [messages.length, typingPerson?.id, suggestions.length]);
 
   const send = () => {
     const text = value.trim();
@@ -55,21 +61,13 @@ function DirectMessages() {
     setValue("");
   };
 
-  const shared = sharedWith(person, prefs);
-  const suggestions = [
-    `What pulled you toward ${(person.causes[0] ?? "volunteering").toLowerCase()}?`,
-    "Are you driving or taking transit?",
-    "Want to meet fifteen minutes early?",
-  ].filter((s) => !messages.some((m) => m.text === s));
-
   return (
-    <div className="flex min-h-screen flex-col bg-background pb-32">
+    <div className="flex min-h-screen flex-col bg-background pb-40">
       <Screen>
         <ScreenHero
           title={person.name}
           subtitle={person.formerRole}
           back
-          right={<Avatar src={person.photo} name={person.name} size={40} />}
         />
 
         <div className="rounded-2xl bg-primary-soft p-4 text-[13px] leading-relaxed">
@@ -104,45 +102,55 @@ function DirectMessages() {
               No messages yet. One line is enough to start.
             </p>
           )}
-          <div ref={endRef} />
         </div>
-
-        {suggestions.length > 0 && (
-          <div className="mt-5 flex flex-wrap gap-2">
-            {suggestions.map((s) => (
-              <button key={s} type="button" onClick={() => setValue(s)} className={tapPill}>
-                {s}
-              </button>
-            ))}
-          </div>
-        )}
+        <div ref={endRef} className="h-px w-full" aria-hidden />
       </Screen>
 
-      <div className="ios-chrome ios-hairline-t fixed inset-x-0 z-20"
-        style={{ bottom: "max(calc(49px + env(safe-area-inset-bottom)), var(--ios-keyboard-inset, 0px))" }}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            send();
-          }}
-          className="mx-auto flex w-full max-w-[430px] items-center gap-2 px-5 py-3"
-        >
-          <input
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder={`Message ${person.name.split(" ")[0]}`}
-            aria-label="Message"
-            className="h-12 flex-1 rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/30"
-          />
-          <button
-            type="submit"
-            aria-label="Send message"
-            disabled={!value.trim()}
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground disabled:opacity-100 disabled:bg-muted disabled:text-[var(--lo-green-faint)]"
+      <div
+        className="ios-chrome ios-hairline-t fixed inset-x-0 z-20"
+        style={{
+          bottom: "max(calc(49px + env(safe-area-inset-bottom)), var(--ios-keyboard-inset, 0px))",
+        }}
+      >
+        <div className="mx-auto w-full max-w-[430px]">
+          {suggestions.length > 0 && (
+            <div className="no-scrollbar flex gap-2 overflow-x-auto px-5 pt-3">
+              {suggestions.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setValue(s)}
+                  className="inline-flex shrink-0 items-center rounded-full border border-muted-foreground/35 bg-card px-3.5 py-2 text-[13px] font-semibold text-foreground transition-colors active:bg-background"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              send();
+            }}
+            className="flex items-center gap-2 px-5 py-3"
           >
-            <Send className="h-5 w-5" />
-          </button>
-        </form>
+            <input
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder={`Message ${person.name.split(" ")[0]}`}
+              aria-label="Message"
+              className="h-12 flex-1 rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/30"
+            />
+            <button
+              type="submit"
+              aria-label="Send message"
+              disabled={!value.trim()}
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground disabled:opacity-100 disabled:bg-muted disabled:text-[var(--lo-green-faint)]"
+            >
+              <Send className="h-5 w-5" />
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

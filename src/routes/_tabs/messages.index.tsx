@@ -1,8 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
-import { toast } from "sonner";
 import { Avatar, ListGroup, Screen, ScreenHero, tapPill, tapRow } from "@/components/app/Shell";
-import { sendMessage, useApp } from "@/lib/store";
+import { useApp } from "@/lib/store";
 
 export const Route = createFileRoute("/_tabs/messages/")({
   head: () => ({
@@ -23,24 +22,11 @@ export const Route = createFileRoute("/_tabs/messages/")({
 
 function MessagesHome() {
   const navigate = useNavigate();
-  const { state, update, matches, thread } = useApp();
+  const { matches, thread } = useApp();
   const groupMessages = thread("group");
   const groupLast = groupMessages[groupMessages.length - 1];
   const groupPeople = matches.slice(0, 3);
   const groupLabel = formatFirstNames(groupPeople.map((person) => person.name));
-
-  const greet = (personId: string, name: string) => {
-    update((s) => ({
-      ...s,
-      matchGreeted: [...new Set([...s.matchGreeted, personId])],
-    }));
-    sendMessage(update, personId, {
-      personId: "you",
-      text: "Hi! We got matched — are you going to the next volunteer day?",
-      time: "Just now",
-    });
-    toast.success(`${name.split(" ")[0]} knows you said hello`);
-  };
 
   return (
     <Screen>
@@ -81,18 +67,14 @@ function MessagesHome() {
         </button>
 
         {matches.map((m) => {
-          const greeted = state.matchGreeted.includes(m.id);
           const messages = thread(m.id);
           const last = messages[messages.length - 1];
-          const preview = last ? last.text : greeted ? "Say hello to continue." : "Say hello to start.";
+          const preview = last ? last.text : "Say hello to start.";
           return (
             <button
               key={m.id}
               type="button"
-              onClick={() => {
-                if (!greeted) greet(m.id, m.name);
-                navigate({ to: "/messages/$personId", params: { personId: m.id } });
-              }}
+              onClick={() => navigate({ to: "/messages/$personId", params: { personId: m.id } })}
               className={tapRow}
             >
               <Avatar src={m.photo} name={m.name} size={52} />
