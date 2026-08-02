@@ -205,11 +205,6 @@ function VolunteerDay() {
             >
               {completed ? "Write another reflection" : "Finish the shift and reflect"}
             </Button>
-            {!checkedIn && !completed && (
-              <p className="mt-2 text-center text-[12px] text-muted-foreground">
-                Check in first — the shift closes out from there.
-              </p>
-            )}
           </div>
         </div>
       )}

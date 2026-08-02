@@ -171,9 +171,6 @@ function Onboarding() {
             Get started
             <ArrowRight />
           </Button>
-          <p className="mt-3 text-center text-[13px] text-muted-foreground">
-            Eight short questions. About two minutes.
-          </p>
         </OnboardingFooter>
       </div>
     );

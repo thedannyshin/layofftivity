@@ -141,11 +141,6 @@ function ReflectionScreen() {
             <Check />
             Save reflection
           </Button>
-          {(!mood || !note.trim()) && (
-            <p className="mt-2 text-center text-[12px] text-muted-foreground">
-              Pick a mood and write a line or two to save.
-            </p>
-          )}
         </div>
       </div>
     </div>

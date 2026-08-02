@@ -131,11 +131,6 @@ function Rsvp() {
             </Button>
           </div>
         )}
-
-        <p className="mt-8 pb-10 text-center text-[13px] text-muted-foreground">
-          Layofftivity is a small-group volunteering community for people rebuilding routine after a
-          layoff.
-        </p>
       </Screen>
     </div>
   );

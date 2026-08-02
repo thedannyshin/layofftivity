@@ -110,12 +110,6 @@ function ContinueTogether() {
           <Link to="/home">Head home — see my volunteer history</Link>
         </Button>
       </div>
-
-      <p className="mt-4 text-center text-[13px] text-muted-foreground">
-        {daysCompleted === 1
-          ? "One day down. Showing up again next week is the whole idea."
-          : `${daysCompleted} volunteer days with the same people. That's how this works.`}
-      </p>
     </Screen>
   );
 }

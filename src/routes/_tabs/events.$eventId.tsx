@@ -157,9 +157,6 @@ function EventDetail() {
             <Button size="lg" className="w-full" onClick={join}>
               Join this activity
             </Button>
-            <p className="mt-2 text-center text-[12px] text-muted-foreground">
-              You can release your spot up until the day before.
-            </p>
           </div>
         </div>
       )}
