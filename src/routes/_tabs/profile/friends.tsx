@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageCircle } from "lucide-react";
 import { Avatar, Card, Chip, ListGroup, Screen, ScreenHero, SectionTitle, tapRow } from "@/components/app/Shell";
 import { Button } from "@/components/ui/button";
-import { sharedWith } from "@/lib/data";
 import { useApp } from "@/lib/store";
 
 export const Route = createFileRoute("/_tabs/profile/friends")({
@@ -23,20 +22,15 @@ export const Route = createFileRoute("/_tabs/profile/friends")({
 });
 
 function Friends() {
-  const { matches, guests, prefs, daysCompleted, thread } = useApp();
+  const { matches, guests } = useApp();
 
   return (
     <Screen>
-      <ScreenHero
-        title="People"
-        subtitle={`${matches.length + guests.length} in your group`}
-        back
-      />
+      <ScreenHero title="People" back />
 
-      <SectionTitle>Your matches</SectionTitle>
+      <SectionTitle>Matches</SectionTitle>
       <ListGroup>
         {matches.map((m) => {
-          const messages = thread(m.id).length;
           return (
             <Link
               key={m.id}
@@ -48,13 +42,7 @@ function Friends() {
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-bold">{m.name}</p>
                 <p className="truncate text-[13px] text-muted-foreground">
-                  {daysCompleted} day{daysCompleted === 1 ? "" : "s"} together,{" "}
-                  {messages ? `${messages} messages` : "no messages yet"}
-                </p>
-                <p className="mt-1.5 truncate text-[12px] text-muted-foreground">
-                  {(sharedWith(m, prefs).length ? sharedWith(m, prefs) : m.interests)
-                    .slice(0, 3)
-                    .join(", ")}
+                  {m.formerRole}
                 </p>
               </div>
               <MessageCircle className="h-5 w-5 shrink-0 text-muted-foreground" />
@@ -72,7 +60,7 @@ function Friends() {
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-bold">{g.name}</p>
                 <p className="truncate text-[13px] text-muted-foreground">
-                  Invited by you, {g.relation}
+                  {g.relation}
                 </p>
               </div>
               <Chip>Guest</Chip>
@@ -82,7 +70,7 @@ function Friends() {
       ) : (
         <Card>
           <p className="text-[15px] leading-relaxed text-muted-foreground">
-            No guests yet. You can bring one friend to any activity — they RSVP with a link.
+            No guests yet.
           </p>
           <Button asChild className="mt-4 w-full">
             <Link to="/invite">Invite a friend</Link>

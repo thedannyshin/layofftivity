@@ -5,7 +5,7 @@ import { Avatar, Screen, ScreenHero } from "@/components/app/Shell";
 import { TypingBubble } from "@/components/app/TypingBubble";
 import { useChatReply } from "@/hooks/useChatReply";
 import { useScrollToLatest } from "@/hooks/useScrollToLatest";
-import { byId, sharedWith } from "@/lib/data";
+import { byId } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/_tabs/messages/$personId")({
 function DirectMessages() {
   const { personId } = Route.useParams();
   const person = byId(personId);
-  const { update, thread, prefs, profile, initials, fullName, primaryEvent } = useApp();
+  const { update, thread, profile, initials, fullName, primaryEvent } = useApp();
   const messages = thread(personId);
   const [value, setValue] = React.useState("");
   const endRef = React.useRef<HTMLDivElement>(null);
@@ -45,7 +45,6 @@ function DirectMessages() {
     eventWhen: `${primaryEvent.dateShort}, ${primaryEvent.time}`,
   });
 
-  const shared = sharedWith(person, prefs);
   const suggestions = [
     `What pulled you toward ${(person.causes[0] ?? "volunteering").toLowerCase()}?`,
     "Are you driving or taking transit?",
@@ -66,14 +65,8 @@ function DirectMessages() {
       <Screen>
         <ScreenHero
           title={person.name}
-          subtitle={person.formerRole}
           back
         />
-
-        <div className="rounded-2xl bg-primary-soft p-4 text-[13px] leading-relaxed">
-          You were matched because you both chose{" "}
-          <span className="font-bold">{(shared.length ? shared : person.causes).join(", ")}</span>.
-        </div>
 
         <div className="mt-4 space-y-3">
           {messages.map((m, i) => {
@@ -97,11 +90,6 @@ function DirectMessages() {
             );
           })}
           {typingPerson && <TypingBubble person={typingPerson} />}
-          {messages.length === 0 && !typingPerson && (
-            <p className="py-6 text-center text-[14px] text-muted-foreground">
-              No messages yet. One line is enough to start.
-            </p>
-          )}
         </div>
         <div ref={endRef} className="h-px w-full" aria-hidden />
       </Screen>

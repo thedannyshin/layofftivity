@@ -72,23 +72,16 @@ function VolunteerDay() {
   return (
     <div className="min-h-screen bg-background pb-40">
       <Screen>
-        <ScreenHero
-          title={event.title}
-          subtitle={`${event.dateShort}, ${event.time}`}
-          back
-        />
+        <ScreenHero title={event.title} back />
 
         {!joined ? (
           <Card variant="accent">
             <p className="text-[16px] font-bold text-accent-foreground">
-              You haven't joined this activity yet
-            </p>
-            <p className="mt-1 text-[14px] text-accent-foreground">
-              Grab a spot and this page turns into your day-of guide.
+              You haven't joined this activity
             </p>
             <Button asChild size="lg" className="mt-4 w-full">
               <Link to="/events/$eventId" params={{ eventId: event.id }}>
-                See the details and join
+                View activity
               </Link>
             </Button>
           </Card>
@@ -103,14 +96,14 @@ function VolunteerDay() {
                   <p className="text-[16px] font-bold text-primary">You're checked in</p>
                 </div>
                 <p className="mt-2 text-[14px] text-muted-foreground">
-                  Your group knows you're here. Find them at {cohort.meetupSpot.split(",")[0]}.
+                  Checked in at {cohort.meetupSpot.split(",")[0]}.
                 </p>
               </>
             ) : (
               <>
-                <p className="text-[16px] font-bold">Check in when you arrive</p>
+                <p className="text-[16px] font-bold">Check in</p>
                 <p className="mt-1 text-[14px] text-muted-foreground">
-                  Checking in lets your group know you made it, so nobody stands around wondering.
+                  Confirm you've arrived so your group can see you're here.
                 </p>
                 <Button size="lg" className="mt-4 w-full" onClick={checkIn}>
                   Check in at {org.name.split(" ")[0]}
@@ -203,7 +196,7 @@ function VolunteerDay() {
               disabled={!checkedIn && !completed}
               onClick={finish}
             >
-              {completed ? "Write another reflection" : "Finish the shift and reflect"}
+              {completed ? "Add reflection" : "End shift"}
             </Button>
           </div>
         </div>

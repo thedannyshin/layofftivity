@@ -88,9 +88,9 @@ function Organizations() {
 
       {filtered.length === 0 && (
         <div className={`${staticCard} p-6 text-center`}>
-            <p className="text-[15px] font-semibold">Nothing matches that yet</p>
+            <p className="text-[15px] font-semibold">No results</p>
             <p className="mt-1 text-[13px] text-muted-foreground">
-              Try a different search to see all upcoming events.
+              Try a different search.
             </p>
             <Button
               variant="quiet"

@@ -133,7 +133,7 @@ function Home() {
             ))}
           </div>
           <span className="flex items-center gap-1 text-[14px] font-bold text-primary-foreground">
-            {joined ? "Open the day" : "See the details"} <ChevronRight className="h-4 w-4" />
+            {joined ? "View day" : "View details"} <ChevronRight className="h-4 w-4" />
           </span>
         </div>
       </Link>

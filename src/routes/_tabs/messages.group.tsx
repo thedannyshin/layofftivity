@@ -64,7 +64,6 @@ function GroupMessages() {
       <Screen>
         <ScreenHero
           title={groupLabel}
-          subtitle={`${matches.length + 1 + guests.length} people`}
           back
           right={
             <Link to="/invite" className={tapPill}>
@@ -113,7 +112,7 @@ function GroupMessages() {
               ))}
             </div>
             <span className="flex items-center gap-1 text-[14px] font-bold text-primary-foreground">
-              {joined ? "Open the day" : "See the details"} <ChevronRight className="h-4 w-4" />
+              {joined ? "View day" : "View details"} <ChevronRight className="h-4 w-4" />
             </span>
           </div>
         </Link>
@@ -181,7 +180,7 @@ function GroupMessages() {
             <input
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              placeholder="Message the crew"
+          placeholder="Message"
               aria-label="Message the crew"
               className="h-12 flex-1 rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/30"
             />

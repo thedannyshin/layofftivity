@@ -58,7 +58,7 @@ function Badges() {
         })}
       </div>
 
-      <SectionTitle>Still ahead</SectionTitle>
+      <SectionTitle>Locked</SectionTitle>
       <div className="grid grid-cols-3 gap-x-3 gap-y-5">
         {locked.map((b) => {
           const Icon = icons[b.icon as keyof typeof icons];
@@ -74,7 +74,7 @@ function Badges() {
       </div>
 
       <Button asChild size="lg" className="mt-6 w-full">
-        <Link to="/invite">Invite someone and earn Brought Someone</Link>
+        <Link to="/invite">Invite a friend</Link>
       </Button>
     </Screen>
   );

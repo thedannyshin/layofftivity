@@ -31,7 +31,7 @@ export const Route = createFileRoute("/_tabs/continue-together")({
 });
 
 function ContinueTogether() {
-  const { state, update, matches, guests, daysCompleted, primaryEvent } = useApp();
+  const { state, update, matches, guests, primaryEvent } = useApp();
   const navigate = useNavigate();
   const nextEvent =
     events.find((e) => e.orgId === primaryEvent.orgId && e.id !== primaryEvent.id) ??
@@ -59,7 +59,7 @@ function ContinueTogether() {
 
   return (
     <Screen>
-      <ScreenHero title="That's a wrap" subtitle={`Day ${daysCompleted} logged`} back />
+      <ScreenHero title="Shift complete" back />
 
       <div className={`${staticCardAccent} p-5 text-center`}>
         <div className="flex justify-center -space-x-2">
@@ -70,12 +70,6 @@ function ContinueTogether() {
             <Avatar key={g.id} name={g.name} size={38} />
           ))}
         </div>
-        <p className="mt-3 text-[17px] leading-snug font-bold text-accent-foreground">
-          Nobody has to leave yet
-        </p>
-        <p className="mt-1 text-[14px] text-muted-foreground">
-          The hour after a shift is where a group turns into friendships. Pick something small.
-        </p>
       </div>
 
       <div className="mt-5 space-y-3">
@@ -107,7 +101,7 @@ function ContinueTogether() {
 
       <div className="mt-6 space-y-3">
         <Button asChild variant="quiet" size="lg" className="w-full">
-          <Link to="/home">Head home — see my volunteer history</Link>
+          <Link to="/home">Back to home</Link>
         </Button>
       </div>
     </Screen>

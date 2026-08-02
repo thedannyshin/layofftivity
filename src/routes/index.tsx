@@ -181,7 +181,7 @@ function Onboarding() {
     step === steps.length - 1
       ? "Find my group"
       : step === 1 && !photo
-        ? "Skip for now"
+        ? "Skip"
         : "Continue";
 
   return (
@@ -205,7 +205,7 @@ function Onboarding() {
 
       <Screen className="flex flex-1 flex-col pb-[calc(6.5rem+env(safe-area-inset-bottom)+var(--ios-keyboard-inset,0px))] pt-2">
         {step === 0 && (
-          <Question title="What should we call you?" hint="Your group sees your first and last name.">
+          <Question title="What's your name?" hint="Shown to your group.">
             <label className="block">
               <span className="mb-1.5 block text-[13px] font-bold text-muted-foreground">
                 First name
@@ -240,7 +240,7 @@ function Onboarding() {
         {step === 1 && (
           <Question
             title="Add a profile photo"
-            hint="A face makes the first Saturday easier. You can skip and use your initials."
+            hint="Optional. You can skip this."
           >
             <div className={`${staticCard} flex flex-col items-center gap-4 p-6`}>
               <Avatar
@@ -252,7 +252,7 @@ function Onboarding() {
                 }
               />
               <p className="text-[13px] text-muted-foreground">
-                {photo ? "Looking good." : "Using your initials for now."}
+                {photo ? "Photo added" : "Optional"}
               </p>
             </div>
             <input
@@ -305,7 +305,7 @@ function Onboarding() {
         {step === 2 && (
           <Question
             title="Why are you here?"
-            hint="Choose as many as you'd like. You can change this later."
+            hint="Select all that apply."
           >
             {reasonOptions.map((r) => (
               <SelectRow
@@ -323,7 +323,7 @@ function Onboarding() {
         {step === 3 && (
           <Question
             title="When were you laid off?"
-            hint="This helps us group people at a similar point."
+            hint="Used for matching."
           >
             {laidOffOptions.map((o) => (
               <SelectRow key={o} selected={laidOff === o} title={o} onClick={() => setLaidOff(o)} />
@@ -334,7 +334,7 @@ function Onboarding() {
         {step === 4 && (
           <Question
             title="What do you enjoy?"
-            hint="Choose as many as you'd like. Shared interests make first conversations easier."
+            hint="Select all that apply."
           >
             <div className="flex flex-wrap gap-2">
               {interestOptions.map((o) => (
@@ -350,7 +350,7 @@ function Onboarding() {
         )}
 
         {step === 5 && (
-          <Question title="Which causes matter to you?" hint="Choose as many as you'd like.">
+          <Question title="Which causes matter to you?" hint="Select all that apply.">
             {causeOptions.map((o) => (
               <SelectRow
                 key={o}
@@ -366,7 +366,7 @@ function Onboarding() {
         {step === 6 && (
           <Question
             title="When can you show up?"
-            hint="Choose as many as you'd like. Consistency matters more than frequency."
+            hint="Select all that apply."
           >
             {availabilityOptions.map((o) => (
               <SelectRow
@@ -383,7 +383,7 @@ function Onboarding() {
         {step === 7 && (
           <Question
             title="Where are you based?"
-            hint="We only match groups within a short drive of each other."
+            hint="Used to match nearby groups."
           >
             {cityOptions.map((o) => (
               <SelectRow

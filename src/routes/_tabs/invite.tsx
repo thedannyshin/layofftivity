@@ -126,13 +126,8 @@ function InviteScreen() {
     <Screen>
       <ScreenHero
         title="Invite a friend"
-        subtitle={primaryEvent.title}
         back
       />
-
-      <p className="text-[15px] leading-relaxed text-muted-foreground">
-        Everyone in the group can bring one guest. They RSVP with a link — no account, no signup.
-      </p>
 
       {myInvites.length > 0 && (
         <>
@@ -278,7 +273,7 @@ function InviteScreen() {
         </>
       ) : (
         <p className="mt-6 text-center text-[13px] text-muted-foreground">
-          One guest per person keeps the group small. Cancel your invitation to invite someone else.
+          You've already sent an invitation. Cancel it to invite someone else.
         </p>
       )}
     </Screen>

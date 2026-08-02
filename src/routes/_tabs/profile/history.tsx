@@ -22,24 +22,20 @@ export const Route = createFileRoute("/_tabs/profile/history")({
 });
 
 function HistoryScreen() {
-  const { state, hours, daysCompleted } = useApp();
+  const { state, daysCompleted } = useApp();
   const items = [...state.completed].reverse();
 
   return (
     <Screen>
-      <ScreenHero
-        title="Volunteer history"
-        subtitle={`${daysCompleted} shift${daysCompleted === 1 ? "" : "s"}, ${hours} hours`}
-        back
-      />
+      <ScreenHero title="Volunteer history" back />
 
       {daysCompleted === 0 ? (
         <Card>
           <p className="text-[15px] leading-relaxed text-muted-foreground">
-            No shifts yet. Finished shifts land on this timeline.
+            No volunteer history yet.
           </p>
           <Button asChild className="mt-4 w-full">
-            <Link to="/organizations">Find your first activity</Link>
+            <Link to="/organizations">Browse activities</Link>
           </Button>
         </Card>
       ) : (

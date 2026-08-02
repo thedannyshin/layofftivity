@@ -79,7 +79,7 @@ function Rsvp() {
           {invite.name.split(" ")[0] || "Hi"}, {host} invited you to volunteer.
         </h1>
         <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-          You'll join as a guest for one activity. No account, no signup — just say yes or no.
+          No account required.
         </p>
 
         <Card className="mt-6 space-y-2">
@@ -106,28 +106,28 @@ function Rsvp() {
               Meet at {event.location}, {event.time}. Wear closed-toe shoes.
             </p>
             <Button variant="quiet" className="mt-4 w-full" onClick={() => respond("declined")}>
-              Actually, I can't make it
+              Decline
             </Button>
           </Card>
         ) : invite.status === "declined" ? (
           <Card className="mt-6">
             <p className="text-[16px] font-bold">You declined this invitation</p>
             <p className="mt-1 text-[14px] text-muted-foreground">
-              {host.split(" ")[0]} has been let know. You can still change your mind.
+              You can change your response anytime.
             </p>
             <Button className="mt-4 w-full" onClick={() => respond("accepted")}>
-              Count me in after all
+              Accept invitation
             </Button>
           </Card>
         ) : (
           <div className="mt-6 space-y-3">
             <Button size="lg" className="w-full" onClick={() => respond("accepted")}>
               <Check />
-              Yes, I'll be there
+              Accept
             </Button>
             <Button variant="quiet" size="lg" className="w-full" onClick={() => respond("declined")}>
               <X />
-              Can't make it
+              Decline
             </Button>
           </div>
         )}

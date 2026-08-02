@@ -32,7 +32,6 @@ function Profile() {
     <Screen>
       <ScreenHero
         title={fullName}
-        subtitle={state.onboarding.location || undefined}
         right={<Avatar src={profile.photo} name={fullName} initials={initials} size={56} />}
       />
 

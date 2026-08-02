@@ -56,7 +56,7 @@ function EventDetail() {
   return (
     <div className="min-h-screen bg-background pb-40">
       <Screen>
-        <ScreenHero title={event.title} subtitle={event.dateShort} back />
+        <ScreenHero title={event.title} back />
 
         <CoverPhoto cover={org.cover} alt={org.name} className="h-44 rounded-2xl" />
 
@@ -123,7 +123,7 @@ function EventDetail() {
             </div>
           ) : (
             <p className="text-[15px] text-muted-foreground">
-              {event.spotsFilled} signed up. Join to see your line.
+              {event.spotsFilled} going
             </p>
           )}
         </Card>
@@ -141,10 +141,10 @@ function EventDetail() {
         {joined && (
           <div className="mt-8 space-y-3">
             <Button asChild size="lg" className="w-full">
-              <Link to="/volunteer-day">Open the volunteer day</Link>
+              <Link to="/volunteer-day">View volunteer day</Link>
             </Button>
             <Button variant="quiet" size="lg" className="w-full" onClick={leave}>
-              Can't make it — release my spot
+              Can't make it
             </Button>
           </div>
         )}

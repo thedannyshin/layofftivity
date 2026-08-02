@@ -32,7 +32,6 @@ function MessagesHome() {
     <Screen>
       <ScreenHero
         title="Messages"
-        subtitle="Message 1:1 or in your group"
         right={
           <Link to="/invite" className={tapPill}>
             Add person
@@ -60,7 +59,7 @@ function MessagesHome() {
           <div className="min-w-0 flex-1 text-left">
             <p className="truncate text-[15px] font-extrabold">{groupLabel}</p>
             <p className="mt-0.5 line-clamp-1 text-[13px] text-muted-foreground">
-              {groupLast ? groupLast.text : "Start with an icebreaker below."}
+              {groupLast ? groupLast.text : "No messages"}
             </p>
           </div>
           <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground" />
@@ -69,7 +68,7 @@ function MessagesHome() {
         {matches.map((m) => {
           const messages = thread(m.id);
           const last = messages[messages.length - 1];
-          const preview = last ? last.text : "Say hello to start.";
+          const preview = last ? last.text : "No messages";
           return (
             <button
               key={m.id}

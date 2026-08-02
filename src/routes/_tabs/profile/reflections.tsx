@@ -27,7 +27,6 @@ function Reflections() {
     <Screen>
       <ScreenHero
         title="Reflect"
-        subtitle="Private to you"
         right={
           <Link
             to="/reflection"
@@ -41,7 +40,7 @@ function Reflections() {
       {state.reflections.length === 0 ? (
         <Card>
           <p className="text-[15px] leading-relaxed text-muted-foreground">
-            No reflections yet. After your first shift, take two minutes to write down how it felt.
+            No reflections yet.
           </p>
         </Card>
       ) : (

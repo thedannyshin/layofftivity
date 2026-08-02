@@ -55,7 +55,7 @@ function ReflectionScreen() {
   return (
     <div className="min-h-screen bg-background pb-40">
       <Screen>
-        <ScreenHero title="How was today?" subtitle="Private to you" back />
+        <ScreenHero title="Reflection" back />
 
         <SectionTitle>Mood</SectionTitle>
         <div className="flex flex-wrap gap-2">
@@ -81,15 +81,15 @@ function ReflectionScreen() {
           value={note}
           onChange={(e) => setNote(e.target.value)}
           rows={6}
-          placeholder="What stayed with you from this morning?"
+          placeholder="Write about your shift"
           className="w-full resize-none rounded-2xl bg-card p-4 text-[16px] leading-relaxed outline-none focus:ring-2 focus:ring-primary/30"
         />
 
-        <SectionTitle>One thing you're grateful for</SectionTitle>
+        <SectionTitle>Gratitude</SectionTitle>
         <input
           value={gratitude}
           onChange={(e) => setGratitude(e.target.value)}
-          placeholder="Someone, something small, anything"
+          placeholder="Optional"
           className="h-12 w-full rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/30"
         />
 
@@ -125,10 +125,8 @@ function ReflectionScreen() {
 
         {state.reflections.length > 0 && (
           <p className="mt-8 text-[13px] text-muted-foreground">
-            {state.reflections.length} earlier reflection
-            {state.reflections.length === 1 ? "" : "s"} saved.{" "}
             <Link to="/profile/reflections" className="font-bold text-primary underline">
-              Read them
+              View past reflections
             </Link>
           </p>
         )}

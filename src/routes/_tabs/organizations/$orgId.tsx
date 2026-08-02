@@ -27,7 +27,7 @@ function OrgDetail() {
 
   return (
     <Screen>
-      <ScreenHero title={org.name} subtitle={org.cause} back />
+      <ScreenHero title={org.name} back />
 
       <CoverPhoto cover={org.cover} alt={org.name} className="h-44 rounded-2xl" />
       <div className="mt-3">
@@ -88,8 +88,8 @@ function OrgDetail() {
         </Deck>
       ) : (
         <Card>
-          <p className="text-[15px] font-semibold">No open shifts right now</p>
-          <p className="mt-1 text-[13px] text-muted-foreground">New dates post Mondays.</p>
+          <p className="text-[15px] font-semibold">No open shifts</p>
+          <p className="mt-1 text-[13px] text-muted-foreground">Check back later for new dates.</p>
           <Button asChild variant="quiet" className="mt-3">
             <Link to="/organizations">Browse other organizations</Link>
           </Button>
