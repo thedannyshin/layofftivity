@@ -1,6 +1,6 @@
 import { Link, useRouter } from "@tanstack/react-router";
 import { ArrowLeft, ChevronDown, ChevronRight, ChevronUp } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -91,9 +91,9 @@ export function BackButton({ onClick, className }: { onClick: () => void; classN
 export function ScreenHero({
   title,
   eyebrow,
+  subtitle,
   back,
   right,
-  sticky,
   onTitleClick,
 }: {
   title: string;
@@ -101,50 +101,133 @@ export function ScreenHero({
   subtitle?: string;
   back?: boolean;
   right?: ReactNode;
-  /** Sticky header with back button. Defaults to true when `back` is set. */
+  /** @deprecated Large titles always collapse into a compact iOS-style bar on scroll. */
   sticky?: boolean;
   /** Optional tap handler for the title (e.g. hidden reset gesture). */
   onTitleClick?: () => void;
 }) {
   const router = useRouter();
-  const isSticky = sticky ?? !!back;
-  return (
-    <header
-      className={cn(
-        "-mx-5 mb-4 px-5",
-        isSticky
-          ? "sticky top-0 z-20 bg-background pt-[max(0.75rem,env(safe-area-inset-top))] pb-3"
-          : "pt-[max(1.5rem,env(safe-area-inset-top))] pb-2",
-      )}
-    >
-      <div className="flex min-h-11 items-center gap-2">
-        {back && (
-          <BackButton onClick={() => router.history.back()} className="shrink-0" />
+  const barRef = useRef<HTMLDivElement>(null);
+  const largeTitleRef = useRef<HTMLDivElement>(null);
+  const [compact, setCompact] = useState(false);
+  const alwaysShowBar = !!back || !!right;
+
+  useEffect(() => {
+    const titleEl = largeTitleRef.current;
+    if (!titleEl) return;
+
+    const update = () => {
+      const titleTop = titleEl.getBoundingClientRect().top;
+      if (alwaysShowBar && barRef.current) {
+        setCompact(titleTop <= barRef.current.getBoundingClientRect().bottom - 2);
+        return;
+      }
+      // Approx. status-bar clearance when no persistent nav chrome.
+      setCompact(titleTop < 52);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [title, alwaysShowBar]);
+
+  const compactLabel = onTitleClick ? (
+    <button type="button" onClick={onTitleClick} className="max-w-full">
+      <span className="block truncate text-center text-[17px] font-semibold tracking-tight">
+        {title}
+      </span>
+    </button>
+  ) : (
+    <p className="truncate text-center text-[17px] font-semibold tracking-tight">{title}</p>
+  );
+
+  const barInner = (
+    <div className="relative mx-auto flex h-11 w-full max-w-[430px] items-center px-5">
+      <div className="relative z-10 flex w-11 shrink-0 items-center justify-start">
+        {back && <BackButton onClick={() => router.history.back()} />}
+      </div>
+      <div
+        className={cn(
+          "absolute inset-x-16 flex items-center justify-center transition-opacity duration-200",
+          compact ? "opacity-100" : "opacity-0",
         )}
-        <div className="min-w-0 flex-1">
-          {eyebrow && (
-            <p className="text-[13px] font-semibold text-muted-foreground">{eyebrow}</p>
+      >
+        {compactLabel}
+      </div>
+      <div className="relative z-10 ml-auto flex min-w-11 shrink-0 items-center justify-end">
+        {right}
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      {alwaysShowBar ? (
+        <div
+          ref={barRef}
+          className={cn(
+            "sticky top-0 z-20 -mx-5 bg-background pt-[max(0.5rem,env(safe-area-inset-top))] transition-[box-shadow] duration-200",
+            compact &&
+              "shadow-[inset_0_-0.5px_0_0_color-mix(in_oklab,var(--color-foreground)_14%,transparent)]",
           )}
+        >
+          {barInner}
+        </div>
+      ) : (
+        <div
+          className={cn(
+            "pointer-events-none fixed inset-x-0 top-0 z-30 bg-background pt-[max(0.5rem,env(safe-area-inset-top))] transition-[opacity,transform] duration-200 ease-out",
+            compact
+              ? "pointer-events-auto translate-y-0 opacity-100 shadow-[inset_0_-0.5px_0_0_color-mix(in_oklab,var(--color-foreground)_14%,transparent)]"
+              : "-translate-y-1 opacity-0",
+          )}
+          aria-hidden={!compact}
+        >
+          {barInner}
+        </div>
+      )}
+
+      <div
+        className={cn(
+          "mb-4",
+          alwaysShowBar ? "pt-1" : "pt-[max(1.5rem,env(safe-area-inset-top))]",
+        )}
+      >
+        {eyebrow && (
+          <p className="text-[13px] font-semibold text-muted-foreground">{eyebrow}</p>
+        )}
+        <div ref={largeTitleRef}>
           {onTitleClick ? (
             <button
               type="button"
               onClick={onTitleClick}
               className={cn(
-                "lo-display block w-full truncate whitespace-nowrap text-left text-[26px] leading-tight",
+                "lo-display block w-full truncate whitespace-nowrap text-left text-[34px] leading-[1.1]",
                 eyebrow && "mt-1",
               )}
             >
               {title}
             </button>
           ) : (
-            <h1 className={cn("lo-display truncate whitespace-nowrap text-[26px] leading-tight", eyebrow && "mt-1")}>
+            <h1
+              className={cn(
+                "lo-display truncate whitespace-nowrap text-[34px] leading-[1.1]",
+                eyebrow && "mt-1",
+              )}
+            >
               {title}
             </h1>
           )}
         </div>
-        {right}
+        {subtitle && (
+          <p className="mt-1 truncate text-[15px] text-muted-foreground">{subtitle}</p>
+        )}
       </div>
-    </header>
+    </>
   );
 }
 
