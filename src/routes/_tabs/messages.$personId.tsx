@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import * as React from "react";
 import { Send } from "lucide-react";
 import { Avatar, Screen, ScreenHero, tapPill } from "@/components/app/Shell";
+import { TypingBubble } from "@/components/app/TypingBubble";
+import { useChatReply } from "@/hooks/useChatReply";
 import { byId, sharedWith } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -29,14 +31,22 @@ export const Route = createFileRoute("/_tabs/messages/$personId")({
 function DirectMessages() {
   const { personId } = Route.useParams();
   const person = byId(personId);
-  const { update, thread, prefs, profile, initials, fullName } = useApp();
+  const { update, thread, prefs, profile, initials, fullName, primaryEvent } = useApp();
   const messages = thread(personId);
   const [value, setValue] = React.useState("");
   const endRef = React.useRef<HTMLDivElement>(null);
+  const { typingPerson } = useChatReply({
+    threadKey: personId,
+    messages,
+    candidates: [person],
+    userFirstName: profile.firstName,
+    eventTitle: primaryEvent.title,
+    eventWhen: `${primaryEvent.dateShort}, ${primaryEvent.time}`,
+  });
 
   React.useEffect(() => {
     endRef.current?.scrollIntoView({ block: "end" });
-  }, [messages.length]);
+  }, [messages.length, typingPerson?.id]);
 
   const send = () => {
     const text = value.trim();
@@ -50,7 +60,7 @@ function DirectMessages() {
     `What pulled you toward ${(person.causes[0] ?? "volunteering").toLowerCase()}?`,
     "Are you driving or taking transit?",
     "Want to meet fifteen minutes early?",
-  ];
+  ].filter((s) => !messages.some((m) => m.text === s));
 
   return (
     <div className="flex min-h-screen flex-col bg-background pb-32">
@@ -88,7 +98,8 @@ function DirectMessages() {
               </div>
             );
           })}
-          {messages.length === 0 && (
+          {typingPerson && <TypingBubble person={typingPerson} />}
+          {messages.length === 0 && !typingPerson && (
             <p className="py-6 text-center text-[14px] text-muted-foreground">
               No messages yet. One line is enough to start.
             </p>
@@ -96,13 +107,15 @@ function DirectMessages() {
           <div ref={endRef} />
         </div>
 
-        <div className="mt-5 flex flex-wrap gap-2">
-          {suggestions.map((s) => (
-            <button key={s} type="button" onClick={() => setValue(s)} className={tapPill}>
-              {s}
-            </button>
-          ))}
-        </div>
+        {suggestions.length > 0 && (
+          <div className="mt-5 flex flex-wrap gap-2">
+            {suggestions.map((s) => (
+              <button key={s} type="button" onClick={() => setValue(s)} className={tapPill}>
+                {s}
+              </button>
+            ))}
+          </div>
+        )}
       </Screen>
 
       <div className="ios-chrome ios-hairline-t fixed inset-x-0 z-20"

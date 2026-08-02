@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { CalendarDays, ChevronRight, MapPin, Send } from "lucide-react";
 import { Avatar, Screen, ScreenHero, tapPill } from "@/components/app/Shell";
+import { TypingBubble } from "@/components/app/TypingBubble";
+import { useChatReply } from "@/hooks/useChatReply";
 import { byId, icebreakers, orgById } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -40,10 +42,19 @@ function GroupMessages() {
   const joined = isJoined(primaryEvent.id);
   const [value, setValue] = React.useState("");
   const endRef = React.useRef<HTMLDivElement>(null);
+  const { typingPerson } = useChatReply({
+    threadKey: "group",
+    messages,
+    candidates: matches,
+    userFirstName: profile.firstName,
+    isGroup: true,
+    eventTitle: primaryEvent.title,
+    eventWhen: `${primaryEvent.dateShort}, ${primaryEvent.time}`,
+  });
 
   React.useEffect(() => {
     endRef.current?.scrollIntoView({ block: "end" });
-  }, [messages.length]);
+  }, [messages.length, typingPerson?.id]);
 
   const send = () => {
     const text = value.trim();
@@ -51,6 +62,10 @@ function GroupMessages() {
     sendMessage(update, "group", { personId: "you", text, time: "Just now" });
     setValue("");
   };
+
+  const unusedIcebreakers = icebreakers
+    .slice(0, 4)
+    .filter((q) => !messages.some((m) => m.text === q));
 
   return (
     <div className="flex min-h-screen flex-col bg-background pb-32">
@@ -112,11 +127,11 @@ function GroupMessages() {
         </Link>
 
         <div className="mt-4 space-y-3">
-          {messages.length === 0 && (
+          {unusedIcebreakers.length > 0 && (
             <div>
               <p className="text-[14px] font-semibold text-muted-foreground">Icebreaker</p>
               <div className="mt-3 flex flex-wrap gap-2">
-                {icebreakers.slice(0, 4).map((q) => (
+                {unusedIcebreakers.map((q) => (
                   <button
                     key={q}
                     type="button"
@@ -156,6 +171,7 @@ function GroupMessages() {
               </div>
             );
           })}
+          {typingPerson && <TypingBubble person={typingPerson} showName />}
           <div ref={endRef} />
         </div>
       </Screen>
