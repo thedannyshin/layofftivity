@@ -1,8 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { BookOpen, CalendarDays, Car, ChevronRight, MapPin, Medal, Repeat, Sunrise, UserPlus } from "lucide-react";
+import { useRef } from "react";
 import { Avatar, Card, Chip, ListGroup, Ring, Screen, ScreenHero, SectionTitle, staticCard, staticCardAccent, tapRow } from "@/components/app/Shell";
 import { orgById } from "@/lib/data";
-import { useApp } from "@/lib/store";
+import { useApp, useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_tabs/home")({
@@ -36,6 +37,8 @@ const badgeIcons = {
 };
 
 function Home() {
+  const navigate = useNavigate();
+  const { reset } = useStore();
   const app = useApp();
   const {
     state,
@@ -49,6 +52,18 @@ function Home() {
   const org = orgById(primaryEvent.orgId);
   const joined = isJoined(primaryEvent.id);
   const earnedBadges = badges.filter((b) => b.earned);
+  const helloTaps = useRef({ count: 0, at: 0 });
+
+  const onHelloTap = () => {
+    const now = Date.now();
+    if (now - helloTaps.current.at > 700) helloTaps.current.count = 0;
+    helloTaps.current.at = now;
+    helloTaps.current.count += 1;
+    if (helloTaps.current.count < 3) return;
+    helloTaps.current.count = 0;
+    reset();
+    navigate({ to: "/" });
+  };
 
   const goals = [
     {
@@ -74,7 +89,10 @@ function Home() {
 
   return (
     <Screen>
-      <ScreenHero title={`Hello${profile.firstName ? `, ${profile.firstName}` : ""}`} />
+      <ScreenHero
+        title={`Hello${profile.firstName ? `, ${profile.firstName}` : ""}`}
+        onTitleClick={onHelloTap}
+      />
 
       <SectionTitle>Upcoming volunteer day</SectionTitle>
       <Link

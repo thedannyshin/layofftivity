@@ -11,7 +11,6 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { StoreProvider } from "../lib/store";
-import { ResetButton } from "@/components/app/ResetButton";
 import { useIosKeyboardInset } from "@/hooks/useIosKeyboardInset";
 
 function NotFoundComponent() {
@@ -155,7 +154,6 @@ function RootComponent() {
       <StoreProvider>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
-        <ResetButton />
       </StoreProvider>
     </QueryClientProvider>
   );

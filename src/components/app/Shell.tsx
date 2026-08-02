@@ -94,6 +94,7 @@ export function ScreenHero({
   back,
   right,
   sticky,
+  onTitleClick,
 }: {
   title: string;
   eyebrow?: string;
@@ -102,6 +103,8 @@ export function ScreenHero({
   right?: ReactNode;
   /** Sticky header with back button. Defaults to true when `back` is set. */
   sticky?: boolean;
+  /** Optional tap handler for the title (e.g. hidden reset gesture). */
+  onTitleClick?: () => void;
 }) {
   const router = useRouter();
   const isSticky = sticky ?? !!back;
@@ -122,9 +125,22 @@ export function ScreenHero({
           {eyebrow && (
             <p className="text-[13px] font-semibold text-muted-foreground">{eyebrow}</p>
           )}
-          <h1 className={cn("lo-display truncate whitespace-nowrap text-[26px] leading-tight", eyebrow && "mt-1")}>
-            {title}
-          </h1>
+          {onTitleClick ? (
+            <button
+              type="button"
+              onClick={onTitleClick}
+              className={cn(
+                "lo-display block w-full truncate whitespace-nowrap text-left text-[26px] leading-tight",
+                eyebrow && "mt-1",
+              )}
+            >
+              {title}
+            </button>
+          ) : (
+            <h1 className={cn("lo-display truncate whitespace-nowrap text-[26px] leading-tight", eyebrow && "mt-1")}>
+              {title}
+            </h1>
+          )}
         </div>
         {right}
       </div>

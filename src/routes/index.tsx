@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
 import { ArrowRight, Camera, Check, ImagePlus, MapPin, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Avatar, BackButton, Screen, selectRow, staticCard, tapPill, tapPillActive } from "@/components/app/Shell";
+import { Avatar, BackButton, Screen, selectRow, staticCard } from "@/components/app/Shell";
 import {
   availabilityOptions,
   causeOptions,
@@ -90,6 +90,10 @@ function Onboarding() {
     if (hydrated && state.onboarding.complete) navigate({ to: "/home", replace: true });
   }, [hydrated, state.onboarding.complete, navigate]);
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step]);
+
   const toggle = (list: string[], set: (v: string[]) => void, value: string) =>
     set(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
 
@@ -130,257 +134,298 @@ function Onboarding() {
     navigate({ to: "/home" });
   };
 
+  const footerPadding =
+    "calc(env(safe-area-inset-bottom) + var(--ios-keyboard-inset, 0px))";
+
   if (step === -1) {
     return (
-      <div className="flex min-h-screen flex-col bg-background">
-        <Screen className="flex flex-1 flex-col justify-between pt-16">
-          <div>
-            <div className="lo-wordmark text-[40px] text-primary">Layofftivity</div>
-            <h1 className="lo-display mt-8 text-[34px] leading-[1.15]">
-              Belonging comes from showing up with the same people.
-            </h1>
-            <p className="mt-4 text-[16px] leading-relaxed text-muted-foreground">
-              Layofftivity places you in a small group of former tech professionals who volunteer
-              together, week after week. Not a job board. Not networking. Just a standing reason to
-              be somewhere with people who get it.
-            </p>
-            <ul className="mt-8 space-y-3">
-              {[
-                "A small group, one cause, the same morning each week",
-                "Meet your matches before your first volunteer day",
-                "No résumés, no pitches, no small talk about titles",
-              ].map((line) => (
-                <li key={line} className="flex gap-3">
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary">
-                    <Check className="h-3 w-3 text-primary-foreground" strokeWidth={3} />
-                  </span>
-                  <span className="text-[15px] text-foreground">{line}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="pt-12 pb-4">
-            <Button size="lg" className="w-full" onClick={() => setStep(0)}>
-              Get started
-              <ArrowRight />
-            </Button>
-            <p className="mt-3 text-center text-[13px] text-muted-foreground">
-              Eight short questions. About two minutes.
-            </p>
-          </div>
+      <div className="flex min-h-dvh flex-col bg-background">
+        <Screen className="flex flex-1 flex-col pb-[calc(8.5rem+env(safe-area-inset-bottom))] pt-[max(2.5rem,env(safe-area-inset-top))]">
+          <div className="lo-wordmark text-[40px] text-primary">Layofftivity</div>
+          <h1 className="lo-display mt-8 text-[34px] leading-[1.15]">
+            Belonging comes from showing up with the same people.
+          </h1>
+          <p className="mt-4 text-[16px] leading-relaxed text-muted-foreground">
+            Layofftivity places you in a small group of former tech professionals who volunteer
+            together, week after week. Not a job board. Not networking. Just a standing reason to
+            be somewhere with people who get it.
+          </p>
+          <ul className="mt-8 space-y-3">
+            {[
+              "A small group, one cause, the same morning each week",
+              "Meet your matches before your first volunteer day",
+              "No résumés, no pitches, no small talk about titles",
+            ].map((line) => (
+              <li key={line} className="flex gap-3">
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary">
+                  <Check className="h-3 w-3 text-primary-foreground" strokeWidth={3} />
+                </span>
+                <span className="text-[15px] text-foreground">{line}</span>
+              </li>
+            ))}
+          </ul>
         </Screen>
+
+        <OnboardingFooter style={{ paddingBottom: footerPadding }}>
+          <Button size="lg" className="w-full" onClick={() => setStep(0)}>
+            Get started
+            <ArrowRight />
+          </Button>
+          <p className="mt-3 text-center text-[13px] text-muted-foreground">
+            Eight short questions. About two minutes.
+          </p>
+        </OnboardingFooter>
       </div>
     );
   }
 
+  const progress = (step + 1) / steps.length;
+  const ctaLabel =
+    step === steps.length - 1
+      ? "Find my group"
+      : step === 1 && !photo
+        ? "Skip for now"
+        : "Continue";
+
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <Screen className="flex flex-1 flex-col pt-4">
-        <div className="pt-2">
+    <div className="flex min-h-dvh flex-col bg-background">
+      <header className="ios-chrome ios-hairline-b sticky top-0 z-20 pt-[max(0.5rem,env(safe-area-inset-top))]">
+        <div className="mx-auto flex w-full max-w-[430px] items-center gap-3 px-5 pb-3">
           <BackButton onClick={() => setStep((s) => s - 1)} />
+          <div className="min-w-0 flex-1">
+            <p className="text-[13px] font-semibold text-muted-foreground">
+              {step + 1} of {steps.length}
+            </p>
+            <div className="mt-2 h-1 overflow-hidden rounded-full bg-secondary">
+              <div
+                className="h-full rounded-full bg-primary transition-[width] duration-200 ease-out"
+                style={{ width: `${progress * 100}%` }}
+              />
+            </div>
+          </div>
         </div>
+      </header>
 
-        <div className="flex-1 pb-32">
-          {step === 0 && (
-            <Question title="What should we call you?" hint="Your group sees your first and last name.">
-              <label className="block">
-                <span className="mb-1.5 block text-[13px] font-bold text-muted-foreground">
-                  First name
-                </span>
-                <input
-                  value={firstName}
-                  onChange={(e) => setFirstName(formatNamePart(e.target.value))}
-                  autoComplete="given-name"
-                  placeholder="Alex"
-                  className="h-12 w-full rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/40"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-1.5 block text-[13px] font-bold text-muted-foreground">
-                  Last name
-                </span>
-                <input
-                  value={lastName}
-                  onChange={(e) => setLastName(formatNamePart(e.target.value))}
-                  autoComplete="family-name"
-                  placeholder="Rivera"
-                  className="h-12 w-full rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/40"
-                />
-              </label>
-            </Question>
-          )}
+      <Screen className="flex flex-1 flex-col pb-[calc(6.5rem+env(safe-area-inset-bottom)+var(--ios-keyboard-inset,0px))] pt-2">
+        {step === 0 && (
+          <Question title="What should we call you?" hint="Your group sees your first and last name.">
+            <label className="block">
+              <span className="mb-1.5 block text-[13px] font-bold text-muted-foreground">
+                First name
+              </span>
+              <input
+                value={firstName}
+                onChange={(e) => setFirstName(formatNamePart(e.target.value))}
+                autoComplete="given-name"
+                autoCapitalize="words"
+                enterKeyHint="next"
+                placeholder="Alex"
+                className="h-12 w-full rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/40"
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1.5 block text-[13px] font-bold text-muted-foreground">
+                Last name
+              </span>
+              <input
+                value={lastName}
+                onChange={(e) => setLastName(formatNamePart(e.target.value))}
+                autoComplete="family-name"
+                autoCapitalize="words"
+                enterKeyHint="done"
+                placeholder="Rivera"
+                className="h-12 w-full rounded-xl bg-card px-4 text-[16px] outline-none focus:ring-2 focus:ring-primary/40"
+              />
+            </label>
+          </Question>
+        )}
 
-          {step === 1 && (
-            <Question
-              title="Add a profile photo"
-              hint="A face makes the first Saturday easier. You can skip and use your initials."
+        {step === 1 && (
+          <Question
+            title="Add a profile photo"
+            hint="A face makes the first Saturday easier. You can skip and use your initials."
+          >
+            <div className={`${staticCard} flex flex-col items-center gap-4 p-6`}>
+              <Avatar
+                src={photo}
+                name={`${firstName} ${lastName}`.trim() || "You"}
+                size={112}
+                initials={
+                  (firstName.trim()[0] ?? "") + (lastName.trim()[0] ?? "") || "?"
+                }
+              />
+              <p className="text-[13px] text-muted-foreground">
+                {photo ? "Looking good." : "Using your initials for now."}
+              </p>
+            </div>
+            <input
+              ref={uploadRef}
+              type="file"
+              accept="image/*"
+              className="sr-only"
+              onChange={onPickPhoto}
+            />
+            <input
+              ref={cameraRef}
+              type="file"
+              accept="image/*"
+              capture="user"
+              className="sr-only"
+              onChange={onPickPhoto}
+            />
+            <Button
+              variant="soft"
+              size="lg"
+              className="w-full"
+              onClick={() => uploadRef.current?.click()}
             >
-              <div className={`${staticCard} flex flex-col items-center gap-4 p-6`}>
-                <Avatar
-                  src={photo}
-                  name={`${firstName} ${lastName}`.trim() || "You"}
-                  size={112}
-                  initials={
-                    (firstName.trim()[0] ?? "") + (lastName.trim()[0] ?? "") || "?"
-                  }
-                />
-                <p className="text-[13px] text-muted-foreground">
-                  {photo ? "Looking good." : "Using your initials for now."}
-                </p>
-              </div>
-              <input
-                ref={uploadRef}
-                type="file"
-                accept="image/*"
-                className="sr-only"
-                onChange={onPickPhoto}
-              />
-              <input
-                ref={cameraRef}
-                type="file"
-                accept="image/*"
-                capture="user"
-                className="sr-only"
-                onChange={onPickPhoto}
-              />
-              <Button size="lg" className="w-full" onClick={() => uploadRef.current?.click()}>
-                <ImagePlus />
-                Upload a photo
-              </Button>
+              <ImagePlus />
+              Upload a photo
+            </Button>
+            <Button
+              variant="soft"
+              size="lg"
+              className="w-full"
+              onClick={() => cameraRef.current?.click()}
+            >
+              <Camera />
+              Take a photo
+            </Button>
+            {photo && (
               <Button
-                variant="soft"
+                variant="quiet"
                 size="lg"
                 className="w-full"
-                onClick={() => cameraRef.current?.click()}
+                onClick={() => setPhoto(null)}
               >
-                <Camera />
-                Take a photo
+                <Trash2 />
+                Remove photo
               </Button>
-              {photo && (
-                <Button
-                  variant="quiet"
-                  size="lg"
-                  className="w-full"
-                  onClick={() => setPhoto(null)}
-                >
-                  <Trash2 />
-                  Remove photo
-                </Button>
-              )}
-            </Question>
-          )}
+            )}
+          </Question>
+        )}
 
-          {step === 2 && (
-            <Question
-              title="Why are you here?"
-              hint="Choose as many as you'd like. You can change this later."
-            >
-              {reasonOptions.map((r) => (
-                <SelectRow
-                  key={r.id}
-                  selected={reasons.includes(r.id)}
-                  title={r.title}
-                  detail={r.detail}
-                  multi
-                  onClick={() => toggle(reasons, setReasons, r.id)}
-                />
-              ))}
-            </Question>
-          )}
+        {step === 2 && (
+          <Question
+            title="Why are you here?"
+            hint="Choose as many as you'd like. You can change this later."
+          >
+            {reasonOptions.map((r) => (
+              <SelectRow
+                key={r.id}
+                selected={reasons.includes(r.id)}
+                title={r.title}
+                detail={r.detail}
+                multi
+                onClick={() => toggle(reasons, setReasons, r.id)}
+              />
+            ))}
+          </Question>
+        )}
 
-          {step === 3 && (
-            <Question
-              title="When were you laid off?"
-              hint="This helps us group people at a similar point."
-            >
-              {laidOffOptions.map((o) => (
-                <SelectRow key={o} selected={laidOff === o} title={o} onClick={() => setLaidOff(o)} />
-              ))}
-            </Question>
-          )}
+        {step === 3 && (
+          <Question
+            title="When were you laid off?"
+            hint="This helps us group people at a similar point."
+          >
+            {laidOffOptions.map((o) => (
+              <SelectRow key={o} selected={laidOff === o} title={o} onClick={() => setLaidOff(o)} />
+            ))}
+          </Question>
+        )}
 
-          {step === 4 && (
-            <Question
-              title="What do you enjoy?"
-              hint="Choose as many as you'd like. Shared interests make first conversations easier."
-            >
-              <div className="flex flex-wrap gap-2">
-                {interestOptions.map((o) => (
-                  <TagButton
-                    key={o}
-                    label={o}
-                    selected={interests.includes(o)}
-                    onClick={() => toggle(interests, setInterests, o)}
-                  />
-                ))}
-              </div>
-            </Question>
-          )}
-
-          {step === 5 && (
-            <Question title="Which causes matter to you?" hint="Choose as many as you'd like.">
-              {causeOptions.map((o) => (
-                <SelectRow
+        {step === 4 && (
+          <Question
+            title="What do you enjoy?"
+            hint="Choose as many as you'd like. Shared interests make first conversations easier."
+          >
+            <div className="flex flex-wrap gap-2">
+              {interestOptions.map((o) => (
+                <TagButton
                   key={o}
-                  selected={causes.includes(o)}
-                  title={o}
-                  onClick={() => toggle(causes, setCauses, o)}
-                  multi
+                  label={o}
+                  selected={interests.includes(o)}
+                  onClick={() => toggle(interests, setInterests, o)}
                 />
               ))}
-            </Question>
-          )}
+            </div>
+          </Question>
+        )}
 
-          {step === 6 && (
-            <Question
-              title="When can you show up?"
-              hint="Choose as many as you'd like. Consistency matters more than frequency."
-            >
-              {availabilityOptions.map((o) => (
-                <SelectRow
-                  key={o}
-                  selected={availability.includes(o)}
-                  title={o}
-                  onClick={() => toggle(availability, setAvailability, o)}
-                  multi
-                />
-              ))}
-            </Question>
-          )}
+        {step === 5 && (
+          <Question title="Which causes matter to you?" hint="Choose as many as you'd like.">
+            {causeOptions.map((o) => (
+              <SelectRow
+                key={o}
+                selected={causes.includes(o)}
+                title={o}
+                onClick={() => toggle(causes, setCauses, o)}
+                multi
+              />
+            ))}
+          </Question>
+        )}
 
-          {step === 7 && (
-            <Question
-              title="Where are you based?"
-              hint="We only match groups within a short drive of each other."
-            >
-              {cityOptions.map((o) => (
-                <SelectRow
-                  key={o}
-                  selected={location === o}
-                  title={o}
-                  icon={<MapPin className="h-4 w-4 text-muted-foreground" />}
-                  onClick={() => setLocation(o)}
-                />
-              ))}
-            </Question>
-          )}
-        </div>
+        {step === 6 && (
+          <Question
+            title="When can you show up?"
+            hint="Choose as many as you'd like. Consistency matters more than frequency."
+          >
+            {availabilityOptions.map((o) => (
+              <SelectRow
+                key={o}
+                selected={availability.includes(o)}
+                title={o}
+                onClick={() => toggle(availability, setAvailability, o)}
+                multi
+              />
+            ))}
+          </Question>
+        )}
+
+        {step === 7 && (
+          <Question
+            title="Where are you based?"
+            hint="We only match groups within a short drive of each other."
+          >
+            {cityOptions.map((o) => (
+              <SelectRow
+                key={o}
+                selected={location === o}
+                title={o}
+                icon={<MapPin className="h-4 w-4 text-muted-foreground" />}
+                onClick={() => setLocation(o)}
+              />
+            ))}
+          </Question>
+        )}
       </Screen>
 
-      <div className="ios-chrome ios-hairline-t fixed inset-x-0 bottom-0"
-        style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + var(--ios-keyboard-inset, 0px))" }}>
-        <div className="mx-auto flex w-full max-w-[430px] gap-3 px-5 py-4">
-          <Button
-            size="lg"
-            className="flex-1"
-            disabled={!canContinue}
-            onClick={() => (step === steps.length - 1 ? finish() : setStep((s) => s + 1))}
-          >
-            {step === steps.length - 1 ? "Find my group" : step === 1 && !photo ? "Skip for now" : "Continue"}
-            <ArrowRight />
-          </Button>
-        </div>
-      </div>
+      <OnboardingFooter style={{ paddingBottom: footerPadding }}>
+        <Button
+          size="lg"
+          className="w-full"
+          disabled={!canContinue}
+          onClick={() => (step === steps.length - 1 ? finish() : setStep((s) => s + 1))}
+        >
+          {ctaLabel}
+          <ArrowRight />
+        </Button>
+      </OnboardingFooter>
+    </div>
+  );
+}
+
+function OnboardingFooter({
+  children,
+  style,
+}: {
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <div className="ios-chrome ios-hairline-t fixed inset-x-0 bottom-0 z-30" style={style}>
+      <div className="mx-auto w-full max-w-[430px] px-5 py-3">{children}</div>
     </div>
   );
 }
@@ -396,7 +441,7 @@ function Question({
 }) {
   return (
     <div>
-      <h2 className="mt-3 text-[26px] leading-tight font-extrabold">{title}</h2>
+      <h2 className="lo-display mt-3 text-[26px] leading-tight">{title}</h2>
       <p className="mt-2 text-[15px] text-muted-foreground">{hint}</p>
       <div className="mt-6 space-y-3">{children}</div>
     </div>
@@ -464,8 +509,8 @@ function TagButton({
       aria-pressed={selected}
       className={
         selected
-          ? tapPillActive
-          : "inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-muted-foreground/35 bg-transparent px-3.5 py-2 text-[13px] font-semibold text-muted-foreground cursor-pointer transition-colors duration-[120ms] hover:bg-card active:bg-card focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft"
+          ? "inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-primary px-3.5 py-2.5 text-[13px] font-semibold text-primary-foreground cursor-pointer transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft"
+          : "inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-muted-foreground/35 bg-transparent px-3.5 py-2.5 text-[13px] font-semibold text-muted-foreground cursor-pointer transition-colors duration-[120ms] hover:bg-card active:bg-card focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-soft"
       }
     >
       {label}
