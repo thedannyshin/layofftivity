@@ -79,11 +79,11 @@ export function BackButton({ onClick, className }: { onClick: () => void; classN
       aria-label="Go back"
       onClick={onClick}
       className={cn(
-        "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-muted-foreground/35 bg-transparent text-foreground transition-colors hover:bg-card active:bg-card active:opacity-70",
+        "flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-foreground transition-opacity active:opacity-50",
         className,
       )}
     >
-      <ArrowLeft className="h-5 w-5" aria-hidden />
+      <ArrowLeft className="h-5 w-5" strokeWidth={2.25} aria-hidden />
     </button>
   );
 }
@@ -148,7 +148,7 @@ export function ScreenHero({
 
   const barInner = (
     <div className="relative mx-auto flex h-11 w-full max-w-[430px] items-center px-5">
-      <div className="relative z-10 flex w-11 shrink-0 items-center justify-start">
+      <div className="relative z-10 -ml-1.5 flex w-9 shrink-0 items-center justify-start">
         {back && <BackButton onClick={() => router.history.back()} />}
       </div>
       <div
