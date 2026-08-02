@@ -117,13 +117,14 @@ export function ScreenHero({
     if (!titleEl) return;
 
     const update = () => {
-      const titleTop = titleEl.getBoundingClientRect().top;
+      const titleRect = titleEl.getBoundingClientRect();
       if (alwaysShowBar && barRef.current) {
-        setCompact(titleTop <= barRef.current.getBoundingClientRect().bottom - 2);
+        // Wait until the large title has fully tucked under the sticky chrome.
+        setCompact(titleRect.bottom <= barRef.current.getBoundingClientRect().bottom);
         return;
       }
-      // Approx. status-bar clearance when no persistent nav chrome.
-      setCompact(titleTop < 52);
+      // Tab roots: wait until the large title has scrolled fully off-screen.
+      setCompact(titleRect.bottom <= 0);
     };
 
     update();
