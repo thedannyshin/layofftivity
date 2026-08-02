@@ -9,13 +9,6 @@ import { byId, icebreakers, orgById } from "@/lib/data";
 import { sendMessage, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-const icebreakerLabels: Record<string, string> = {
-  "What's one thing you're doing with your week now that you couldn't before?": "Your week",
-  "What did you think you'd miss about work, but don't?": "Work surprises",
-  "What's the smallest good thing that happened to you this week?": "Small wins",
-  "If Saturday mornings were yours forever, how would you spend them?": "Saturday mornings",
-};
-
 export const Route = createFileRoute("/_tabs/messages/group")({
   head: () => ({
     meta: [
@@ -173,7 +166,7 @@ function GroupMessages() {
                   onClick={() => setValue(q)}
                   className="inline-flex shrink-0 items-center rounded-full border border-muted-foreground/35 bg-card px-3.5 py-2 text-[13px] font-semibold text-foreground transition-colors active:bg-background"
                 >
-                  {icebreakerLabels[q] ?? q}
+                  {q}
                 </button>
               ))}
             </div>
