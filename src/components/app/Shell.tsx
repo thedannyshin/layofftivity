@@ -113,7 +113,7 @@ export function ScreenHero({
       className={cn(
         "-mx-5 mb-4 px-5",
         isSticky
-          ? "ios-chrome ios-hairline-b sticky top-0 z-20 pt-[max(0.75rem,env(safe-area-inset-top))] pb-3"
+          ? "sticky top-0 z-20 bg-background pt-[max(0.75rem,env(safe-area-inset-top))] pb-3"
           : "pt-[max(1.5rem,env(safe-area-inset-top))] pb-2",
       )}
     >

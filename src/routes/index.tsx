@@ -189,7 +189,7 @@ function Onboarding() {
 
   return (
     <div className="flex min-h-dvh flex-col bg-background">
-      <header className="ios-chrome ios-hairline-b sticky top-0 z-20 pt-[max(0.5rem,env(safe-area-inset-top))]">
+      <header className="sticky top-0 z-20 bg-background pt-[max(0.5rem,env(safe-area-inset-top))]">
         <div className="mx-auto flex w-full max-w-[430px] items-center gap-3 px-5 pb-3">
           <BackButton onClick={() => setStep((s) => s - 1)} />
           <div className="min-w-0 flex-1">
